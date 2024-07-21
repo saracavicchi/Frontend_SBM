@@ -1,16 +1,26 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from "@/components/TheWelcome.vue";
+<script setup lang="ts"></script>
+<<template>
+  <div>
+    <Header />
+    <main>
+      <router-view></router-view>
+    </main>
+    <Footer />
+  </div>
+</template>
+
+<script>
+import Header from './components/views/Header.vue';
+import Footer from './components/views/Footer.vue';
+
+export default {
+  components: {
+    Header,
+    Footer
+  }
+};
 </script>
 
-<template>
-
-
-  <main>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </main>
-
-
-</template>
+<style>
+@import './assets/main.css';
+</style>

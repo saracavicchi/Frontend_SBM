@@ -6,7 +6,7 @@ import { ref } from 'vue';
 const data = ref(0);
 
 /* Inseriamo nella variabile data il risultato della chiamata al backend */
-axios.get("/api/testMysql").then(response => {
+axios.get("/api/home/callREST").then(response => {
   console.log(JSON.stringify(response.data))
   data.value = response.data
 })
@@ -20,12 +20,7 @@ class MyTable{
 
 <template>
   <div>
-    <table>
-      <tr v-for="items in data" >
-        <td>{{ items }}</td>
-      </tr>
-    </table>
-    
+    <p>Ciao</p>
   </div>
 </template>
 
