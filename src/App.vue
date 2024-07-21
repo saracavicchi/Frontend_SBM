@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <<template>
-  <div>
+  <div class="app">
     <Header />
     <main>
       <router-view></router-view>
