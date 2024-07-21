@@ -1,5 +1,6 @@
 export interface Notifica {
+    id: number;
     mittente: string;
-    messaggio: string;
-    timestamp: string;
+    testo: string;
+    data_ora: string;
 }

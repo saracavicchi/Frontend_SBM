@@ -15,22 +15,22 @@
       </article>
       <article>
         <a href="#organizzazione">
-          <img class="action-img" src="@/assets/images/homepageImg/groups-24dp-e8eaed-fill0-wght400-grad0-opsz24-1.png" alt="Groups">
+          <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzazione.png" alt="Groups">
         </a>
       </article>
       <article>
         <a href="#profilo">
-          <img class="action-img" src="@/assets/images/homepageImg/manage-accounts-24dp-fill0-wght400-grad0-opsz24-1.png" alt="Manage accounts">
+          <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzatore.png" alt="Manage accounts">
         </a>
       </article>
       <article>
         <a href="#pagamenti">
-          <img class="action-img" src="@/assets/images/homepageImg/add-card-24dp-fill0-wght400-grad0-opsz24-1.png" alt="Add card">
+          <img class="action-img" src="../../assets/images/homepageImg/pagamento.png" alt="Add card">
         </a>
       </article>
       <article>
         <a href="#marketing">
-          <img class="action-img" src="@/assets/images/homepageImg/campaign-24dp-e8eaed-fill0-wght400-grad0-opsz24-1.png" alt="Campaign">
+          <img class="action-img" src="../../assets/images/homepageImg/marketing.png" alt="Campaign">
         </a>
       </article>
     </div>

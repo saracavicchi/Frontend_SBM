@@ -9,7 +9,7 @@
         <li><a href="#area-personale">Area personale</a></li>
         <li><a href="#help">Help</a></li>
         <li><a href="/logout">
-          <img class="logout" alt="Logout" src="@/assets/images/homepageImg/logout-24dp-e8eaed-fill0-wght400-grad0-opsz24-1.png" />
+          <img class="logout" alt="Logout" src="../../assets/images/homepageImg/logout.png" />
         </a></li>
       </ul>
     </nav>

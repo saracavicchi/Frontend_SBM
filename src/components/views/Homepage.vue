@@ -1,19 +1,28 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import type { Notifica } from '@/types/notificaType';
+import type { Evento } from '@/types/eventoType';
+import type { Utente } from '@/types/utenteType';
+import type { EventoConcluso } from '@/types/eventoConclusoType';
 
-const eventiConclusi = ref([]);
-const eventiInProgramma = ref([]);
-const notifiche = ref([]);
-const utente = ref({});
+const eventiConclusi = ref<EventoConcluso[]>([]);
+const eventiFuturi = ref<Evento[]>([]);
+const notifiche = ref<Notifica[]>([]);
+const utente = ref<Utente[]>([]);
 
 onMounted(async () => {
   try {
-    //eventiConclusi.value = (await axios.get('/api/eventi/conclusi')).data;
-    //eventiInProgramma.value = (await axios.get('/api/eventi/in-programma')).data;
-    notifiche.value = (await axios.get('/notifiche')).data;
-    console.log()
-    //utente.value = (await axios.get('/api/utente')).data;
+    eventiConclusi.value = (await axios.get('/api/homepage/eventiConclusi')).data;
+    console.log(JSON.stringify(eventiConclusi.value));
+    eventiFuturi.value = (await axios.get('/api/homepage/eventiFuturi')).data;
+    console.log(JSON.stringify(eventiFuturi.value));
+    axios.get("/api/homepage/notifiche").then(response => {
+      console.log(JSON.stringify(response.data))
+      notifiche.value = response.data
+    })
+    utente.value = (await axios.get('/api/homepage/utente')).data;
+    console.log(JSON.stringify(utente.value));
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
   }
