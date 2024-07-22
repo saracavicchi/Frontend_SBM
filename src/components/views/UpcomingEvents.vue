@@ -1,27 +1,44 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { defineProps } from 'vue';
+import type { PropType } from 'vue';
+import type { Evento } from '@/types/eventoType.ts';
+import { format } from 'date-fns-tz';
+import { toZonedTime } from 'date-fns-tz';
+
+const props = defineProps({
+  eventiFuturi: Array as PropType<Evento[]>
+});
+
+function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
+  const date = new Date(Date.parse(timestamp));
+  const zonedDate = toZonedTime(date, timeZone);
+  return format(zonedDate, 'dd/MM/yyyy HH:mm:ss', { timeZone });
+}
+</script>
 
 <template>
-  <section aria-labelledby="upcoming-events" id="eventi-in-programma">
-    <h2 id="upcoming-events">Eventi in programma</h2>
-    <img class="line" alt="Line" src="@/assets/images/homepageImg/line-1.svg" />
+  <section aria-labelledby="upcoming-events" id="eventi-in-programma" class="rounded-component">
+    <h2 id="upcoming-events">
+      <a href="#eventi-futuri" aria-label="Visualizza tutti gli eventi in programma" >Eventi In Programma</a>
+    </h2>
     <ul>
-      <li>
+      <li v-for="evento in eventiFuturi" :key="evento.id">
         <article>
-          <img class="event-img" src="@/assets/images/homepageImg/profilo.jpg" alt="Festa 1" />
-          <p><strong>Festa 1</strong> Venerdì 24 Maggio 7856 interessati</p>
-        </article>
-      </li>
-      <li>
-        <article>
-          <img class="event-img" src="@/assets/images/homepageImg/profilo.jpg" alt="Festa 1" />
-          <p><strong>Festa 2</strong> Sabato 25 Maggio 10984 interessati</p>
+          <img class="event-img" :src="evento.url_photo ? evento.url_photo : '@/assets/images/homepageImg/profilo.jpg'" :alt="evento.nome" />
+          <section class="event-info">
+            <p class="event-name">{{ evento.nome }}</p>
+            <section class="event-dates">
+              <p>Inizio: {{ formatTimestamp(evento.data_ora.inizio) }}</p>
+              <p>Fine: {{ formatTimestamp(evento.data_ora.fine) }}</p>
+            </section>
+          </section>
         </article>
       </li>
     </ul>
   </section>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'UpcomingEvents'
 };

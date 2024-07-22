@@ -2,37 +2,33 @@
  import { defineProps } from 'vue';
  import type { PropType } from 'vue';
  import type { Notifica } from '@/types/notificaType.ts';
+ import { format } from 'date-fns-tz';
+ import { toZonedTime } from 'date-fns-tz';
 
   const props = defineProps({
     notifiche: Array as PropType<Notifica[]>
   });
 
- function formatTimestamp(timestamp: number | string): string {
-   const date = new Date(timestamp);
-   const year = date.getFullYear();
-   const month = date.getMonth() + 1; // getMonth() restituisce 0-11
-   const day = date.getDate();
-   const hours = date.getHours();
-   const minutes = date.getMinutes();
-   const seconds = date.getSeconds();
-
-   const formatNumber = (num: number): string => (num < 10 ? `0${num}` : num.toString());
-
-   const formattedDate = `${year}-${formatNumber(month)}-${formatNumber(day)}`;
-   const formattedTime = `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`;
-
-   return `${formattedDate} ${formattedTime}`;
+ function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
+   const date = new Date(Date.parse(timestamp));
+   const zonedDate = toZonedTime(date, timeZone);
+   return format(zonedDate, 'dd/MM/yyyy - HH:mm:ss', { timeZone });
  }
+
 </script>
 
 <template>
-  <section aria-labelledby="notification-center" id="centro-notifiche">
-    <h2 id="notification-center">Centro Notifiche</h2>
-    <img class="line-3" alt="Line" src="@/assets/images/homepageImg/line-4.svg" />
+  <section aria-labelledby="notification-center" id="centro-notifiche" class="rounded-component">
+    <h2 id="notification-center">
+      <a href="#notifiche" aria-label="Vai al Centro Notifiche">Centro Notifiche</a>
+    </h2>
     <ul>
-      <li v-for="notifica in notifiche" :key="notifica.id">{{ formatTimestamp(notifica.data_ora) }} <strong>{{ notifica.mittente }}:</strong> {{ notifica.testo }}</li>
+      <li v-for="notifica in notifiche" :key="notifica.id">
+        <p>{{ formatTimestamp(notifica.data_ora) }}</p>
+        <p class="messaggio" style="font-weight: bold">{{ notifica.mittente }}:</p>
+        <p class="messaggio">{{ notifica.testo }}</p>
+      </li>
     </ul>
-    <a href="#notifiche">Visualizza tutte le notifiche</a>
   </section>
 </template>
 

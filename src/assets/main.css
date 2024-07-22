@@ -17,6 +17,13 @@ body {
   flex-direction: column;
   height: 100vh;
 }
+
+.app{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .main-container {
   display: flex;
   justify-content: space-between;
@@ -25,7 +32,7 @@ body {
   flex-wrap: wrap; /* Permette agli elementi di spostarsi su una nuova riga se necessario */
 }
 
-header, nav, main{
+header, header nav, footer nav, main{
   max-width: 100%; /* Assicura che questi elementi non superino la larghezza della viewport */
 }
 
@@ -33,7 +40,7 @@ header {
   background-color: #007BFF;
   color: white;
   padding: 1rem;
-  height: 15vh;
+  height: 25vh;
 }
 
 header nav {
@@ -86,10 +93,6 @@ header nav li:hover {
 main {
   flex: 1;
   padding: 1rem;
-}
-
-section {
-  margin-bottom: 10px;
 }
 
 footer {
@@ -155,9 +158,7 @@ footer nav a {
   padding-bottom: 0;
 }
 
-#action-center + * {
-  clear: both;
-}
+
 
 .left-section .actions {
   display: flex;
@@ -237,51 +238,160 @@ footer nav a {
   text-align: center; /* Ensures text is centered if it wraps */
   flex-direction: column; /* Stack children vertically */
   height: 230px; /* Optional: Adjust based on your design */
-}
-
-.rounded-component article {
-  display: flex;
-  justify-content: flex-start;
-  align-items: self-start; /* Allinea verticalmente gli elementi al centro */
-  gap: 15px; /* Distanza tra gli elementi */
+  width: 580px;
 }
 
 .rounded-component ul {
   list-style-type: none; /* Rimuove i pallini */
-  margin-left: 0;
+  margin: 0 0 0 0;
+  padding: 0 15px 0 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .rounded-component li {
-  display: inline-block;
+  color: #00004d;
   margin-bottom: 10px;
   font-size: 18px;
 }
 
-.rounded-component h2 {
-  padding: 5px 0 0 0;
+.rounded-component article {
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+  align-items: center;
+  gap: 15px; /* Distanza tra gli elementi */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 75px;
+}
+
+.rounded-component p{
   margin: 0;
+  padding: 0;
+
+}
+
+.rounded-component h2 {
+  color: #00004d;
+  padding: 5px 0 0 0;
+  margin: 0 0 5px 0;
+}
+
+.rounded-component h2::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ffffff;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .rounded-component .event-img{
   width: 60px;
   height: 60px;
-  margin: 0;
+  margin: 0 0 ;
   border-radius: 50%;
   display: inline-block;
+  margin-right: 15px;
 }
 
 .right-section .rounded-component, .right-section .rounded-component * {
   max-width: 100%;
   box-sizing: border-box; /* Assicura che padding e bordi siano inclusi nel calcolo della larghezza */
 }
-
-.rounded-component section {
-  max-width: 100%;
-  text-align: center;
+/*
+.event-name {
+  flex: 1;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.event-dates {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  display: block;
+  margin: 0;
+  padding: 0;
+  align-content: flex-start;
+}
 
+.event-dates p{
+  margin: 3px 0;
+  padding: 0;
+  text-align: left;
+  display: block;
+}
+
+ */
+
+.event-info{
+  display: inline-block;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.event-name {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-details{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.event-dates {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 260px;
+}
+
+.event-dates p{
+  margin: 3px 0;
+  padding: 0;
+  text-align: left;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-info .stars-rating{
+  display: inline-block;
+  text-align: center;
+  margin-left: -5px;
+}
+
+.rounded-component > h2 > a {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  color: #00004d;
+}
+
+.rounded-component > h2 > a:hover {
+  transform: scale(1.05);
+}
+
+.rounded-component .messaggio{
+  display: inline-block;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 

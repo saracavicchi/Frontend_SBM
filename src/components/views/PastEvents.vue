@@ -1,187 +1,51 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { defineProps} from 'vue';
+import type { PropType} from 'vue';
+import type { EventoConcluso } from '@/types/eventoConclusoType.ts';
+import { format } from 'date-fns-tz';
+import { toZonedTime } from 'date-fns-tz';
+import StarsRating from '@/components/views/StarsRating.vue';
 
-<template>
-  <section aria-labelledby="past-events" id="eventi-conclusi">
-    <h2 id="past-events">Eventi Conclusi</h2>
-    <img class="line" alt="Line" src="@/assets/images/homepageImg/line-1.svg" />
+const props = defineProps({
+  eventiConclusi: Array as PropType<EventoConcluso[]>
+});
+
+function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
+  const date = new Date(Date.parse(timestamp));
+  const zonedDate = toZonedTime(date, timeZone);
+  return format(zonedDate, 'dd/MM/yyyy HH:mm:ss', { timeZone });
+}
+</script>
+
+<<template>
+  <section class="rounded-component" aria-labelledby="past-events" id="eventi-conclusi">
+    <h2 id="past-events">
+      <a href="#eventi-conclusi" aria-label="Visualizza tutti gli eventi conclusi" >Eventi Conclusi</a>
+    </h2>
     <ul>
-      <li>
+      <li v-for="(evento, index) in eventiConclusi" :key="evento.id">
         <article>
-          <img class="event-img" src="@/assets/images/homepageImg/profilo.jpg" alt="Festa 3" />
-          <p><strong>Festa 3</strong> Venerdì 9 Maggio Stelle:4.7/5</p>
-        </article>
-      </li>
-      <li>
-        <article>
-          <img class="event-img" src="@/assets/images/homepageImg/profilo.jpg" alt="Festa 4" />
-          <p><strong>Festa 4</strong> Sabato 10 Maggio Stelle: 4.9/5</p>
+          <img class="event-img" :src="evento.url_photo ? evento.url_photo : '@/assets/images/homepageImg/profilo.jpg'" :alt="evento.nome" />
+          <section class="event-info">
+            <p class="event-name">{{ evento.nome }}</p>
+            <section class="event-details">
+              <section class="event-dates">
+                <p>Inizio: {{ formatTimestamp(evento.data_ora.inizio) }}</p>
+                <p>Fine: {{ formatTimestamp(evento.data_ora.fine) }}</p>
+              </section>
+              <StarsRating :rating="evento.stelle" />
+              <!--<p class="stars" style="font-weight: bold">Stelle:</p><p class="stars"> {{ evento.stelle }}/5</p> -->
+            </section>
+          </section>
         </article>
       </li>
     </ul>
   </section>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'PastEvents'
 };
 </script>
 
-<style>
-.hidden {
-  display: none;
-}
-
-.eventi-conclusi {
-  height: 251px;
-  left: 801px;
-  position: absolute;
-  top: 655px;
-  width: 601px;
-}
-
-.eventi-conclusi .overlap-2 {
-  height: 251px;
-  position: relative;
-  width: 611px;
-}
-
-.eventi-conclusi .rectangle-2 {
-  background-color: #ffffff40;
-  border-radius: 20px;
-  height: 251px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 597px;
-}
-
-.eventi-conclusi .line-2 {
-  height: 1px;
-  left: 4px;
-  object-fit: cover;
-  position: absolute;
-  top: 60px;
-  width: 588px;
-}
-
-.eventi-conclusi .text-wrapper-24 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 25px;
-  font-weight: 800;
-  left: 188px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 14px;
-  width: 223px;
-}
-
-.eventi-conclusi .info-feste-in-2 {
-  height: 133px;
-  left: 25px;
-  position: absolute;
-  top: 86px;
-  width: 586px;
-}
-
-.eventi-conclusi .foto-festa-3 {
-  background-color: #d9d9d9;
-  border-radius: 27.5px/28.33px;
-  height: 57px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 55px;
-}
-
-.eventi-conclusi .foto-festa-4 {
-  background-color: #d9d9d9;
-  border-radius: 27.5px/28.33px;
-  height: 57px;
-  left: 0;
-  position: absolute;
-  top: 76px;
-  width: 55px;
-}
-
-.eventi-conclusi .text-wrapper-25 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 423px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 91px;
-  width: 151px;
-}
-
-.eventi-conclusi .text-wrapper-26 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 184px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 92px;
-  width: 162px;
-}
-
-.eventi-conclusi .text-wrapper-27 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 66px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 91px;
-  width: 68px;
-}
-
-.eventi-conclusi .text-wrapper-28 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 423px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 13px;
-  width: 140px;
-}
-
-.eventi-conclusi .text-wrapper-29 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 184px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 13px;
-  width: 167px;
-}
-
-.eventi-conclusi .text-wrapper-30 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 66px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 13px;
-  width: 64px;
-}
-
-</style>

@@ -20,17 +20,17 @@
       </article>
       <article>
         <a href="#profilo">
-          <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzatore.png" alt="Manage accounts">
+          <img class="action-img" src="@/assets/images/homepageImg/profiloOrganizzatore.png" alt="Manage accounts">
         </a>
       </article>
       <article>
         <a href="#pagamenti">
-          <img class="action-img" src="../../assets/images/homepageImg/pagamento.png" alt="Add card">
+          <img class="action-img" src="@/assets/images/homepageImg/pagamento.png" alt="Add card">
         </a>
       </article>
       <article>
         <a href="#marketing">
-          <img class="action-img" src="../../assets/images/homepageImg/marketing.png" alt="Campaign">
+          <img class="action-img" src="@/assets/images/homepageImg/marketing.png" alt="Campaign">
         </a>
       </article>
     </div>

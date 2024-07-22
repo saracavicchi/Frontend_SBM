@@ -6,7 +6,7 @@ import Homepage from './components/views/Homepage.vue';
 import HelloWorld from "@/components/HelloWorld.vue";
 
 const routes = [
-    { path: '/home', name: 'Homepage', component: Homepage },
+    { path: '/', name: 'Homepage', component: Homepage },
     { path: '/hello', component: HelloWorld }
 ];
 
