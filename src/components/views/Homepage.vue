@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
-import type { Notifica } from '@/types/notificaType';
-import type { Evento } from '@/types/eventoType';
-import type { Utente } from '@/types/utenteType';
-import type { EventoConcluso } from '@/types/eventoConclusoType';
+import type {Notifica} from '@/types/notificaType';
+import type {Evento} from '@/types/eventoType';
+import type {Organizzatore} from '@/types/organizzatoreType';
+import type {EventoConcluso} from '@/types/eventoConclusoType';
 
 const eventiConclusi = ref<EventoConcluso[]>([]);
 const eventiFuturi = ref<Evento[]>([]);
 const notifiche = ref<Notifica[]>([]);
-const utente = ref<Utente[]>([]);
+const organizzatore = ref<Organizzatore[]>([]);
+const marzel = ref<Organizzatore[]>([]);
 
 onMounted(async () => {
   try {
@@ -21,8 +22,10 @@ onMounted(async () => {
       console.log(JSON.stringify(response.data))
       notifiche.value = response.data
     })
-    utente.value = (await axios.get('/api/homepage/utente')).data;
-    console.log(JSON.stringify(utente.value));
+    organizzatore.value = (await axios.get('/api/homepage/utente')).data;
+    console.log(JSON.stringify(organizzatore.value));
+    marzel.value = (await axios.get('/api/homepage/marzel')).data;
+    console.log(JSON.stringify(marzel.value));
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
   }
@@ -30,28 +33,26 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main>
-    <div class="main-container">
-      <div class="left-section">
-        <div class="profile-header">
-          <img class="profile-image" src="@/assets/images/homepageImg/profilo.jpg" alt="Foto Profilo" />
-          <h3>Ciao utente!</h3>
-        </div>
-        <ActionCenter />
+  <div class="main-container">
+    <div class="left-section">
+      <div class="profile-header">
+        <img class="profile-image" src="@/assets/images/homepageImg/profilo.jpg" alt="Foto Profilo"/>
+        <h3>Ciao utente!</h3>
       </div>
-      <div class="right-section">
-        <div class="rounded-component">
-          <NotificationCenter :notifiche="notifiche" />
-        </div>
-        <div class="rounded-component">
-          <!--<UpcomingEvents :eventiInProgramma="eventiInProgramma" /> -->
-        </div>
-        <div class="rounded-component">
-          <!-- <PastEvents :eventiConclusi="eventiConclusi" /> -->
-        </div>
+      <ActionCenter :marzel="marzel"/>
+    </div>
+    <div class="right-section">
+      <div class="rounded-component">
+        <NotificationCenter :notifiche="notifiche"/>
+      </div>
+      <div class="rounded-component">
+        <!--<UpcomingEvents :eventiInProgramma="eventiInProgramma" /> -->
+      </div>
+      <div class="rounded-component">
+        <!-- <PastEvents :eventiConclusi="eventiConclusi" /> -->
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">

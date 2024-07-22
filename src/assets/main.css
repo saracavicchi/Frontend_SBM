@@ -31,7 +31,7 @@ body {
   flex-wrap: wrap; /* Permette agli elementi di spostarsi su una nuova riga se necessario */
 }
 
-header, nav, main{
+header, header nav, footer nav, main{
   max-width: 100%; /* Assicura che questi elementi non superino la larghezza della viewport */
 }
 
@@ -39,7 +39,7 @@ header {
   background-color: #007BFF;
   color: white;
   padding: 1rem;
-  height: 15vh;
+  height: 25vh;
 }
 
 header nav {

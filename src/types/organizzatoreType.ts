@@ -1,4 +1,8 @@
-export interface Utente {
+import type {Organizzazione} from "@/types/organizzazioneType";
+import type {Link} from "@/types/linkType";
+import type {Carta} from "@/types/cartaType";
+
+export interface Organizzatore {
     id: number;
     codFiscale: string;
     nome: string;
@@ -20,4 +24,6 @@ export interface Utente {
     organizzazione: {
         id: number;
     };
+    link: Link[];
+    carte: Carta[];
 }

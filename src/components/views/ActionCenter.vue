@@ -1,4 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import {computed} from 'vue';
+
+const props = defineProps({
+  marzel: Object
+});
+
+const organizzazionePath = computed(() => {
+  if (props.marzel && props.marzel.organizzazione === null) {
+    return '/creaOrganizzazione';
+  } else {
+    return `/organizzazione/${props.marzel?.organizzazione ? props.marzel.organizzazione.id : ''}`;
+  }
+});
+
+</script>
+
 <template>
   <section aria-labelledby="action-center" id="centro-azioni">
     <h2 id="action-center">Centro Azioni</h2>
@@ -14,9 +31,9 @@
         </a>
       </article>
       <article>
-        <a href="#organizzazione">
+        <router-link :to="organizzazionePath">
           <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzazione.png" alt="Groups">
-        </a>
+        </router-link>
       </article>
       <article>
         <a href="#profilo">
@@ -37,12 +54,11 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'ActionCenter'
 };
 </script>
-
 
 
 <style>
