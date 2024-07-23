@@ -1,11 +1,13 @@
 <script setup lang="ts">
 
-import {useRouter} from "vue-router";
+import {onBeforeRouteLeave, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 import type {Organizzatore} from "@/types/organizzatoreType";
+
+const errorMessage = ref('');
 
 const router = useRouter();
 const photoUrl = ref('');
@@ -61,21 +63,35 @@ const submitForm = () => {
           .then(response => {
             console.log(response.data);
 
-            router.push({
-              name: 'Organizzazione',
-              params: {
-                id: response.data
-              }
-            })
+            if (response.status === 200) {
+              router.push({
+                name: 'Organizzazione',
+                params: {
+                  id: response.data
+                }
+              })
+            }
+
 
           })
           .catch(error => {
             console.error(error);
-            // Handle the error
+
+            errorMessage.value = error.response.data;
+
           });
     }
   }
 };
+
+onBeforeRouteLeave(() => {
+  errorMessage.value = '';
+  photoUrl.value = defaultImage; // Imposta il valore iniziale
+  if (fileInputRef.value) {
+    fileInputRef.value.value = ''; // Resetta l'input del file
+  }
+  formRef.value?.reset();
+});
 
 
 onMounted(async () => {
@@ -101,7 +117,8 @@ onMounted(async () => {
         <button type="button" id="cancel-button" class="form-button" aria-label="Annulla creazione" @click="goBack">
           Annulla
         </button>
-        <button type="button" id="create-button" class="form-button" aria-label="Conferma creazione" @click="submitForm">Crea
+        <button type="button" id="create-button" class="form-button" aria-label="Conferma creazione"
+                @click="submitForm">Crea
         </button>
       </section>
 
@@ -113,7 +130,8 @@ onMounted(async () => {
 
         <img class="photo-upload-circle" @click="uploadPhoto" :src="photoUrl || defaultImage"
              alt="Foto organizzazione" aria-label="Carica o modifica foto organizzazione">
-        <input type="file" id="photo-upload" name="foto" ref="fileInputRef" @change="handleFileChange" style="display: none;"
+        <input type="file" id="photo-upload" name="foto" ref="fileInputRef" @change="handleFileChange"
+               style="display: none;"
                accept="image/*" aria-hidden="true">
 
         <!-- image edit.png -->
@@ -124,6 +142,8 @@ onMounted(async () => {
         <button v-if="photoUrl" class="remove-button" type="button" @click="removePhoto" style="margin-left: 20px;"
                 aria-label="Rimuovi foto organizzazione">Rimuovi Foto
         </button>
+
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
       </div>
 
@@ -372,6 +392,16 @@ textarea {
 .photo-upload-circle:focus {
   outline: 2px solid #007BFF;
   outline-offset: 2px;
+}
+
+.error-message {
+  margin-left: 100px;
+  color: #3152a8;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 15px;
 }
 
 </style>

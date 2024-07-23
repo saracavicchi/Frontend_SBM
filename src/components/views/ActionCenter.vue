@@ -1,18 +1,34 @@
 <script setup lang="ts">
 
-import {computed} from 'vue';
+import {ref, onMounted, watch} from "vue";
+import axios from "axios";
+
+const organizzazionePath = ref('');
 
 const props = defineProps({
   marzel: Object
 });
 
-const organizzazionePath = computed(() => {
-  if (props.marzel && props.marzel.organizzazione === null) {
-    return '/creaOrganizzazione';
-  } else {
-    return `/organizzazione/${props.marzel?.organizzazione ? props.marzel.organizzazione.id : ''}`;
+const fetchData = async () => {
+  if (props.marzel && props.marzel.id) {
+    try {
+      const response = await axios.get(`/api/organizzatore/hasOrganizzazione?id=${props.marzel.id}`);
+      if (response.data === '') {
+        organizzazionePath.value = '/creaOrganizzazione';
+      } else {
+        organizzazionePath.value = '/organizzazione/' + response.data;
+      }
+    } catch (error) {
+      console.error('Errore nel recupero dei dati:', error);
+    }
   }
-});
+};
+
+watch(() => props.marzel, (newValue, oldValue) => {
+  if (newValue && newValue.id !== oldValue?.id) {
+    fetchData();
+  }
+}, { immediate: true });
 
 </script>
 
