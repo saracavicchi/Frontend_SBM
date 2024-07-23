@@ -6,9 +6,9 @@
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#eventi">Eventi</a></li>
-        <li><a href="#area-personale">Area personale</a></li>
+        <li><a href="#area-personale"><router-link to="/home">Area personale</router-link></a></li>
         <li><a href="#help">Help</a></li>
-        <li><a href="/logout">
+        <li><a href="#logout">
           <img class="logout" alt="Logout" src="../../assets/images/homepageImg/logout.png" />
         </a></li>
       </ul>

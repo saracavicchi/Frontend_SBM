@@ -12,6 +12,8 @@ const idOrganizzazione = route.params.id;
 const organizzazione = ref<Organizzazione>();
 const organizzatori = ref<Organizzatore[]>([]);
 
+const marzel = ref<Organizzatore>();
+
 onMounted(async () => {
   try {
     organizzazione.value = (await axios.get('/api/organizzazione/getOrganizzazione', {
@@ -25,6 +27,9 @@ onMounted(async () => {
       organizzatori.value = organizzazione.value.organizzatori;
     }
 
+    marzel.value = (await axios.get('/api/homepage/marzel')).data;
+    console.log(JSON.stringify(marzel.value));
+
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
   }
@@ -33,22 +38,22 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main>
-    <h1>Organizzazione</h1>
-    <p>{{ idOrganizzazione }}</p>
+  <h1>Organizzazione</h1>
+  <p>{{ idOrganizzazione }}</p>
 
-    <p>{{ organizzazione?.nome }}</p>
+  <p>{{ organizzazione?.nome }}</p>
 
-    <div v-if="organizzatori && organizzatori.length > 0">
-      <h2>Organizzatori</h2>
-      <ul>
-        <li v-for="organizzatore in organizzatori" :key="organizzatore.id">
-          <p>{{ organizzatore.nome }} {{ organizzatore.cognome }}</p>
-        </li>
-      </ul>
-    </div>
+  <div v-if="organizzatori && organizzatori.length > 0">
+    <h2>Organizzatori</h2>
+    <ul>
+      <li v-for="organizzatore in organizzatori" :key="organizzatore.id">
+        <p>{{ organizzatore.cognome }} {{ organizzatore.nome }}</p>
+      </li>
+    </ul>
+  </div>
 
-  </main>
+  <p v-if="marzel?.id === organizzazione?.admin.id">admin</p>
+
 </template>
 
 <style scoped>

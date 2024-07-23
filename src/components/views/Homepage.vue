@@ -10,7 +10,7 @@ const eventiConclusi = ref<EventoConcluso[]>([]);
 const eventiFuturi = ref<Evento[]>([]);
 const notifiche = ref<Notifica[]>([]);
 const organizzatore = ref<Organizzatore[]>([]);
-const marzel = ref<Organizzatore[]>([]);
+const marzel = ref<Organizzatore>();
 
 onMounted(async () => {
   try {

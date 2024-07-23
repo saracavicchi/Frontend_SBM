@@ -1,13 +1,26 @@
 <script setup lang="ts">
 
+
+
 </script>
 
 <template>
-  <main>
-    <h1>Crea Organizzazione</h1>
-  </main>
+
+  <CreationForm />
+
 </template>
 
 <style scoped>
 
 </style>
+
+<script lang="ts">
+
+import CreationForm from "@/components/views/organizzazione/CreationForm.vue";
+
+export default {
+  components: {
+    CreationForm
+  }
+};
+</script>

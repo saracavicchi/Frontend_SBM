@@ -39,7 +39,8 @@ header {
   background-color: #007BFF;
   color: white;
   padding: 1rem;
-  height: 25vh;
+  height: 15vh;
+  border-bottom: 1px solid white;
 }
 
 header nav {
