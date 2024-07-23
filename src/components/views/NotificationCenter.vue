@@ -18,15 +18,15 @@
 </script>
 
 <template>
-  <section aria-labelledby="notification-center" id="centro-notifiche" class="rounded-component">
+  <section aria-labelledby="notification-center" id="centro-notifiche" class="rounded-component" role="region">
     <h2 id="notification-center">
-      <a href="#notifiche" aria-label="Vai al Centro Notifiche">Centro Notifiche</a>
+      <a href="#notifiche" aria-label="Vai al Centro Notifiche" tabindex="0">Centro Notifiche</a>
     </h2>
-    <ul>
-      <li v-for="notifica in notifiche" :key="notifica.id">
+    <ul role="list">
+      <li v-for="notifica in notifiche" :key="notifica.id" role="listitem">
         <p>{{ formatTimestamp(notifica.data_ora) }}</p>
         <p class="messaggio" style="font-weight: bold">{{ notifica.mittente }}:</p>
-        <p class="messaggio">{{ notifica.testo }}</p>
+        <p class="messaggio" style="margin-left: 15px">{{ notifica.testo }}</p>
       </li>
     </ul>
   </section>

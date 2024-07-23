@@ -3,12 +3,14 @@ import stellaVuota from '@/assets/images/stars/stellaVuota.png';
 </script>
 
 <template>
-  <div class="stars-rating">
+  <section class="stars-rating" role="img" aria-label="Valutazione: {{ rating }} su 5">
     <img v-for="index in 5" :key="index"
-         :src="index <= rating ? stellaPiena : stellaVuota"
-         alt="Star" class="star">
-  </div>
+         :src="index <= Math.round(rating) ? stellaPiena : stellaVuota"
+         :alt="`Stella ${index <= Math.round(rating) ? 'piena' : 'vuota'} per una valutazione di ${rating} su 5`"
+         class="star">
+  </section>
 </template>
+
 <script lang="ts">
 export default {
   name: 'StarsRating',

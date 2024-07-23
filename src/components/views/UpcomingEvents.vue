@@ -1,30 +1,66 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import type { PropType } from 'vue';
+import {defineProps, ref, watchEffect} from 'vue';
+import type { PropType, Ref } from 'vue';
 import type { Evento } from '@/types/eventoType.ts';
 import { format } from 'date-fns-tz';
 import { toZonedTime } from 'date-fns-tz';
+import axios from 'axios';
+import defaultImage from '@/assets/images/homepageImg/profilo.jpg';
 
 const props = defineProps({
   eventiFuturi: Array as PropType<Evento[]>
 });
+
+
+const eventiFuturiImageUrls: Ref<string[]> = ref([]);
 
 function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
   const date = new Date(Date.parse(timestamp));
   const zonedDate = toZonedTime(date, timeZone);
   return format(zonedDate, 'dd/MM/yyyy HH:mm:ss', { timeZone });
 }
+
+async function fetchImage(imagePath: string) {
+  try {
+    const response = await axios.get(`/api/images/mockImg/${imagePath}`, { responseType: 'blob' });
+    const imageUrl = URL.createObjectURL(response.data);
+    return imageUrl;
+  } catch (error) {
+    console.error('Errore nel recupero dell\'immagine:', error);
+    return defaultImage; // Ritorna un percorso di fallback in caso di errore
+  }
+}
+
+watchEffect(() => {
+  if(props.eventiFuturi){
+    const imageUrlsPromises = props.eventiFuturi.map(async (evento) => {
+      return fetchImage(evento.url_photo)
+          .catch(error => {
+            console.error('Errore nel recupero dell\'immagine:', error);
+            return defaultImage;
+          });
+    });
+
+    Promise.all(imageUrlsPromises)
+        .then(results => {
+          eventiFuturiImageUrls.value = results;
+        })
+        .catch(error => {
+          console.error('Errore durante il recupero delle immagini:', error);
+        });
+  }
+});
 </script>
 
 <template>
-  <section aria-labelledby="upcoming-events" id="eventi-in-programma" class="rounded-component">
+  <section aria-labelledby="upcoming-events" id="eventi-in-programma" class="rounded-component" role="region">
     <h2 id="upcoming-events">
-      <a href="#eventi-futuri" aria-label="Visualizza tutti gli eventi in programma" >Eventi In Programma</a>
+      <a href="#eventi-futuri" aria-label="Visualizza tutti gli eventi in programma">Eventi In Programma</a>
     </h2>
     <ul>
-      <li v-for="evento in eventiFuturi" :key="evento.id">
+      <li v-for="(evento, index) in eventiFuturi" :key="evento.id" tabindex="0" role="listitem">
         <article>
-          <img class="event-img" :src="evento.url_photo ? evento.url_photo : '@/assets/images/homepageImg/profilo.jpg'" :alt="evento.nome" />
+          <img class="event-img" :src="evento.url_photo ? eventiFuturiImageUrls[index] : defaultImage" :alt="`Immagine dell'evento: ${evento.nome}`" />
           <section class="event-info">
             <p class="event-name">{{ evento.nome }}</p>
             <section class="event-dates">

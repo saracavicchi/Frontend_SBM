@@ -1,13 +1,14 @@
 <script setup lang="ts"></script>
+
 <template>
   <footer>
     <p>&copy; 2024 Eventgo</p>
-    <nav aria-label="Footer Navigation">
+    <nav aria-label="Navigazione footer">
       <ul>
-        <li><a href="#terms">Terms and conditions</a></li>
-        <li><a href="#accessibility">Accessibilità</a></li>
-        <li><a href="#privacy">Privacy</a></li>
-        <li><a href="#contact">Contattaci</a></li>
+        <li><a href="#terms" aria-label="Termini e condizioni">Terms and conditions</a></li>
+        <li><a href="#accessibility" aria-label="Accessibilità del sito">Accessibilità</a></li>
+        <li><a href="#privacy" aria-label="Politica sulla privacy">Privacy</a></li>
+        <li><a href="#contact" aria-label="Contattaci">Contattaci</a></li>
       </ul>
     </nav>
   </footer>

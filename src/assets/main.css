@@ -24,13 +24,13 @@ body {
   height: 100vh;
 }
 
-.main-container {
+/*.main-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: 100vw; /* Assicura che il contenitore principale non superi la larghezza della viewport */
-  flex-wrap: wrap; /* Permette agli elementi di spostarsi su una nuova riga se necessario */
-}
+  max-width: 100vw;
+  flex-wrap: wrap;
+}*/
 
 header, header nav, footer nav, main{
   max-width: 100%; /* Assicura che questi elementi non superino la larghezza della viewport */
@@ -57,7 +57,7 @@ header img {
 header .logo{
   width: 190px;
   height: auto;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   margin-left: 10px;
 }
@@ -66,7 +66,7 @@ header nav ul {
   list-style: none;
   display: flex;
   gap: 1rem;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   margin: 0;
   padding: 0;
@@ -93,6 +93,11 @@ header nav li:hover {
 main {
   flex: 1;
   padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100vw;
+  flex-wrap: wrap;
 }
 
 footer {
@@ -134,7 +139,7 @@ footer nav a {
   display: flex;
   flex-direction: column; /* Imposta i figli in colonna */
   justify-content: flex-start;
-  gap: 72px;
+  gap: 52px;
   height: 740px;
 }
 
@@ -162,7 +167,7 @@ footer nav a {
 
 .left-section .actions {
   display: flex;
-  gap: 1rem;
+  gap: 0;
   width: 100%;
   flex-wrap: wrap;
   margin-top: 0;
@@ -170,20 +175,21 @@ footer nav a {
 
 .left-section .actions article {
   flex: 1 1 200px;
-  padding: 2rem;
+  padding: 28px;
   border-radius: 0.5rem;
   text-align: center;
+  transition: transform 0.3s ease;
 }
 
 .left-section .action-img {
-  transition: transform 0.3s ease;
+  /*transition: transform 0.3s ease;*/
   width: 100px;
   height: auto;
 }
-
+/*
 .left-section .action-img:hover {
   transform: scale(1.1);
-}
+}*/
 
 
 .profile-header {
@@ -191,20 +197,20 @@ footer nav a {
   align-items: center;
   margin-top: 0px;
   padding-top: 0px;
-  gap: 30px; /* Adjust the gap as needed */
+  gap: 30px; /* spazio tra immagine e scritta di benvenuto */
   margin-bottom: 5px;
 }
 
 .profile-header h3{
   margin-left: 10px;
-  font-size: 25px;
+  font-size: 28px;
   font-weight: bold;
   color: white;
 }
 
 .profile-image {
-  width: 170px; /* Imposta la larghezza */
-  height: 170px; /* Imposta l'altezza */
+  width: 190px; /* Imposta la larghezza */
+  height: 190px; /* Imposta l'altezza */
   border-radius: 50%; /* Rende l'immagine circolare */
   object-fit: cover; /* Assicura che l'immagine copra completamente l'area senza perdere le proporzioni */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra leggera */
@@ -218,6 +224,26 @@ footer nav a {
 
 .left-section>h3{
   display: inline-block;
+}
+
+.left-section .actions .action-text{
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  font-variant: small-caps;
+  text-align: center;
+  color: #d9d9d9;
+  margin: 0;
+  padding: 0;
+}
+
+.left-section .actions > article > a{
+  text-decoration: none;
+}
+
+
+.left-section .actions > article:hover {
+  transform: scale(1.05);
 }
 
 .right-section {
@@ -251,7 +277,8 @@ footer nav a {
 }
 
 .rounded-component li {
-  color: #00004d;
+  /*color: #00004d;*/
+  color: white;
   margin-bottom: 10px;
   font-size: 18px;
 }
@@ -274,7 +301,8 @@ footer nav a {
 }
 
 .rounded-component h2 {
-  color: #00004d;
+  /*color: #00004d;*/
+    color: white;
   padding: 5px 0 0 0;
   margin: 0 0 5px 0;
 }
@@ -380,7 +408,8 @@ footer nav a {
   display: inline-block;
   text-decoration: none;
   transition: transform 0.3s ease;
-  color: #00004d;
+  /*color: #00004d;*/
+  color: white;
 }
 
 .rounded-component > h2 > a:hover {
