@@ -1,22 +1,26 @@
 <script setup lang="ts">
 
 import {useRouter} from "vue-router";
-import {ref} from "vue";
-import axios from 'axios';
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
+import type {Organizzatore} from "@/types/organizzatoreType";
 
 const router = useRouter();
 const photoUrl = ref('');
 
 const fileInputRef = ref<HTMLInputElement | null>(null);
 
+const formRef = ref<HTMLFormElement | null>(null);
+
+const marzel = ref<Organizzatore>();
+
 const goBack = () => {
   router.go(-1);
 }
 
 const uploadPhoto = () => {
-  // Utilizza la ref per accedere all'elemento input e invocare il metodo click
   if (fileInputRef.value instanceof HTMLInputElement) {
     fileInputRef.value.click();
   }
@@ -45,6 +49,43 @@ const removePhoto = () => {
   }
 };
 
+const submitForm = () => {
+  if (formRef.value) {
+    if (formRef.value.reportValidity()) {
+      const formData = new FormData(formRef.value);
+      if (fileInputRef.value && fileInputRef.value.files && fileInputRef.value.files[0]) {
+        formData.append('foto', fileInputRef.value.files[0]);
+      }
+
+      axios.post('/api/organizzazione/creaOrganizzazione', formData)
+          .then(response => {
+            console.log(response.data);
+
+            router.push({
+              name: 'Organizzazione',
+              params: {
+                id: response.data
+              }
+            })
+
+          })
+          .catch(error => {
+            console.error(error);
+            // Handle the error
+          });
+    }
+  }
+};
+
+
+onMounted(async () => {
+  try {
+    marzel.value = (await axios.get('/api/homepage/marzel')).data;
+    console.log(JSON.stringify(marzel.value));
+  } catch (error) {
+    console.error('Errore nel recupero dei dati:', error);
+  }
+});
 
 </script>
 
@@ -60,25 +101,29 @@ const removePhoto = () => {
         <button type="button" id="cancel-button" class="form-button" aria-label="Annulla creazione" @click="goBack">
           Annulla
         </button>
-        <button type="button" id="create-button" class="form-button" aria-label="Conferma creazione">Crea</button>
+        <button type="button" id="create-button" class="form-button" aria-label="Conferma creazione" @click="submitForm">Crea
+        </button>
       </section>
 
     </article>
 
-    <form class="creation-form">
+    <form class="creation-form" ref="formRef">
 
       <div class="photo-row" aria-live="polite">
 
         <img class="photo-upload-circle" @click="uploadPhoto" :src="photoUrl || defaultImage"
              alt="Foto organizzazione" aria-label="Carica o modifica foto organizzazione">
-        <input type="file" id="photo-upload" ref="fileInputRef" @change="handleFileChange" style="display: none;" accept="image/*" aria-hidden="true">
+        <input type="file" id="photo-upload" name="foto" ref="fileInputRef" @change="handleFileChange" style="display: none;"
+               accept="image/*" aria-hidden="true">
 
         <!-- image edit.png -->
         <img src="@/assets/images/creaOrganizzazioneImages/edit.png" alt="Icona modifica foto" width="32" height="32"
              style="margin-left: 10px;">
 
         <label for="photo-upload" style="margin-left: 20px;">Imposta foto organizzazione</label>
-        <button v-if="photoUrl" class="remove-button" type="button" @click="removePhoto" style="margin-left: 20px;" aria-label="Rimuovi foto organizzazione">Rimuovi Foto</button>
+        <button v-if="photoUrl" class="remove-button" type="button" @click="removePhoto" style="margin-left: 20px;"
+                aria-label="Rimuovi foto organizzazione">Rimuovi Foto
+        </button>
 
       </div>
 
@@ -86,28 +131,31 @@ const removePhoto = () => {
 
         <div class="form-column">
 
+          <!-- nome -->
           <label for="name">Nome organizzazione *</label>
-          <input type="text" id="name" name="name" required aria-required="true" aria-label="Inserisci nome organizzazione">
+          <input type="text" id="name" name="nome" required aria-required="true"
+                 aria-label="Inserisci nome organizzazione">
 
           <!-- email -->
           <label for="email">Email *</label>
-          <input type="email" id="email" name="email" required aria-required="true" aria-label="Inserisci email organizzazione">
+          <input type="email" id="email" name="mail" required aria-required="true"
+                 aria-label="Inserisci email organizzazione">
 
           <!-- telefono -->
           <label for="phone">Telefono</label>
-          <input type="tel" id="phone" name="phone" aria-label="Inserisci numero di telefono organizzazione">
+          <input type="tel" id="phone" name="telefono" aria-label="Inserisci numero di telefono organizzazione">
 
           <!-- stato -->
           <label for="state">Stato</label>
-          <input type="text" id="state" name="state" aria-label="Inserisci stato/nazione organizzazione">
+          <input type="text" id="state" name="stato" aria-label="Inserisci stato/nazione organizzazione">
 
           <!-- provincia -->
           <label for="province">Provincia</label>
-          <input type="text" id="province" name="province" aria-label="Inserisci provincia organizzazione">
+          <input type="text" id="province" name="provincia" aria-label="Inserisci provincia organizzazione">
 
           <!-- città -->
           <label for="city">Città</label>
-          <input type="text" id="city" name="city" aria-label="Inserisci città organizzazione">
+          <input type="text" id="city" name="città" aria-label="Inserisci città organizzazione">
 
           <!-- cap -->
           <label for="cap">CAP</label>
@@ -115,11 +163,11 @@ const removePhoto = () => {
 
           <!-- via -->
           <label for="street">Via</label>
-          <input type="text" id="street" name="street" aria-label="Inserisci via organizzazione">
+          <input type="text" id="street" name="via" aria-label="Inserisci via organizzazione">
 
           <!-- numero civico -->
           <label for="civic">Numero civico</label>
-          <input type="text" id="civic" name="civic" aria-label="Inserisci numero civico organizzazione">
+          <input type="text" id="civic" name="numCivico" aria-label="Inserisci numero civico organizzazione">
 
         </div>
 
@@ -127,7 +175,7 @@ const removePhoto = () => {
 
           <!-- descrizione -->
           <label for="description">Descrizione</label>
-          <textarea id="description" name="description" aria-label="Inserisci descrizione organizzazione"></textarea>
+          <textarea id="description" name="descrizione" aria-label="Inserisci descrizione organizzazione"></textarea>
 
           <!-- iban -->
           <label for="iban">IBAN</label>
@@ -135,7 +183,7 @@ const removePhoto = () => {
 
           <!-- link sito web -->
           <label for="website">Sito web</label>
-          <input type="url" id="website" name="website" aria-label="Inserisci link sito web organizzazione">
+          <input type="url" id="website" name="sito" aria-label="Inserisci link sito web organizzazione">
 
           <!-- link instagram -->
           <label for="instagram">Instagram</label>
@@ -153,11 +201,11 @@ const removePhoto = () => {
           <label for="linkedin">Linkedin</label>
           <input type="url" id="linkedin" name="linkedin" aria-label="Inserisci link Linkedin organizzazione">
 
-
         </div>
 
       </div>
 
+      <input type="hidden" name="idAdmin" :value="marzel?.id">
       <input type="submit" style="display: none;" aria-hidden="true">
 
     </form>
