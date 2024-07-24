@@ -5,7 +5,7 @@ import type { PropType} from 'vue';
 import type { EventoConcluso } from '@/types/eventoConclusoType.ts';
 import { format } from 'date-fns-tz';
 import { toZonedTime } from 'date-fns-tz';
-import StarsRating from '@/components/views/StarsRating.vue';
+import StarsRating from '@/components/views/Homepage/StarsRating.vue';
 import axios from "axios";
 import defaultImage from '@/assets/images/homepageImg/profilo.jpg';
 
@@ -62,7 +62,7 @@ watchEffect(() => {
 <template>
   <section class="rounded-component" aria-labelledby="past-events" id="eventi-conclusi" role="region">
     <h2 id="past-events">
-      <a href="#eventi-conclusi" aria-label="Visualizza tutti gli eventi conclusi">Eventi Conclusi</a>
+      <a href="#eventi-conclusi" aria-label="Visualizza tutti gli eventi conclusi" accesskey="f">Eventi Conclusi</a>
     </h2>
     <ul>
       <li v-for="(evento, index) in eventiConclusi" :key="evento.id" tabindex="0" role="listitem">

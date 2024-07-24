@@ -73,30 +73,28 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- <div class="main-container"> -->
-    <section class="left-section" aria-labelledby="left-header" role="main">
-      <h2 id="left-header" class="visually-hidden">Profilo Organizzatore e Centro Azioni</h2>
-      <section class="profile-header">
-        <img class="profile-image" v-if="state.organizzatore" :src="profileImageUrl" alt="Foto Profilo" />
-        <h3 v-if="state.organizzatore">Ciao {{ state.organizzatore.nome }} {{ state.organizzatore.cognome }}!</h3>
-      </section>
-      <ActionCenter />
+  <section class="left-section" aria-labelledby="left-header" role="main">
+    <h2 id="left-header" class="visually-hidden">Profilo Organizzatore e Centro Azioni</h2>
+    <section class="profile-header">
+      <img class="profile-image" v-if="state.organizzatore" :src="profileImageUrl" alt="Foto Profilo" />
+      <h3 v-if="state.organizzatore">Ciao {{ state.organizzatore.nome }} {{ state.organizzatore.cognome }}!</h3>
     </section>
-    <aside class="right-section" aria-labelledby="aside-header">
-      <h2 id="aside-header" class="visually-hidden">Notifiche e Eventi</h2>
-      <NotificationCenter :notifiche="state.notifiche" />
-      <UpcomingEvents :eventiFuturi="state.eventiFuturi" />
-      <PastEvents :eventiConclusi="state.eventiConclusi" />
-    </aside>
-  <!-- </div> -->
+    <ActionCenter />
+  </section>
+  <aside class="right-section" id="right-section" aria-labelledby="aside-header">
+    <h2 id="aside-header" class="visually-hidden">Notifiche e Eventi</h2>
+    <NotificationCenter :notifiche="state.notifiche" />
+    <UpcomingEvents :eventiFuturi="state.eventiFuturi" />
+    <PastEvents :eventiConclusi="state.eventiConclusi" />
+  </aside>
 </template>
 
 <script lang="ts">
 // Importazione dei componenti utilizzati nella homepage
-import ActionCenter from '@/components/views/ActionCenter.vue';
-import NotificationCenter from '@/components/views/NotificationCenter.vue';
-import UpcomingEvents from '@/components/views/UpcomingEvents.vue';
-import PastEvents from '@/components/views/PastEvents.vue';
+import ActionCenter from '@/components/views/Homepage/ActionCenter.vue';
+import NotificationCenter from '@/components/views/Homepage/NotificationCenter.vue';
+import UpcomingEvents from '@/components/views/Homepage/UpcomingEvents.vue';
+import PastEvents from '@/components/views/Homepage/PastEvents.vue';
 
 export default {
   components: {
@@ -109,7 +107,5 @@ export default {
 </script>
 
 <style>
-.visually-hidden{
-  display: none;
-}
+@import '@/assets/css/Homepage.css';
 </style>

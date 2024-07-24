@@ -2,7 +2,7 @@
 <<template>
   <div class="app">
     <Header />
-    <main>
+    <main id="mainContent">
       <router-view></router-view>
     </main>
     <Footer />
@@ -22,5 +22,5 @@ export default {
 </script>
 
 <style>
-@import './assets/main.css';
+@import 'assets/css/main.css';
 </style>

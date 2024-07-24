@@ -23,7 +23,7 @@ function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
 <template>
   <section aria-labelledby="notification-center" id="centro-notifiche" class="rounded-component" role="region">
     <h2 id="notification-center">
-      <a href="#notifiche" aria-label="Vai al Centro Notifiche" tabindex="0">Centro Notifiche</a>
+      <a href="#notifiche" aria-label="Vai al Centro Notifiche" tabindex="0" accesskey="n">Centro Notifiche</a>
     </h2>
     <ul role="list">
       <li v-for="notifica in notifiche" :key="notifica.id" role="listitem">

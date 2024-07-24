@@ -61,7 +61,7 @@ watchEffect(() => {
 <template>
   <section aria-labelledby="upcoming-events" id="eventi-in-programma" class="rounded-component" role="region">
     <h2 id="upcoming-events">
-      <a href="#eventi-futuri" aria-label="Visualizza tutti gli eventi in programma">Eventi In Programma</a>
+      <a href="#eventi-futuri" aria-label="Visualizza tutti gli eventi in programma" accesskey="k">Eventi In Programma</a>
     </h2>
     <ul>
       <li v-for="(evento, index) in eventiFuturi" :key="evento.id" tabindex="0" role="listitem">

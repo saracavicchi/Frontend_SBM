@@ -5,7 +5,8 @@ import stellaVuota from '@/assets/images/stars/stellaVuota.png';
 </script>
 
 <template>
-  <section class="stars-rating" role="img" aria-label="Valutazione: {{ rating }} su 5">
+  <section class="stars-rating">
+    <span class="visually-hidden">Valutazione: {{ rating }} su 5</span>
     <img v-for="index in 5" :key="index"
          :src="index <= Math.round(rating) ? stellaPiena : stellaVuota"
          :alt="`Stella ${index <= Math.round(rating) ? 'piena' : 'vuota'} per una valutazione di ${rating} su 5`"
