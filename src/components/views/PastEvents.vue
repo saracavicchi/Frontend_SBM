@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Importazione delle funzioni necessarie da Vue e date-fns-tz, dei tipi definiti dall'utente e dell'immagine di default
 import {defineProps, watchEffect, ref, type Ref} from 'vue';
 import type { PropType} from 'vue';
 import type { EventoConcluso } from '@/types/eventoConclusoType.ts';
@@ -8,21 +9,26 @@ import StarsRating from '@/components/views/StarsRating.vue';
 import axios from "axios";
 import defaultImage from '@/assets/images/homepageImg/profilo.jpg';
 
+
+// Definizione delle props del componente, accetta un array di eventi conclusi
 const props = defineProps({
   eventiConclusi: Array as PropType<EventoConcluso[]>
 });
 
+// Variabile reattiva per memorizzare gli URL delle immagini degli eventi conclusi
 const eventiConclusiImageUrls: Ref<string[]> = ref([]);
 
+// Funzione per formattare i timestamp in una stringa leggibile, considerando il fuso orario
 function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
   const date = new Date(Date.parse(timestamp));
   const zonedDate = toZonedTime(date, timeZone);
   return format(zonedDate, 'dd/MM/yyyy HH:mm:ss', { timeZone });
 }
 
+// Funzione asincrona per recuperare l'URL dell'immagine di un evento tramite una richiesta HTTP
 async function fetchImage(imagePath: string) {
   try {
-    const response = await axios.get(`/api/images/mockImg/${imagePath}`, { responseType: 'blob' });
+    const response = await axios.get(`/api/images/mock?name=${encodeURIComponent(imagePath)}`, { responseType: 'blob' });
     const imageUrl = URL.createObjectURL(response.data);
     return imageUrl;
   } catch (error) {
@@ -31,13 +37,14 @@ async function fetchImage(imagePath: string) {
   }
 }
 
+// Effetto collaterale per recuperare gli URL delle immagini degli eventi conclusi
 watchEffect(() => {
   if(props.eventiConclusi){
     const imageUrlsPromises = props.eventiConclusi.map(async (evento) => {
       return fetchImage(evento.url_photo)
           .catch(error => {
             console.error('Errore nel recupero dell\'immagine:', error);
-            return defaultImage; // Provide a fallback image in case of error
+            return defaultImage;
           });
     });
 

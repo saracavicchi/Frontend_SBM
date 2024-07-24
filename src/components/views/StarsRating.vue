@@ -1,4 +1,6 @@
-<script setup lang="ts">import stellaPiena from '@/assets/images/stars/stellaPiena.png';
+<script setup lang="ts">
+// Importazione delle immagini delle stelle per visualizzare la valutazione degli eventi
+import stellaPiena from '@/assets/images/stars/stellaPiena.png';
 import stellaVuota from '@/assets/images/stars/stellaVuota.png';
 </script>
 

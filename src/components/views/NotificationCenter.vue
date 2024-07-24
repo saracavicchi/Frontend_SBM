@@ -1,19 +1,22 @@
 <script setup lang="ts">
- import { defineProps } from 'vue';
- import type { PropType } from 'vue';
- import type { Notifica } from '@/types/notificaType.ts';
- import { format } from 'date-fns-tz';
- import { toZonedTime } from 'date-fns-tz';
+// Importazione delle funzioni necessarie da Vue e date-fns-tz e dei tipi definiti dall'utente
+import { defineProps } from 'vue';
+import type { PropType } from 'vue';
+import type { Notifica } from '@/types/notificaType.ts';
+import { format } from 'date-fns-tz';
+import { toZonedTime } from 'date-fns-tz';
 
-  const props = defineProps({
-    notifiche: Array as PropType<Notifica[]>
-  });
+// Definizione delle props del componente
+const props = defineProps({
+  notifiche: Array as PropType<Notifica[]>
+});
 
- function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
-   const date = new Date(Date.parse(timestamp));
-   const zonedDate = toZonedTime(date, timeZone);
-   return format(zonedDate, 'dd/MM/yyyy - HH:mm:ss', { timeZone });
- }
+// Funzione per formattare i timestamp in una stringa leggibile, considerando il fuso orario
+function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
+  const date = new Date(Date.parse(timestamp));
+  const zonedDate = toZonedTime(date, timeZone);
+  return format(zonedDate, 'dd/MM/yyyy - HH:mm:ss', { timeZone });
+}
 
 </script>
 

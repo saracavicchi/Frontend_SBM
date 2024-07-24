@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Importazione delle funzioni necessarie da Vue e date-fns-tz, dei tipi definiti dall'utente e dell'immagine di default
 import {defineProps, ref, watchEffect} from 'vue';
 import type { PropType, Ref } from 'vue';
 import type { Evento } from '@/types/eventoType.ts';
@@ -7,23 +8,27 @@ import { toZonedTime } from 'date-fns-tz';
 import axios from 'axios';
 import defaultImage from '@/assets/images/homepageImg/profilo.jpg';
 
+// Definisce le props del componente, specificando che accetta un array di eventi futuri
 const props = defineProps({
   eventiFuturi: Array as PropType<Evento[]>
 });
 
-
+// Definisce una variabile reattiva per memorizzare gli URL delle immagini degli eventi futuri
 const eventiFuturiImageUrls: Ref<string[]> = ref([]);
 
+// Funzione per formattare i timestamp in una stringa leggibile, considerando il fuso orario
 function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
   const date = new Date(Date.parse(timestamp));
   const zonedDate = toZonedTime(date, timeZone);
   return format(zonedDate, 'dd/MM/yyyy HH:mm:ss', { timeZone });
 }
 
+// Funzione asincrona per recuperare l'URL dell'immagine di un evento tramite una richiesta HTTP
 async function fetchImage(imagePath: string) {
   try {
-    const response = await axios.get(`/api/images/mockImg/${imagePath}`, { responseType: 'blob' });
+    const response = await axios.get(`/api/images/mock?name=${encodeURIComponent(imagePath)}`, { responseType: 'blob' });
     const imageUrl = URL.createObjectURL(response.data);
+    console.log(imageUrl);
     return imageUrl;
   } catch (error) {
     console.error('Errore nel recupero dell\'immagine:', error);
@@ -31,6 +36,7 @@ async function fetchImage(imagePath: string) {
   }
 }
 
+// Per visualizzare le foto degli eventi futuri
 watchEffect(() => {
   if(props.eventiFuturi){
     const imageUrlsPromises = props.eventiFuturi.map(async (evento) => {
@@ -81,142 +87,3 @@ export default {
 </script>
 
 
-<style>
-.eventi-in-programma {
-  height: 232px;
-  left: 798px;
-  position: absolute;
-  top: 400px;
-  width: 601px;
-}
-
-.eventi-in-programma .overlap {
-  background-color: #ffffff40;
-  border-radius: 20px;
-  height: 232px;
-  position: relative;
-  width: 599px;
-}
-
-.eventi-in-programma .text-wrapper-12 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 25px;
-  font-weight: 800;
-  left: 152px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 14px;
-}
-
-.eventi-in-programma .line {
-  height: 1px;
-  left: 16px;
-  object-fit: cover;
-  position: absolute;
-  top: 66px;
-  width: 573px;
-}
-
-.eventi-in-programma .info-feste-in {
-  height: 129px;
-  left: 22px;
-  position: absolute;
-  top: 77px;
-  width: 576px;
-}
-
-.eventi-in-programma .foto-festa {
-  background-color: #d9d9d9;
-  border-radius: 27.5px;
-  height: 55px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 55px;
-}
-
-.eventi-in-programma .foto-festa-2 {
-  background-color: #d9d9d9;
-  border-radius: 27.5px;
-  height: 55px;
-  left: 0;
-  position: absolute;
-  top: 74px;
-  width: 55px;
-}
-
-.eventi-in-programma .text-wrapper-13 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 413px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 89px;
-}
-
-.eventi-in-programma .text-wrapper-14 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 184px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 89px;
-}
-
-.eventi-in-programma .text-wrapper-15 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 66px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 89px;
-}
-
-.eventi-in-programma .text-wrapper-16 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 423px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 13px;
-}
-
-.eventi-in-programma .text-wrapper-17 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 184px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 13px;
-}
-
-.eventi-in-programma .text-wrapper-18 {
-  color: #ffffff;
-  font-family: "Outfit", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 66px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 13px;
-}
-
-</style>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Importazioni necessarie da Vue e Axios, oltre ai tipi definiti dall'utente
 import {reactive, onMounted, ref, watchEffect} from 'vue';
 import axios from 'axios';
 import type { Notifica } from '@/types/notificaType';
@@ -7,7 +8,7 @@ import type { EventoConcluso } from '@/types/eventoConclusoType';
 import type { Organizzatore } from '@/types/organizzatoreType';
 import defaultImage from '@/assets/images/homepageImg/profilo.jpg';
 
-// Definizione di un singolo oggetto reattivo per lo stato della pagina
+// Stato reattivo della pagina, contenente eventi conclusi, futuri, notifiche e informazioni sull'organizzatore
 const state = reactive({
   eventiConclusi: [] as EventoConcluso[],
   eventiFuturi: [] as Evento[],
@@ -15,13 +16,13 @@ const state = reactive({
   organizzatore: null as Organizzatore | null
 });
 
+// Variabile reattiva per gestire l'URL dell'immagine del profilo
 const profileImageUrl = ref('');
 
+// Funzione per recuperare l'immagine del profilo tramite una richiesta HTTP
 async function fetchImage(imagePath: string) {
   try {
-    console.log(imagePath)
-    const response = await axios.get(`/api/images/profileImg/${imagePath}`, { responseType: 'blob' });
-    console.log("Ciao");
+    const response = await axios.get(`/api/images/organizzatore?name=${encodeURIComponent(imagePath)}`, { responseType: 'blob' });
     const imageUrl = URL.createObjectURL(response.data);
     return imageUrl;
   } catch (error) {
@@ -30,6 +31,7 @@ async function fetchImage(imagePath: string) {
   }
 }
 
+// Per visualizzare l'immagine del profilo dell'organizzatore
 watchEffect(() => {
   (async () => {
     if (state.organizzatore && state.organizzatore.urlFoto) {
@@ -45,6 +47,7 @@ watchEffect(() => {
   })();
 });
 
+// Funzione eseguita al montaggio del componente per recuperare dati degli eventi e notifiche
 onMounted(async () => {
   try {
     const eventiConclusiResponse = await axios.get('/api/homepage/eventiConclusi');
@@ -89,6 +92,7 @@ onMounted(async () => {
 </template>
 
 <script lang="ts">
+// Importazione dei componenti utilizzati nella homepage
 import ActionCenter from '@/components/views/ActionCenter.vue';
 import NotificationCenter from '@/components/views/NotificationCenter.vue';
 import UpcomingEvents from '@/components/views/UpcomingEvents.vue';
@@ -105,7 +109,7 @@ export default {
 </script>
 
 <style>
- .visually-hidden{
-   display: none;
- }
+.visually-hidden{
+  display: none;
+}
 </style>
