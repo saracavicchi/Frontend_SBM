@@ -15,21 +15,298 @@ a,
   padding: 3px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+* {
+  box-sizing: border-box;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+body {
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #007BFF;
+  color: #333;
+  overflow-x: hidden; /* Impedisce lo scorrimento orizzontale */
 }
+
+#app{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100vw; /* Assicura che il contenitore principale non superi la larghezza della viewport */
+  flex-wrap: wrap; /* Permette agli elementi di spostarsi su una nuova riga se necessario */
+}
+
+header, header nav, footer nav, main{
+  max-width: 100%; /* Assicura che questi elementi non superino la larghezza della viewport */
+}
+
+header {
+  background-color: #007BFF;
+  color: white;
+  padding: 1rem;
+  height: 25vh;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img {
+  width: 50px;
+  height: auto;
+}
+
+header .logo{
+  width: 190px;
+  height: auto;
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+header nav li{
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 60px;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+}
+
+header nav li:hover {
+  transform: scale(1.1);
+  border-radius: 20px;
+  margin-right: 60px;
+}
+
+main {
+  flex: 1;
+  padding: 1rem;
+}
+
+section {
+  margin-bottom: 10px;
+}
+
+footer {
+  border-top: 1px solid white;
+  background-color: #007BFF;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  height: 15vh;
+}
+
+footer nav ul {
+  font-size: 16px;
+  list-style: none;
+  font-weight: bold;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0;
+  padding: 10px;
+}
+
+footer p{
+  font-size: 18px;
+  font-weight: bold;
+  font-variant: small-caps;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+footer nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 25px;
+}
+
+.left-section {
+  flex: 0 0 50%; /* Mantiene la larghezza */
+  display: flex;
+  flex-direction: column; /* Imposta i figli in colonna */
+  justify-content: flex-start;
+  gap: 72px;
+  height: 740px;
+}
+
+.left-section #centro-azioni{
+  height: calc(2 * 230px + 15px); /* 2*altezza rounded component + gap di 15px*/
+  background-color: #ffffff40;
+  border-radius: 20px;
+  display: block;
+  justify-content: center;
+}
+
+.left-section #action-center{
+  justify-content: center;
+  display: flex;
+  font-size: 30px;
+  font-weight: bold;
+  font-variant: small-caps;
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+}
+
+#action-center + * {
+  clear: both;
+}
+
+.left-section .actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.left-section .actions article {
+  flex: 1 1 200px;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.left-section .action-img {
+  transition: transform 0.3s ease;
+  width: 100px;
+  height: auto;
+}
+
+.left-section .action-img:hover {
+  transform: scale(1.1);
+}
+
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-top: 0px;
+  padding-top: 0px;
+  gap: 30px; /* Adjust the gap as needed */
+  margin-bottom: 5px;
+}
+
+.profile-header h3{
+  margin-left: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+}
+
+.profile-image {
+  width: 170px; /* Imposta la larghezza */
+  height: 170px; /* Imposta l'altezza */
+  border-radius: 50%; /* Rende l'immagine circolare */
+  object-fit: cover; /* Assicura che l'immagine copra completamente l'area senza perdere le proporzioni */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra leggera */
+  transition: transform 0.3s ease; /* Effetto di transizione all'hover */
+  align-self: flex-start; /* Aggiunto per allineare l'immagine a sinistra */
+}
+
+.profile-image:hover {
+  transform: scale(1.05); /* Ingrandisce leggermente l'immagine all'hover */
+}
+
+.left-section>h3{
+  display: inline-block;
+}
+
+.right-section {
+  flex: 0 0 45%; /* Assegna alla sezione destra il 45% dello spazio disponibile */
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  gap: 15px; /* Regola questo valore in base alle tue necessità */
+  margin-left: auto; /* Spinge la .right-section ulteriormente a destra */
+}
+
+
+.rounded-component {
+  border-radius: 15px;
+  background-color: #ffffff40;
+  padding: 10px;
+  display: flex; /* Enables Flexbox */
+  text-align: center; /* Ensures text is centered if it wraps */
+  flex-direction: column; /* Stack children vertically */
+  height: 230px; /* Optional: Adjust based on your design */
+}
+
+.rounded-component article {
+  display: flex;
+  justify-content: flex-start;
+  align-items: self-start; /* Allinea verticalmente gli elementi al centro */
+  gap: 15px; /* Distanza tra gli elementi */
+}
+
+.rounded-component ul {
+  list-style-type: none; /* Rimuove i pallini */
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.rounded-component li {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.rounded-component h2 {
+  padding: 5px 0 0 0;
+  margin: 0;
+}
+
+.rounded-component .event-img{
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.right-section .rounded-component, .right-section .rounded-component * {
+  max-width: 100%;
+  box-sizing: border-box; /* Assicura che padding e bordi siano inclusi nel calcolo della larghezza */
+}
+
+.rounded-component section {
+  max-width: 100%;
+  text-align: center;
+
+
+}
+
+
+
