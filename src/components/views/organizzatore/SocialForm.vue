@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-// Puoi aggiungere logica qui se necessario
+// Logica
 </script>
 
 <style scoped>
@@ -45,7 +45,7 @@
 }
 
 .form-column {
-  width: 45%; /* Regola la larghezza delle colonne come preferisci */
+  width: 45%; /* Regola la larghezza delle colonne */
 }
 
 .form-group {

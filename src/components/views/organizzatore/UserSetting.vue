@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="header">
+    <div class="header"> <!-- Header con le 3 sezioni -->
       <button @click="activeSection = 'anagrafica'" :class="{ active: activeSection === 'anagrafica', blur: activeSection !== 'anagrafica' }">Anagrafica</button>
       <button @click="activeSection = 'social'" :class="{ active: activeSection === 'social', blur: activeSection !== 'social' }">Social</button>
       <button @click="activeSection = 'pagamenti'" :class="{ active: activeSection === 'pagamenti', blur: activeSection !== 'pagamenti' }">Pagamenti</button>
@@ -34,7 +34,7 @@ const activeSection = ref('anagrafica');
   margin: 20px auto;
   max-width: 1200px;
   height: 600px; /* Imposta un'altezza fissa per il contenitore cosi quando cambi tra le sezioni rimane uguale*/
-  overflow: hidden; /* Nasconde lo scroll all'interno del contenitore */
+  overflow: hidden;
 }
 
 .header {
@@ -66,7 +66,7 @@ const activeSection = ref('anagrafica');
   width: 100%; /* Occupa tutta la larghezza del contenitore */
 }
 
-.blur {
+.blur { /*blur delle sezioni non attive*/
   filter: blur(1.5px);
   opacity: 0.6;
 }

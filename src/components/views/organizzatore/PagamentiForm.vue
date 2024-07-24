@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-// Puoi aggiungere logica qui se necessario
+// Logica
 </script>
 
 <style scoped>
@@ -46,7 +46,7 @@
   border-radius: 15px;
   background-color: #2553AE; /* Colore di sfondo del form */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 100%; /* Assicurati che il contenitore non si estenda oltre */
+  max-width: 100%;
 }
 
 /* Layout a due colonne */
@@ -56,7 +56,7 @@
 }
 
 .form-column {
-  width: 45%; /* Regola la larghezza delle colonne come preferisci */
+  width: 45%; /* Regola la larghezza delle colonne */
 }
 
 .form-group {

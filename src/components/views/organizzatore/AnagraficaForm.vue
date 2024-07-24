@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-// Puoi aggiungere logica qui se necessario
+// Logica
 </script>
 
 <style scoped>
@@ -68,7 +68,7 @@
   padding: 20px;
   border-radius: 15px;
   background-color: #2553AE; /* Colore di sfondo del form */
-  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-row {
@@ -77,7 +77,7 @@
 }
 
 .form-column {
-  width: 45%; /* Regola la larghezza delle colonne come preferisci */
+  width: 45%; /* Regola la larghezza delle colonne */
 }
 
 .form-group {
