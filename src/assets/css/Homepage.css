@@ -1,0 +1,296 @@
+/*** Stili specifici per la pagina Homepage ***/
+/** Stili per la sezione sinistra: foto profilo e centro azioni ***/
+.left-section {
+    flex: 0 0 50%; /* Mantiene la larghezza */
+    display: flex;
+    flex-direction: column; /* Imposta i figli in colonna */
+    justify-content: flex-start;
+    gap: 52px;
+    height: 740px;
+}
+
+/* Stili per la sezione dell'immagine profilo */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-top: 0px;
+    padding-top: 0px;
+    gap: 30px; /* spazio tra immagine e scritta di benvenuto */
+    margin-bottom: 5px;
+}
+
+/* Stili per la scritta di benvenuto */
+.profile-header h3{
+    margin-left: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Stili per l'immagine profilo */
+.profile-image {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    align-self: flex-start;
+}
+
+/* Stili per l'immagine profilo all'hover */
+.profile-image:hover {
+    transform: scale(1.05); /* Ingrandisce leggermente l'immagine all'hover */
+}
+
+/* Stili per il centro azioni */
+.left-section .centro-azioni{
+    height: calc(2 * 230px + 15px); /* 2*altezza rounded component + gap di 15px*/
+    background-color: #ffffff40;
+    border-radius: 20px;
+    display: block;
+    justify-content: center;
+}
+
+/* Stili per il titolo del centro azioni */
+.left-section #action-center{
+    justify-content: center;
+    display: flex;
+    font-size: 30px;
+    font-weight: bold;
+    font-variant: small-caps;
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+    padding-bottom: 0;
+}
+
+/* Stili per la sezione delle azioni */
+.left-section .actions {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 0;
+}
+
+/* Stili per gli articoli delle azioni */
+.left-section .actions article {
+    flex: 1 1 200px;
+    padding: 28px;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* Stili per le immagini delle azioni */
+.left-section .action-img {
+    width: 100px;
+    height: auto;
+}
+
+/* Stili per il testo delle azioni */
+.left-section .actions .action-text{
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    font-variant: small-caps;
+    text-align: center;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Stili per i link delle azioni */
+.left-section .actions > article > a{
+    text-decoration: none;
+}
+
+/* Stili per gli articoli delle azioni all'hover */
+.left-section .actions > article:hover {
+    transform: scale(1.05);
+}
+
+
+/** Stili per la sezione destra: eventi futiri e conclusi e notifiche **/
+.right-section {
+    flex: 0 0 45%; /* Assegna alla sezione destra il 45% dello spazio disponibile */
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    gap: 15px;
+    margin-left: auto;
+}
+
+/* Stili per le 3 sezioni che rappresentano notifiche, eventi futuri e eventi passati */
+.rounded-component {
+    border-radius: 15px;
+    background-color: #ffffff40;
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    height: 230px;
+    width: 580px;
+}
+
+/* Stili per il titolo delle liste di notifiche/eventi */
+.rounded-component h2 {
+    /*color: #00004d;*/
+    color: white;
+    padding: 5px 0 0 0;
+    margin: 0 0 5px 0;
+}
+
+/* Stili per i link a visualizzazione delle pegine di eventi/notifiche */
+.rounded-component > h2 > a {
+    display: inline-block;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    /*color: #00004d;*/
+    color: white;
+}
+
+/* Stili per i link a visualizzazione delle pegine di eventi/notifiche all'hover */
+.rounded-component > h2 > a:hover {
+    transform: scale(1.05);
+}
+
+/* Stili per la linea sotto il titolo delle liste di notifiche/eventi */
+.rounded-component h2::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Stili per le liste di notifiche/eventi*/
+.rounded-component ul {
+    list-style-type: none;
+    margin: 0 0 0 0;
+    padding: 0 15px 0 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Stili per gli elementi delle liste di notifiche/eventi */
+.rounded-component li {
+    /*color: #00004d;*/
+    color: white;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Stili per gli elementi delle liste di notifiche/eventi*/
+.rounded-component article {
+    display: flex;
+    justify-content: flex-start;
+    /*align-items: center;*/
+    align-items: center;
+    gap: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 75px;
+}
+
+/* Stili per le scritte nelle liste di notifiche/eventi */
+.rounded-component p{
+    margin: 0;
+    padding: 0;
+
+}
+
+/* Stili per l'immagine dell'eventi */
+.rounded-component .event-img{
+    width: 60px;
+    height: 60px;
+    margin: 0 0 ;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+/*Stili generali di disposizione degli elementi della sezione destra*/
+.right-section .rounded-component, .right-section .rounded-component * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Stili per i messaggi delle notifiche */
+.rounded-component .messaggio{
+    display: inline-block;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Stili per la sezione del testo degli eventi */
+.event-info{
+    display: inline-block;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Stili per il nome dell'evento */
+.event-name {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Stili per la sezione delle date e stelle degli eventi conclusi */
+.event-details{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Stili per la sezione delle date degli eventi */
+.event-dates {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 260px;
+}
+
+/* Stili per le date degli eventi */
+.event-dates p{
+    margin: 3px 0;
+    padding: 0;
+    text-align: left;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Stili per le stelle degli eventi */
+.event-info .stars-rating{
+    display: inline-block;
+    text-align: center;
+    margin-left: -5px;
+}
+
+/* Stili per non visualizzare elementi utili agli screen reader */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

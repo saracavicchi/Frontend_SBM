@@ -1,4 +1,4 @@
-export interface Utente {
+export interface Organizzatore {
     id: number;
     codFiscale: string;
     nome: string;
