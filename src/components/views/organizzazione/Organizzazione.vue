@@ -23,12 +23,6 @@ onMounted(async () => {
     })).data;
     console.log(JSON.stringify(organizzazione.value));
 
-    /*
-    if (organizzazione.value) {
-      organizzatori.value = organizzazione.value.organizzatori;
-    }
-     */
-
     marzel.value = (await axios.get('/api/homepage/marzel')).data;
     console.log(JSON.stringify(marzel.value));
 
@@ -44,13 +38,9 @@ onMounted(async () => {
 
   <div class="org-main-container">
 
-    <section class="control-panel">
-      <ControlPanel v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"/>
-    </section>
+    <ControlPanel v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"/>
 
-    <section class="team-management">
-      <TeamManagement v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"/>
-    </section>
+    <TeamManagement v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"/>
 
   </div>
 
@@ -80,47 +70,6 @@ export default {
   align-items: center;
   max-width: 100vw;
   max-height: 70vh;
-  overflow: auto;
 }
-
-
-.control-panel {
-  max-height: 30vh;
-  position: sticky;
-  top: 0;
-  background-color: #007BFF;
-  z-index: 1;
-  width: 100%;
-  text-align: center;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.team-management {
-  width: 100%;
-  text-align: center;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 40px;
-  column-gap: 10%;
-  row-gap: 10%;
-}
-
-@media (max-width: 768px) {
-  .team-management {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .team-management {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-
 
 </style>
