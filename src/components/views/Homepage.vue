@@ -39,7 +39,7 @@ onMounted(async () => {
         <img class="profile-image" src="@/assets/images/homepageImg/profilo.jpg" alt="Foto Profilo"/>
         <h3>Ciao utente!</h3>
       </div>
-      <ActionCenter :marzel="marzel"/>
+      <ActionCenter v-if="marzel" :marzel="marzel"/>
     </div>
     <div class="right-section">
       <div class="rounded-component">

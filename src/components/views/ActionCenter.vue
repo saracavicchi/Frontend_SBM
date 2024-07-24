@@ -1,14 +1,42 @@
 <script setup lang="ts">
 
-import {ref, onMounted, watch} from "vue";
+import {ref, onMounted, watch, defineProps, type PropType} from "vue";
 import axios from "axios";
+import type {Organizzatore} from "@/types/organizzatoreType";
 
 const organizzazionePath = ref('');
 
+/*
 const props = defineProps({
   marzel: Object
 });
 
+ */
+
+const props = defineProps({
+  marzel: {
+    type: Object as PropType<Organizzatore>,
+    required: true
+  }
+});
+
+watch(() => props.marzel, async (newVal) => {
+  if (newVal && newVal.id) {
+    try {
+      const response = await axios.get(`/api/organizzatore/hasOrganizzazione?id=${newVal.id}`);
+      if (response.data === '') {
+        organizzazionePath.value = '/creaOrganizzazione';
+      } else {
+        organizzazionePath.value = '/organizzazione/' + response.data;
+      }
+      //console.log('organizzazionePath:', organizzazionePath.value);
+    } catch (error) {
+      console.error('Errore nel recupero dei dati:', error);
+    }
+  }
+}, { immediate: true });
+
+/*
 const fetchData = async () => {
   if (props.marzel && props.marzel.id) {
     try {
@@ -29,6 +57,8 @@ watch(() => props.marzel, (newValue, oldValue) => {
     fetchData();
   }
 }, { immediate: true });
+
+ */
 
 </script>
 
