@@ -9,6 +9,8 @@ import axios from "axios";
 const route = useRoute();
 const idOrganizzazione = route.params.id;
 
+const key = ref(0);
+
 const organizzazione = ref<Organizzazione>();
 //const organizzatori = ref<Organizzatore[]>([]);
 
@@ -38,7 +40,7 @@ onMounted(async () => {
 
   <div class="org-main-container">
 
-    <ControlPanel v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"/>
+    <ControlPanel v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel" @organizzatoreAdded="handleOrganizzatoreAdded"/>
 
     <TeamManagement v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"/>
 

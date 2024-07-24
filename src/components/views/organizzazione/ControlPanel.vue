@@ -4,6 +4,7 @@ import {defineProps, nextTick, type PropType, ref, watch} from "vue";
 import type {Organizzatore} from "@/types/organizzatoreType";
 import type {Organizzazione} from "@/types/organizzazioneType";
 import axios from "axios";
+import qs from 'qs';
 
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 import {useRouter} from "vue-router";
@@ -41,6 +42,7 @@ watch(() => props.organizzazione, async (newVal) => {
 
 const showConfPopupOrganizzazione = ref(false);
 
+
 const promptDelConfOrganizzazione = () => {
   showConfPopupOrganizzazione.value = true;
 
@@ -48,6 +50,7 @@ const promptDelConfOrganizzazione = () => {
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.showModal();
   });
 };
+
 
 const confDelOrganizzazione = async () => {
   try {
@@ -73,9 +76,54 @@ const confDelOrganizzazione = async () => {
   }
 };
 
+
 const cancDelOrganizzazione = () => {
   showConfPopupOrganizzazione.value = false;
   (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+};
+
+const showAddOrganizzatorePopup = ref(false);
+const email = ref('');
+const responseMessage = ref('');
+
+const openAddOrganizzatorePopup = () => {
+  showAddOrganizzatorePopup.value = true;
+  responseMessage.value = '';
+  nextTick(() => {
+    (document.querySelector('.add-organizzatore-dialog') as HTMLDialogElement)?.showModal();
+  })
+};
+
+const closeAddOrganizzatorePopup = () => {
+  showAddOrganizzatorePopup.value = false;
+  email.value = '';
+  (document.querySelector('.add-organizzatore-dialog') as HTMLDialogElement)?.close();
+
+};
+
+const addOrganizzatore = async () => {
+  try {
+    console.log('Email:', email.value);
+
+    const response = await axios.post('/api/organizzazione/addOrganizzatore', qs.stringify({
+      emailAddress: email.value,
+      idOrganizzazione: props.organizzazione.id
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+
+    if (response.status === 200) {
+      responseMessage.value = response.data;
+
+    } else {
+      responseMessage.value = 'Errore nell\'aggiunta dell\'organizzatore';
+    }
+  } catch (error) {
+    responseMessage.value = 'Errore nell\'aggiunta dell\'organizzatore';
+    console.error('Errore nell\'aggiunta dell\'organizzatore:', error);
+  }
 };
 
 </script>
@@ -90,7 +138,8 @@ const cancDelOrganizzazione = () => {
     </section>
 
     <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id">
-      <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore">
+      <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
+              @click="openAddOrganizzatorePopup">
         Aggiungi
         organizzatore
       </button>
@@ -117,6 +166,18 @@ const cancDelOrganizzazione = () => {
         <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzazione" value="cancel">
           Annulla
         </button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog v-if="showAddOrganizzatorePopup" class="add-organizzatore-dialog">
+    <form method="dialog" @submit.prevent="addOrganizzatore">
+      <label for="email>">Email organizzatore:</label>
+      <input type="email" id="email" v-model="email" required/>
+      <p style="margin: 0;" v-if="responseMessage">{{ responseMessage }}</p>
+      <menu>
+        <button type="submit" class="dialog-button">Aggiungi</button>
+        <button type="button" @click="closeAddOrganizzatorePopup" class="dialog-button">Annulla</button>
       </menu>
     </form>
   </dialog>
@@ -239,6 +300,40 @@ export default {
 .dialog-button:hover {
   background-color: #007BFF;
   cursor: pointer;
+}
+
+.add-organizzatore-dialog {
+  border: none;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  color: #3152a8;
+  font-size: 1.2rem;
+  width: 50vw;
+}
+
+.add-organizzatore-dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-organizzatore-dialog menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #3152a8;
+  resize: none;
+  margin-bottom: 10px;
+  outline: none;
+  border: 2px solid #3152a8;
 }
 
 </style>
