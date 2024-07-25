@@ -1,4 +1,4 @@
-import './assets/main.css';
+import './assets/css/main.css';
 import {createApp} from 'vue';
 import App from './App.vue';
 import {createRouter, createWebHistory} from 'vue-router';
@@ -6,13 +6,15 @@ import Homepage from './components/views/Homepage.vue';
 import HelloWorld from "@/components/HelloWorld.vue";
 import CreaOrganizzazione from "@/components/views/organizzazione/CreaOrganizzazione.vue";
 import Organizzazione from "@/components/views/organizzazione/Organizzazione.vue";
+import ModificaOrganizzazione from "@/components/views/organizzazione/ModificaOrganizzazione.vue";
 
 const routes = [
     {path: '/home', name: 'Homepage', component: Homepage},
     {path: '/hello', name: 'HelloWorld', component: HelloWorld},
     {path: '/', redirect: '/home'},
     {path: '/creaOrganizzazione', name: 'CreaOrganizzazione', component: CreaOrganizzazione},
-    {path: '/organizzazione/:id', name: 'Organizzazione', component: Organizzazione}
+    {path: '/organizzazione/:id', name: 'Organizzazione', component: Organizzazione},
+    {path: '/modificaOrganizzazione/:id', name: 'ModificaOrganizzazione', component: ModificaOrganizzazione}
 ];
 
 const router = createRouter({

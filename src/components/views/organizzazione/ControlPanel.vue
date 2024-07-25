@@ -24,7 +24,7 @@ const props = defineProps({
 const imageUrl = ref('');
 
 watch(() => props.organizzazione, async (newVal) => {
-  if (newVal && newVal.id) {
+  if (newVal && newVal.id && newVal.urlFoto) {
     try {
       //richiesta ad axios con parametro newVal.urlFoto, response type blob
       const response = await axios.get('/api/images/organizzazione', {
@@ -47,6 +47,10 @@ const promptDelConfOrganizzazione = () => {
   nextTick(() => {
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.showModal();
   });
+};
+
+const navigateToModificaOrganizzazione = () => {
+  router.push({ name: 'ModificaOrganizzazione', params: { id: props.organizzazione.id } });
 };
 
 const confDelOrganizzazione = async () => {
@@ -81,45 +85,46 @@ const cancDelOrganizzazione = () => {
 </script>
 
 <template>
+  <div v-if="organizzazione && marzel">
+    <div class="control-panel-container">
 
-  <div class="control-panel-container">
+      <section class="info-organizzazione">
+        <img class="organizzazione-image" :src="imageUrl || defaultImage" alt="Foto organizzazione"/>
+        <h1 class="greeting-organizzazione">Ciao, {{ organizzazione.nome }}!</h1>
+      </section>
 
-    <section class="info-organizzazione">
-      <img class="organizzazione-image" :src="imageUrl || defaultImage" alt="Foto organizzazione"/>
-      <h1 class="greeting-organizzazione">Ciao, {{ organizzazione.nome }}!</h1>
-    </section>
+      <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id">
+        <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore">
+          Aggiungi
+          organizzatore
+        </button>
+        <button type="button" id="mod-org-button" class="control-panel-button" aria-label="Modifica informazioni dell'organizzazione" @click="navigateToModificaOrganizzazione">
+          Modifica
+          organizzazione
+        </button>
+        <button type="button" id="del-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
+                @click="promptDelConfOrganizzazione">
+          Elimina
+          organizzazione
+        </button>
+      </section>
 
-    <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id">
-      <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore">
-        Aggiungi
-        organizzatore
-      </button>
-      <button type="button" id="mod-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore">
-        Modifica
-        organizzazione
-      </button>
-      <button type="button" id="del-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
-              @click="promptDelConfOrganizzazione">
-        Elimina
-        organizzazione
-      </button>
-    </section>
+    </div>
 
+    <dialog v-if="showConfPopupOrganizzazione" class="confirmation-dialog-organizzazione" @close="cancDelOrganizzazione">
+      <form method="dialog">
+        <p>Sei sicuro di voler eliminare l'organizzazione?</p>
+        <menu class="dialog-actions-organizzazione">
+          <button type="button" class="dialog-confirm-button dialog-button" @click="confDelOrganizzazione"
+                  value="confirm">Conferma
+          </button>
+          <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzazione" value="cancel">
+            Annulla
+          </button>
+        </menu>
+      </form>
+    </dialog>
   </div>
-
-  <dialog v-if="showConfPopupOrganizzazione" class="confirmation-dialog-organizzazione" @close="cancDelOrganizzazione">
-    <form method="dialog">
-      <p>Sei sicuro di voler eliminare l'organizzazione?</p>
-      <menu class="dialog-actions-organizzazione">
-        <button type="button" class="dialog-confirm-button dialog-button" @click="confDelOrganizzazione"
-                value="confirm">Conferma
-        </button>
-        <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzazione" value="cancel">
-          Annulla
-        </button>
-      </menu>
-    </form>
-  </dialog>
 
 </template>
 
