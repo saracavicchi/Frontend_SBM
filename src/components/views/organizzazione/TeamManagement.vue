@@ -1,13 +1,14 @@
 <script setup lang="ts">
 
-import {defineProps, nextTick, onMounted, type PropType, ref, watch} from "vue";
+import {defineEmits, defineProps, nextTick, onMounted, type PropType, ref, watch} from "vue";
 import type {Organizzazione} from "@/types/organizzazioneType";
 import type {Organizzatore} from "@/types/organizzatoreType";
-import organizzazione from "@/components/views/organizzazione/Organizzazione.vue";
+
 import axios from "axios";
 
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 
+const emit = defineEmits(['openPopup', 'closePopup']);
 
 const props = defineProps({
   organizzazione: {
@@ -52,6 +53,8 @@ const promptDelConfOrganizzatore = (id: number) => {
   showConfPopupOrganizzatore.value = true;
   idToDelete.value = id;
 
+  emit('openPopup');
+
   nextTick(() => {
     (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.showModal();
   });
@@ -75,9 +78,12 @@ const confDelOrganizzatore = async () => {
       }
 
       (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.close();
+      emit('closePopup');
 
     } catch (error) {
       console.error('Errore nella cancellazione dell\'organizzatore:', error);
+      (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.close();
+      emit('closePopup');
     }
   }
 };
@@ -85,6 +91,7 @@ const confDelOrganizzatore = async () => {
 const cancDelOrganizzatore = () => {
   showConfPopupOrganizzatore.value = false;
   idToDelete.value = null;
+  emit('closePopup');
   (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.close();
 }
 
@@ -93,23 +100,34 @@ const cancDelOrganizzatore = () => {
 
 <template>
 
-  <h1 class="team-management-title" v-if="props.marzel.id === props.organizzazione.admin.id">Team Management</h1>
+  <h1 id="team-management" class="team-management-title" v-if="props.marzel.id === props.organizzazione.admin.id"
+  >Team Management</h1>
 
-  <div class="team-management-container">
+  <div class="team-management-container" aria-labelledby="team-management">
 
     <div v-for="organizzatore in organizzatori" :key="organizzatore.id">
 
-      <article class="organizzatore-box" :class="{'admin-highlight': organizzatore.id === props.organizzazione.admin.id}">
+      <article class="organizzatore-box"
+               :class="{'current-organizzatore-highlight': organizzatore.id === props.marzel.id}"
+               aria-labelledby="org-name">
 
+        <div class="upper-container">
 
-        <img class="organizzatore-profile-image" :src="immaginiOrganizzatori.get(organizzatore.id) || defaultImage"
-             alt="Foto profilo"/>
+          <img class="organizzatore-profile-image" :src="immaginiOrganizzatori.get(organizzatore.id) || defaultImage"
+               alt="Foto profilo" aria-label="Foto profilo organizzatore" aria-labelledby="org-name"/>
 
-        <p class="organizzatore-name">{{ organizzatore.nome }} {{ organizzatore.cognome }}</p>
+          <p id="org-name" class="organizzatore-name">{{ organizzatore.nome }} {{ organizzatore.cognome }}</p>
+          <p style="margin: 0; padding: 0; text-decoration: underline;"
+             v-if="organizzatore.id === props.organizzazione.admin.id">Admin</p>
 
-        <img class="delete-image" src="@/assets/images/organizzazioneImg/delete.png" alt="Icona modifica foto"
-             width="32" height="32" @click="promptDelConfOrganizzatore(organizzatore.id)" v-if="props.marzel.id === props.organizzazione.admin.id && organizzatore.id !== props.organizzazione.admin.id">
+          <img class="delete-image" src="@/assets/images/organizzazioneImg/delete.png" alt="Icona modifica foto"
+               width="32" height="32" @click="promptDelConfOrganizzatore(organizzatore.id)"
+               v-if="props.marzel.id === props.organizzazione.admin.id && organizzatore.id !== props.organizzazione.admin.id"
+               aria-label="Elimina organizzatore dall'organizzazione">
 
+        </div>
+
+        <p class="organizzatore-email" aria-label="Email dell'organizzatore">{{ organizzatore.mail }}</p>
 
       </article>
 
@@ -117,12 +135,20 @@ const cancDelOrganizzatore = () => {
 
   </div>
 
-  <dialog v-if="showConfPopupOrganizzatore" class="confirmation-dialog-organizzatore" @close="cancDelOrganizzatore">
+  <dialog v-if="showConfPopupOrganizzatore" class="confirmation-dialog-organizzatore" @close="cancDelOrganizzatore"
+          aria-modal="true" aria-labelledby="dialog-descr"
+  >
     <form method="dialog">
-      <p>Sei sicuro di voler eliminare questo organizzatore?</p>
+      <p id="dialog-descr">Sei sicuro di voler eliminare questo organizzatore?</p>
       <menu class="dialog-actions-organizzatore">
-        <button type="button" class="dialog-confirm-button dialog-button" @click="confDelOrganizzatore" value="confirm">Conferma</button>
-        <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzatore" value="cancel">Annulla</button>
+        <button type="button" class="dialog-confirm-button dialog-button" @click="confDelOrganizzatore" value="confirm"
+                aria-label="Conferma eliminazione">
+          Conferma
+        </button>
+        <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzatore" value="cancel"
+                aria-label="Chiudi finestra di dialogo">
+          Annulla
+        </button>
       </menu>
     </form>
   </dialog>
@@ -145,9 +171,24 @@ export default {
   border-radius: 15px;
   margin: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.upper-container {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   gap: 10px;
+}
+
+.organizzatore-email {
+  margin: 0;
+  padding: 15px 0 0;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .organizzatore-name {
@@ -192,7 +233,6 @@ export default {
 .delete-image {
   cursor: pointer;
   transition: transform 0.2s;
-  justify-self: flex-end;
 }
 
 .delete-image:hover {
@@ -237,7 +277,7 @@ export default {
   cursor: pointer;
 }
 
-.admin-highlight {
+.current-organizzatore-highlight {
   border: 3px solid white;
 }
 

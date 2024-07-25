@@ -1,15 +1,17 @@
 <script setup lang="ts">
 
-import {defineProps, nextTick, type PropType, ref, watch} from "vue";
+import {defineProps, nextTick, type PropType, ref, watch, defineEmits} from "vue";
 import type {Organizzatore} from "@/types/organizzatoreType";
 import type {Organizzazione} from "@/types/organizzazioneType";
 import axios from "axios";
 import qs from 'qs';
 
+
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 import {useRouter} from "vue-router";
 
 const router = useRouter();
+const emit = defineEmits(['organizzatoreAdded', 'openPopup', 'closePopup']);
 
 const props = defineProps({
   organizzazione: {
@@ -45,6 +47,7 @@ const showConfPopupOrganizzazione = ref(false);
 
 const promptDelConfOrganizzazione = () => {
   showConfPopupOrganizzazione.value = true;
+  emit('openPopup');
 
   nextTick(() => {
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.showModal();
@@ -63,16 +66,19 @@ const confDelOrganizzazione = async () => {
     if (response.status === 200) {
       console.log('Organizzazione eliminata con successo!');
       (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+      emit('closePopup');
       await router.push({
         name: 'Homepage'
       })
     }
 
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+    emit('closePopup');
 
   } catch (error) {
     console.error('Errore nella cancellazione dell\'organizzazione:', error);
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+    emit('closePopup');
   }
 };
 
@@ -80,6 +86,7 @@ const confDelOrganizzazione = async () => {
 const cancDelOrganizzazione = () => {
   showConfPopupOrganizzazione.value = false;
   (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+  emit('closePopup');
 };
 
 const showAddOrganizzatorePopup = ref(false);
@@ -88,6 +95,7 @@ const responseMessage = ref('');
 
 const openAddOrganizzatorePopup = () => {
   showAddOrganizzatorePopup.value = true;
+  emit('openPopup');
   responseMessage.value = '';
   nextTick(() => {
     (document.querySelector('.add-organizzatore-dialog') as HTMLDialogElement)?.showModal();
@@ -98,6 +106,7 @@ const closeAddOrganizzatorePopup = () => {
   showAddOrganizzatorePopup.value = false;
   email.value = '';
   (document.querySelector('.add-organizzatore-dialog') as HTMLDialogElement)?.close();
+  emit('closePopup');
 
 };
 
@@ -116,11 +125,17 @@ const addOrganizzatore = async () => {
 
     if (response.status === 200) {
       responseMessage.value = response.data;
+      emit('organizzatoreAdded');
+      email.value = '';
 
     } else {
       responseMessage.value = 'Errore nell\'aggiunta dell\'organizzatore';
     }
   } catch (error) {
+    if (axios.isAxiosError(error) && (error.response?.status === 409 || error.response?.status === 404)) {
+      responseMessage.value = error.response?.data;
+      return;
+    }
     responseMessage.value = 'Errore nell\'aggiunta dell\'organizzatore';
     console.error('Errore nell\'aggiunta dell\'organizzatore:', error);
   }
@@ -130,14 +145,16 @@ const addOrganizzatore = async () => {
 
 <template>
 
-  <div class="control-panel-container">
+  <div class="control-panel-container" aria-label="Pannello di controllo organizzazione">
 
-    <section class="info-organizzazione">
-      <img class="organizzazione-image" :src="imageUrl || defaultImage" alt="Foto organizzazione"/>
-      <h1 class="greeting-organizzazione">Ciao, {{ organizzazione.nome }}!</h1>
+    <section class="info-organizzazione" aria-labelledby="organizzazione-name">
+      <img class="organizzazione-image" :src="imageUrl || defaultImage" alt="Foto organizzazione"
+           aria-label="Foto profilo organizzazione"/>
+      <h1 id="organizzazione-name" class="greeting-organizzazione">Ciao, {{ organizzazione.nome }}!</h1>
     </section>
 
-    <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id">
+    <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id"
+             aria-label="Pulsanti per interagire con l'organizzazione">
       <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
               @click="openAddOrganizzatorePopup">
         Aggiungi
@@ -156,28 +173,30 @@ const addOrganizzatore = async () => {
 
   </div>
 
-  <dialog v-if="showConfPopupOrganizzazione" class="confirmation-dialog-organizzazione" @close="cancDelOrganizzazione">
+  <dialog v-if="showConfPopupOrganizzazione" class="confirmation-dialog-organizzazione" @close="cancDelOrganizzazione"
+          aria-labelledby="del-dialog-descr">
     <form method="dialog">
-      <p>Sei sicuro di voler eliminare l'organizzazione?</p>
+      <p id="del-dialog-descr">Sei sicuro di voler eliminare l'organizzazione?</p>
       <menu class="dialog-actions-organizzazione">
         <button type="button" class="dialog-confirm-button dialog-button" @click="confDelOrganizzazione"
-                value="confirm">Conferma
+                value="confirm" aria-label="Conferma eliminazione organizzazione">Conferma
         </button>
-        <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzazione" value="cancel">
+        <button type="button" class="dialog-cancel-button dialog-button" @click="cancDelOrganizzazione" value="cancel"
+                aria-label="Annulla eliminazione organizzazione">
           Annulla
         </button>
       </menu>
     </form>
   </dialog>
 
-  <dialog v-if="showAddOrganizzatorePopup" class="add-organizzatore-dialog">
+  <dialog v-if="showAddOrganizzatorePopup" class="add-organizzatore-dialog" aria-label="Finestra di dialogo per aggiungere un organizzatore">
     <form method="dialog" @submit.prevent="addOrganizzatore">
       <label for="email>">Email organizzatore:</label>
-      <input type="email" id="email" v-model="email" required/>
+      <input type="email" id="email" v-model="email" required aria-required="true"/>
       <p style="margin: 0;" v-if="responseMessage">{{ responseMessage }}</p>
       <menu>
-        <button type="submit" class="dialog-button">Aggiungi</button>
-        <button type="button" @click="closeAddOrganizzatorePopup" class="dialog-button">Annulla</button>
+        <button type="submit" class="dialog-button" aria-label="Aggiungi organizzatore">Aggiungi</button>
+        <button type="button" @click="closeAddOrganizzatorePopup" class="dialog-button" aria-label="Chiudi finestra di dialogo">Annulla</button>
       </menu>
     </form>
   </dialog>

@@ -6,7 +6,7 @@
 
 <template>
 
-  <CreationForm />
+  <CreationForm aria-label="Sezione di creazione organizzazione"/>
 
 </template>
 
