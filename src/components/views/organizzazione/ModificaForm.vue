@@ -138,10 +138,10 @@ onMounted(async () => {
 <template>
   <div v-if="organizzazione">
 
-    <section class="modify-form-section" aria-labelledby="modify-form-title" id="modify-form">
+    <section class="edit-form-section" aria-labelledby="edit-form-title" id="edit-form">
 
       <article class="form-header">
-        <h1 id="modify-form-title">Modifica la tua organizzazione</h1>
+        <h1 id="edit-form-title">Modifica la tua organizzazione</h1>
         <section class="form-buttons">
           <button type="button" id="cancel-button" class="form-button" aria-label="Annulla modifica" @click="goBack">
             Annulla
@@ -152,7 +152,7 @@ onMounted(async () => {
         </section>
       </article>
 
-      <form class="modify-form" ref="formRef">
+      <form class="edit-form" ref="formRef">
 
         <div class="photo-row" aria-live="polite">
           <img class="photo-upload-circle" @click="uploadPhoto" :src="photoUrl || defaultImage"
