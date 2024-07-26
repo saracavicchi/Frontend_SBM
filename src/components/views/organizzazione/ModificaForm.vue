@@ -6,7 +6,6 @@ import type {Organizzazione} from "@/types/organizzazioneType";
 import { AxiosError } from 'axios';
 import defaultImage from "@/assets/images/creaOrganizzazioneImages/profilo.jpg";
 import type {Organizzatore} from "@/types/organizzatoreType";
-//import type {Organizzatore} from "@/types/organizzatoreType";
 
 // Props per ricevere l'organizzazione esistente
 const props = defineProps({
@@ -26,11 +25,11 @@ const router = useRouter();
 const errorMessage = ref('');
 const deleted = ref('false');
 
-
+// Osserva i cambiamenti nell'organizzazione e aggiorna l'URL della foto
 watch(() => props.organizzazione, async (newVal) => {
   if (newVal && newVal.id && newVal.urlFoto) {
     try {
-      //richiesta ad axios con parametro newVal.urlFoto, response type blob
+      // Richiesta ad axios per ottenere l'immagine dell'organizzazione
       const response = await axios.get('/api/images/organizzazione', {
         params: {name: newVal.urlFoto},
         responseType: 'blob'
@@ -43,16 +42,19 @@ watch(() => props.organizzazione, async (newVal) => {
   }
 }, {immediate: true});
 
+// Funzione per tornare alla pagina precedente
 const goBack = () => {
   router.go(-1);
 };
 
+// Funzione per aprire il selettore di file
 const uploadPhoto = () => {
   if (fileInputRef.value instanceof HTMLInputElement) {
     fileInputRef.value.click();
   }
 };
 
+// Gestisce il cambiamento del file selezionato
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement | null;
   if (input && input.files && input.files.length > 0) {
@@ -68,6 +70,7 @@ const handleFileChange = (event: Event) => {
   }
 };
 
+// Rimuove la foto caricata
 const removePhoto = () => {
   photoUrl.value = ''; // Rimuove l'anteprima della foto
   const uploadInput = document.getElementById('photo-upload') as HTMLInputElement | null;
@@ -78,6 +81,7 @@ const removePhoto = () => {
   deleted.value='true';
 };
 
+// Resetta il form e i valori prima di lasciare la pagina
 onBeforeRouteLeave(() => {
   errorMessage.value = '';
   photoUrl.value = defaultImage; // Imposta il valore iniziale
@@ -87,6 +91,7 @@ onBeforeRouteLeave(() => {
   formRef.value?.reset();
 });
 
+// Invia il form con i dati aggiornati
 const submitForm = () => {
   if (formRef.value) {
     if (formRef.value.reportValidity()) {
@@ -98,7 +103,7 @@ const submitForm = () => {
       console.log(props.organizzazione);
       axios.put(`/api/organizzazione/update/${props.organizzazione.id}`, formData)
           .then(response => {
-            // Debug: Print form data
+            // Debug: Stampa i dati del form
             for (let [key, value] of formData.entries()) {
               console.log(`${key}: ${value}`);
             }
@@ -120,11 +125,13 @@ const submitForm = () => {
   }
 };
 
+// Ottiene l'URL del link social
 const getLinkUrl = (nomeSocial: string): string => {
   const link = props.organizzazione.link.find(l => l.nomeSocial === nomeSocial);
   return link ? link.url : '';
 };
 
+// Carica i dati iniziali al montaggio del componente
 onMounted(async () => {
   try {
     marzel.value = (await axios.get('/api/homepage/marzel')).data;
