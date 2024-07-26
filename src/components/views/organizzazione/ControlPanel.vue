@@ -44,6 +44,9 @@ watch(() => props.organizzazione, async (newVal) => {
 
 const showConfPopupOrganizzazione = ref(false);
 
+const navigateToModificaOrganizzazione = () => {
+  router.push({ name: 'ModificaOrganizzazione', params: { id: props.organizzazione.id } });
+};
 
 const promptDelConfOrganizzazione = () => {
   showConfPopupOrganizzazione.value = true;
@@ -161,7 +164,7 @@ const addOrganizzatore = async () => {
           Aggiungi
           organizzatore
         </button>
-        <button type="button" id="mod-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore">
+        <button type="button" id="mod-org-button" class="control-panel-button" aria-label="Modifica organizzazione" @click="navigateToModificaOrganizzazione">
           Modifica
           organizzazione
         </button>
