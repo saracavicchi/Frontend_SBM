@@ -136,6 +136,7 @@ onMounted(async () => {
   try {
     marzel.value = (await axios.get('/api/homepage/marzel')).data;
     console.log(JSON.stringify(marzel.value));
+    //console.log (props.organizzazione);
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
   }
