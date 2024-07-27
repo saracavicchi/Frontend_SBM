@@ -173,6 +173,8 @@ onMounted(async () => {
                   aria-label="Rimuovi foto organizzazione">Rimuovi Foto
           </button>
           <input type="hidden" name="deleted" id="deleted" v-model="deleted">
+
+          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         </div>
 
         <div class="fields-row">
