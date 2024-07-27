@@ -6,6 +6,7 @@
 
 <template>
 
+  <!-- Componente per la creazione di una nuova organizzazione -->
   <CreationForm aria-label="Sezione di creazione organizzazione"/>
 
 </template>

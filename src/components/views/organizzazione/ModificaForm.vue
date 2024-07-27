@@ -7,25 +7,35 @@ import {AxiosError} from 'axios';
 import defaultImage from "@/assets/images/creaOrganizzazioneImages/profilo.jpg";
 import type {Organizzatore} from "@/types/organizzatoreType";
 
-// Props per ricevere l'organizzazione esistente
+// Definizione delle proprietà passate al componente
 const props = defineProps({
   organizzazione: {
     type: Object as PropType<Organizzazione>,
     required: true
   }
 });
+
+// Dati dell'organizzatore corrente
 const marzel = ref<Organizzatore>();
+
+// URL della foto dell'organizzazione
 const photoUrl = ref('');
 
+// Riferimento all'input file per la foto
 const fileInputRef = ref<HTMLInputElement | null>(null);
 
+// Riferimento al form per la modifica dell'organizzazione
 const formRef = ref<HTMLFormElement | null>(null);
 
 const router = useRouter();
+
+// Messaggio di errore reattivo
 const errorMessage = ref('');
+
+// Stato che indica se la foto è stata eliminata
 const deleted = ref('false');
 
-// Osserva i cambiamenti nell'organizzazione e aggiorna l'URL della foto
+// Osserva le modifiche alla proprietà dell'organizzazione per aggiornare l'immagine di conseguenza
 watch(() => props.organizzazione, async (newVal) => {
   if (newVal && newVal.id && newVal.urlFoto) {
     try {
@@ -47,14 +57,14 @@ const goBack = () => {
   router.go(-1);
 };
 
-// Funzione per aprire il selettore di file
+// Funzione per aprire il selettore di file per la foto
 const uploadPhoto = () => {
   if (fileInputRef.value instanceof HTMLInputElement) {
     fileInputRef.value.click();
   }
 };
 
-// Gestisce il cambiamento del file selezionato
+// Gestisce il cambio del file selezionato, mostrando l'anteprima della foto
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement | null;
   if (input && input.files && input.files.length > 0) {
@@ -72,26 +82,26 @@ const handleFileChange = (event: Event) => {
 
 // Rimuove la foto caricata
 const removePhoto = () => {
-  photoUrl.value = ''; // Rimuove l'anteprima della foto
+  photoUrl.value = '';
   const uploadInput = document.getElementById('photo-upload') as HTMLInputElement | null;
 
   if (uploadInput) {
-    uploadInput.value = ''; // Resetta l'input file
+    uploadInput.value = '';
   }
   deleted.value = 'true';
 };
 
-// Resetta il form e i valori prima di lasciare la pagina
+// Eseguito prima di lasciare la rotta corrente per ripulire lo stato del componente
 onBeforeRouteLeave(() => {
   errorMessage.value = '';
-  photoUrl.value = defaultImage; // Imposta il valore iniziale
+  photoUrl.value = defaultImage;
   if (fileInputRef.value) {
-    fileInputRef.value.value = ''; // Resetta l'input del file
+    fileInputRef.value.value = '';
   }
   formRef.value?.reset();
 });
 
-// Invia il form con i dati aggiornati
+// Funzione per inviare il form di modifica dell'organizzazione
 const submitForm = () => {
   if (formRef.value) {
     if (formRef.value.reportValidity()) {
@@ -103,10 +113,10 @@ const submitForm = () => {
       console.log(props.organizzazione);
       axios.put(`/api/organizzazione/update/${props.organizzazione.id}`, formData)
           .then(response => {
-            // Debug: Stampa i dati del form
-            for (let [key, value] of formData.entries()) {
-              console.log(`${key}: ${value}`);
-            }
+
+            //for (let [key, value] of formData.entries()) {
+              //console.log(`${key}: ${value}`);
+            //}
 
             if (response.status === 200) {
               router.push({
@@ -125,13 +135,15 @@ const submitForm = () => {
   }
 };
 
-// Ottiene l'URL del link social
+
+// Funzione per ottenere l'URL di un link sociale specifico
 const getLinkUrl = (nomeSocial: string): string => {
   const link = props.organizzazione.link.find(l => l.nomeSocial === nomeSocial);
   return link ? link.url : '';
 };
 
-// Carica i dati iniziali al montaggio del componente
+
+// Eseguito al montaggio del componente per recuperare i dati dell'organizzatore
 onMounted(async () => {
   try {
     marzel.value = (await axios.get('/api/homepage/marzel')).data;
@@ -146,10 +158,14 @@ onMounted(async () => {
 <template>
   <div v-if="organizzazione">
 
+    <!-- Sezione per la modifica di un'organizzazione -->
     <section class="edit-form-section" aria-labelledby="edit-form-title" id="edit-form">
 
+      <!-- Intestazione del form -->
       <article class="form-header">
         <h1 id="edit-form-title">Modifica la tua organizzazione</h1>
+
+        <!-- Pulsanti per annullare o salvare le modifiche -->
         <section class="form-buttons">
           <button type="button" id="cancel-button" class="form-button" aria-label="Annulla modifica" @click="goBack">
             Annulla
@@ -160,9 +176,13 @@ onMounted(async () => {
         </section>
       </article>
 
+      <!-- Form per la modifica dell'organizzazione -->
       <form class="edit-form" ref="formRef">
 
+        <!-- Sezione per l'upload della foto dell'organizzazione -->
         <div class="photo-row" aria-live="polite">
+
+          <!-- Foto dell'organizzazione -->
           <img class="photo-upload-circle" @click="uploadPhoto" :src="photoUrl || defaultImage"
                alt="Foto organizzazione" aria-label="Carica o modifica foto organizzazione">
           <input type="file" id="photo-upload" name="foto" ref="fileInputRef" @change="handleFileChange"
@@ -175,48 +195,59 @@ onMounted(async () => {
           </button>
           <input type="hidden" name="deleted" id="deleted" v-model="deleted">
 
+          <!-- Messaggio di errore -->
           <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         </div>
 
+        <!-- Sezione per i campi del form -->
         <div class="fields-row">
           <div class="form-column">
 
+            <!-- Nome -->
             <label for="name">Nome organizzazione *</label>
             <input type="text" id="name" name="nome" v-model="organizzazione.nome" required aria-required="true"
                    aria-label="Nome organizzazione"
                    maxlength="45">
 
+            <!-- Email -->
             <label for="email">Email *</label>
             <input type="email" id="email" name="mail" v-model="organizzazione.mail" required aria-required="true"
                    aria-label="Email organizzazione"
                    maxlength="254">
 
+            <!-- Telefono -->
             <label for="phone">Telefono</label>
             <input type="tel" id="phone" name="telefono" v-model="organizzazione.telefono"
                    aria-label="Telefono organizzazione"
                    maxlength="15">
 
+            <!-- Stato -->
             <label for="state">Stato</label>
             <input type="text" id="state" name="stato" v-model="organizzazione.stato" aria-label="Stato organizzazione"
                    maxlength="45">
 
+            <!-- Provincia -->
             <label for="province">Provincia</label>
             <input type="text" id="province" name="provincia" v-model="organizzazione.provincia"
                    aria-label="Provincia organizzazione"
                    maxlength="45">
 
+            <!-- Città -->
             <label for="city">Città</label>
             <input type="text" id="city" name="città" v-model="organizzazione.città" aria-label="Città organizzazione"
                    maxlength="45">
 
+            <!-- CAP -->
             <label for="cap">CAP</label>
             <input type="text" id="cap" name="cap" v-model="organizzazione.cap" aria-label="CAP organizzazione"
                    pattern="\d{5}">
 
+            <!-- Via -->
             <label for="street">Via</label>
             <input type="text" id="street" name="via" v-model="organizzazione.via" aria-label="Via organizzazione"
                    maxlength="45">
 
+            <!-- Numero civico -->
             <label for="civic">Numero civico</label>
             <input type="text" id="civic" name="numCivico" v-model="organizzazione.numCivico"
                    aria-label="Numero civico organizzazione"
@@ -225,36 +256,44 @@ onMounted(async () => {
           </div>
 
           <div class="form-column">
+
+            <!-- Descrizione -->
             <label for="description">Descrizione</label>
             <textarea id="description" name="descrizione" v-model="organizzazione.descrizione"
                       aria-label="Descrizione organizzazione"></textarea>
 
+            <!-- IBAN -->
             <label for="iban">IBAN</label>
             <input type="text" id="iban" name="iban" v-model="organizzazione.iban" aria-label="IBAN organizzazione"
                    minlength="15"
                    maxlength="34"
                    pattern="[A-Z0-9]+">
 
+            <!-- Sito web -->
             <label for="website">Sito web</label>
             <input type="url" id="website" name="sito" :value="getLinkUrl('Sito')"
                    aria-label="Inserisci link sito web organizzazione"
                    maxlength="2000">
 
+            <!-- Instagram -->
             <label for="instagram">Instagram</label>
             <input type="url" id="instagram" name="instagram" :value="getLinkUrl('Instagram')"
                    aria-label="Inserisci link Instagram organizzazione"
                    maxlength="2000">
 
+            <!-- Facebook -->
             <label for="facebook">Facebook</label>
             <input type="url" id="facebook" name="facebook" :value="getLinkUrl('Facebook')"
                    aria-label="Inserisci link Facebook organizzazione"
                    maxlength="2000">
 
+            <!-- Twitter -->
             <label for="twitter">Twitter</label>
             <input type="url" id="twitter" name="twitter" :value="getLinkUrl('Twitter')"
                    aria-label="Inserisci link Twitter organizzazione"
                    maxlength="2000">
 
+            <!-- Linkedin -->
             <label for="linkedin">Linkedin</label>
             <input type="url" id="linkedin" name="linkedin" :value="getLinkUrl('Linkedin')"
                    aria-label="Inserisci link Linkedin organizzazione"
@@ -263,7 +302,9 @@ onMounted(async () => {
 
         </div>
 
+        <!-- Input nascosto per l'id dell'admin -->
         <input type="hidden" name="idAdmin" :value="marzel?.id">
+
         <input type="submit" style="display: none;" aria-hidden="true">
 
       </form>

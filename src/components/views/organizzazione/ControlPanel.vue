@@ -11,8 +11,10 @@ import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 import {useRouter} from "vue-router";
 
 const router = useRouter();
+// Definizione delle funzioni emittenti (eventi)
 const emit = defineEmits(['organizzatoreAdded', 'openPopup', 'closePopup']);
 
+// Definizione delle proprietà passate al componente
 const props = defineProps({
   organizzazione: {
     type: Object as PropType<Organizzazione>,
@@ -24,12 +26,13 @@ const props = defineProps({
   }
 });
 
+// Stato reattivo per l'URL dell'immagine dell'organizzazione
 const imageUrl = ref('');
 
+// Osserva le modifiche alle proprietà dell'organizzazione per aggiornare l'immagine di conseguenza
 watch(() => props.organizzazione, async (newVal) => {
   if (newVal && newVal.id && newVal.urlFoto) {
     try {
-      //richiesta ad axios con parametro newVal.urlFoto, response type blob
       const response = await axios.get('/api/images/organizzazione', {
         params: {name: newVal.urlFoto},
         responseType: 'blob'
@@ -42,12 +45,15 @@ watch(() => props.organizzazione, async (newVal) => {
   }
 }, {immediate: true});
 
+// Stato reattivo per il popup di conferma dell'eliminazione dell'organizzazione
 const showConfPopupOrganizzazione = ref(false);
 
+// Naviga alla pagina di modifica dell'organizzazione
 const navigateToModificaOrganizzazione = () => {
   router.push({ name: 'ModificaOrganizzazione', params: { id: props.organizzazione.id } });
 };
 
+// Mostra il popup di conferma dell'eliminazione dell'organizzazione
 const promptDelConfOrganizzazione = () => {
   showConfPopupOrganizzazione.value = true;
   emit('openPopup');
@@ -57,7 +63,7 @@ const promptDelConfOrganizzazione = () => {
   });
 };
 
-
+// Conferma e gestisce l'eliminazione dell'organizzazione
 const confDelOrganizzazione = async () => {
   try {
     const response = await axios.get('/api/organizzazione/deleteOrganizzazione', {
@@ -86,16 +92,21 @@ const confDelOrganizzazione = async () => {
 };
 
 
+// Annulla l'eliminazione dell'organizzazione e chiude il popup di conferma
 const cancDelOrganizzazione = () => {
   showConfPopupOrganizzazione.value = false;
   (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
   emit('closePopup');
 };
 
+// Stato reattivo per il popup di aggiunta dell'organizzatore
 const showAddOrganizzatorePopup = ref(false);
+// Stato reattivo per l'email dell'organizzatore da aggiungere
 const email = ref('');
+// Stato reattivo per il messaggio di risposta dell'aggiunta dell'organizzatore
 const responseMessage = ref('');
 
+// Mostra il popup di aggiunta dell'organizzatore
 const openAddOrganizzatorePopup = () => {
   showAddOrganizzatorePopup.value = true;
   emit('openPopup');
@@ -105,6 +116,7 @@ const openAddOrganizzatorePopup = () => {
   })
 };
 
+// Chiude il popup di aggiunta dell'organizzatore
 const closeAddOrganizzatorePopup = () => {
   showAddOrganizzatorePopup.value = false;
   email.value = '';
@@ -113,6 +125,7 @@ const closeAddOrganizzatorePopup = () => {
 
 };
 
+// Gestisce l'aggiunta di un nuovo organizzatore
 const addOrganizzatore = async () => {
   try {
     console.log('Email:', email.value);
@@ -151,14 +164,17 @@ const addOrganizzatore = async () => {
   <div v-if="organizzazione && marzel">
 
 
+    <!-- Pannello di controllo dell'organizzazione -->
     <div class="control-panel-container" aria-label="Pannello di controllo organizzazione">
 
+      <!-- Sezione informativa dell'organizzazione -->
       <section class="info-organizzazione" aria-labelledby="organizzazione-name">
         <img class="organizzazione-image" :src="imageUrl || defaultImage" alt="Foto organizzazione"
              aria-label="Foto profilo organizzazione"/>
         <h1 id="organizzazione-name" class="greeting-organizzazione">Ciao, {{ organizzazione.nome }}!</h1>
       </section>
 
+      <!-- Sezione pulsanti di modifica, visibile solo all'admin -->
       <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id"
                aria-label="Pulsanti per interagire con l'organizzazione">
         <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
@@ -179,8 +195,7 @@ const addOrganizzatore = async () => {
 
     </div>
 
-
-
+    <!-- Popup di conferma eliminazione organizzazione -->
     <dialog v-if="showConfPopupOrganizzazione" class="confirmation-dialog-organizzazione" @close="cancDelOrganizzazione"
             aria-labelledby="del-dialog-descr">
       <form method="dialog">
@@ -197,6 +212,7 @@ const addOrganizzatore = async () => {
       </form>
     </dialog>
 
+    <!-- Popup di aggiunta organizzatore -->
     <dialog v-if="showAddOrganizzatorePopup" class="add-organizzatore-dialog" aria-label="Finestra di dialogo per aggiungere un organizzatore">
       <form method="dialog" @submit.prevent="addOrganizzatore">
         <label for="email>">Email organizzatore:</label>
@@ -208,6 +224,7 @@ const addOrganizzatore = async () => {
         </menu>
       </form>
     </dialog>
+
   </div>
 </template>
 
@@ -219,6 +236,7 @@ export default {
 
 <style scoped>
 
+/* Stile per l'immagine dell'organizzazione */
 .organizzazione-image {
   width: 100px;
   height: 100px;
@@ -229,12 +247,14 @@ export default {
   box-shadow: 0 0 5px 0 white;
 }
 
+/* Stile per il saluto dell'organizzazione */
 .greeting-organizzazione {
   color: white;
   font-size: 1.5rem;
   text-wrap: nowrap;
 }
 
+/* Layout della sezione informativa dell'organizzazione */
 .info-organizzazione {
   display: flex;
   flex-direction: row;
@@ -244,6 +264,7 @@ export default {
   gap: 25px;
 }
 
+/* Layout dei pulsanti di modifica */
 .mod-buttons {
   display: flex;
   flex-direction: row;
@@ -253,6 +274,7 @@ export default {
   gap: 20px;
 }
 
+/* Modifiche al layout per schermi piccoli */
 @media (max-width: 768px) {
   .mod-buttons {
     flex-direction: column;
@@ -260,6 +282,7 @@ export default {
   }
 }
 
+/* Modifiche al layout per schermi di dimensioni medie */
 @media (max-width: 1000px) {
   .info-organizzazione {
     flex-direction: column;
@@ -267,6 +290,7 @@ export default {
   }
 }
 
+/* Stile per i pulsanti del pannello di controllo */
 .control-panel-button {
   background-color: #f2f2f2;
   border: none;
@@ -285,6 +309,7 @@ export default {
   box-shadow: 0 0 5px 0 white;
 }
 
+/* Layout del contenitore del pannello di controllo */
 .control-panel-container {
   width: 100%;
   background-color: inherit;
@@ -296,6 +321,7 @@ export default {
   gap: 100px;
 }
 
+/* Stile per il dialogo di conferma eliminazione */
 .confirmation-dialog-organizzazione {
   border: none;
   border-radius: 15px;
@@ -305,12 +331,14 @@ export default {
   font-size: 1.2rem;
 }
 
+/* Layout dei pulsanti del dialogo di conferma eliminazione */
 .dialog-actions-organizzazione {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
 
+/* Stile dei pulsanti del dialogo */
 .dialog-button {
   background-color: #3152a8;
   color: white;
@@ -328,6 +356,7 @@ export default {
   cursor: pointer;
 }
 
+/* Stile per il dialogo di aggiunta organizzatore */
 .add-organizzatore-dialog {
   border: none;
   border-radius: 15px;
@@ -350,6 +379,7 @@ export default {
   gap: 10px;
 }
 
+/* Stile per il campo di input email */
 input[type="email"] {
   width: 100%;
   padding: 10px;

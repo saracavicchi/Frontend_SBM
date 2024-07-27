@@ -7,27 +7,36 @@ import axios from "axios";
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 import type {Organizzatore} from "@/types/organizzatoreType";
 
+// Messaggio di errore reattivo
 const errorMessage = ref('');
 
 const router = useRouter();
+
+// URL della foto dell'organizzazione
 const photoUrl = ref('');
 
+// Riferimento all'input file per la foto
 const fileInputRef = ref<HTMLInputElement | null>(null);
 
+// Riferimento al form per la creazione dell'organizzazione
 const formRef = ref<HTMLFormElement | null>(null);
 
+// Dati dell'organizzatore corrente
 const marzel = ref<Organizzatore>();
 
+// Funzione per tornare alla pagina precedente
 const goBack = () => {
   router.go(-1);
 }
 
+// Funzione per aprire il selettore di file per la foto
 const uploadPhoto = () => {
   if (fileInputRef.value instanceof HTMLInputElement) {
     fileInputRef.value.click();
   }
 };
 
+// Gestisce il cambio del file selezionato, mostrando l'anteprima della foto
 const handleFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement | null;
   if (input && input.files && input.files.length > 0) {
@@ -43,14 +52,16 @@ const handleFileChange = (event: Event) => {
   }
 };
 
+// Rimuove la foto caricata
 const removePhoto = () => {
-  photoUrl.value = ''; // Rimuove l'anteprima della foto
+  photoUrl.value = '';
   const uploadInput = document.getElementById('photo-upload') as HTMLInputElement | null;
   if (uploadInput) {
-    uploadInput.value = ''; // Resetta l'input file
+    uploadInput.value = '';
   }
 };
 
+// Funzione per inviare il form di creazione dell'organizzazione
 const submitForm = () => {
   if (formRef.value) {
     if (formRef.value.reportValidity()) {
@@ -84,16 +95,18 @@ const submitForm = () => {
   }
 };
 
+// Eseguito prima di lasciare la rotta corrente per ripulire lo stato
 onBeforeRouteLeave(() => {
   errorMessage.value = '';
-  photoUrl.value = defaultImage; // Imposta il valore iniziale
+  photoUrl.value = defaultImage;
   if (fileInputRef.value) {
-    fileInputRef.value.value = ''; // Resetta l'input del file
+    fileInputRef.value.value = '';
   }
   formRef.value?.reset();
 });
 
 
+// Eseguito al montaggio del componente per recuperare i dati dell'organizzatore
 onMounted(async () => {
   try {
     marzel.value = (await axios.get('/api/homepage/marzel')).data;
@@ -107,12 +120,14 @@ onMounted(async () => {
 
 <template>
 
+  <!-- Sezione per la creazione di una nuova organizzazione -->
   <section class="creation-form-section" aria-labelledby="creation-form-title" id="creation-form">
 
-
+    <!-- Intestazione del form -->
     <article class="form-header">
       <h1 id="creation-form-title">Crea la tua organizzazione</h1>
 
+      <!-- Pulsanti del form -->
       <section class="form-buttons">
         <button type="button" id="cancel-button" class="form-button" aria-label="Annulla creazione" @click="goBack">
           Annulla
@@ -124,29 +139,37 @@ onMounted(async () => {
 
     </article>
 
+    <!-- Form per la creazione dell'organizzazione -->
     <form class="creation-form" ref="formRef">
 
+      <!-- Sezione foto dell'organizzazione -->
       <div class="photo-row" aria-live="polite">
 
+        <!-- Foto dell'organizzazione -->
         <img class="photo-upload-circle" @click="uploadPhoto" :src="photoUrl || defaultImage"
              alt="Foto organizzazione" aria-label="Carica o modifica foto organizzazione">
         <input type="file" id="photo-upload" name="foto" ref="fileInputRef" @change="handleFileChange"
                style="display: none;"
                accept="image/*" aria-hidden="true">
 
-        <!-- image edit.png -->
+        <!-- Icona modifica foto -->
         <img src="@/assets/images/creaOrganizzazioneImages/edit.png" alt="Icona modifica foto" width="32" height="32"
              style="margin-left: 10px;">
 
+
         <label for="photo-upload" style="margin-left: 20px;">Imposta foto organizzazione</label>
+
+        <!-- Pulsante per rimuovere la foto -->
         <button v-if="photoUrl" class="remove-button" type="button" @click="removePhoto" style="margin-left: 20px;"
                 aria-label="Rimuovi foto organizzazione">Rimuovi Foto
         </button>
 
+        <!-- Messaggio di errore -->
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
       </div>
 
+      <!-- Sezione campi del form -->
       <div class="fields-row">
 
         <div class="form-column">
@@ -242,6 +265,7 @@ onMounted(async () => {
 
       </div>
 
+      <!-- Input nascosto per l'id dell'admin -->
       <input type="hidden" name="idAdmin" :value="marzel?.id">
       <input type="submit" style="display: none;" aria-hidden="true">
 

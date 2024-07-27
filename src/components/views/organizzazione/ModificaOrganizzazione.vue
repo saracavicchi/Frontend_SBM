@@ -5,14 +5,16 @@ import axios from 'axios';
 import type { Organizzazione } from "@/types/organizzazioneType";
 import type {Organizzatore} from "@/types/organizzatoreType";
 
-// Ottiene il parametro id dalla route corrente
 const route = useRoute();
+
+// Stato reattivo per l'organizzazione
 const organizzazione = ref<Organizzazione | null>(null);
 
+// Estrae l'ID dell'organizzazione dai parametri della rotta
 const idOrganizzazione = route.params.id;
 console.log('idOrganizzazione:', idOrganizzazione);
 
-// Effettua una richiesta API per ottenere i dati dell'organizzazione
+// Effettua il recupero dei dati dell'organizzazione ogni volta che la rotta cambia
 watchEffect(async () => {
   try {
     const response = await axios.get('/api/organizzazione/getOrganizzazione', {
@@ -26,7 +28,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <!-- Mostra il componente ModificaForm se i dati dell'organizzazione sono disponibili -->
+  <!-- Visualizza il modulo di modifica solo se l'organizzazione è stata caricata -->
   <ModificaForm v-if="organizzazione" :organizzazione="organizzazione" />
 </template>
 

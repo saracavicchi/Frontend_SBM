@@ -8,8 +8,10 @@ import axios from "axios";
 
 import defaultImage from '@/assets/images/creaOrganizzazioneImages/profilo.jpg';
 
+// Definisce gli eventi che il componente può emettere
 const emit = defineEmits(['openPopup', 'closePopup']);
 
+// Definizione delle proprietà passate al componente
 const props = defineProps({
   organizzazione: {
     type: Object as PropType<Organizzazione>,
@@ -21,12 +23,14 @@ const props = defineProps({
   }
 });
 
+// Stato reattivo per gli organizzatori e le loro immagini
 const organizzatori = ref<Organizzatore[]>([]);
 const immaginiOrganizzatori = ref<Map<number, string>>(new Map());
 
+// Osserva le modifiche alla lista degli organizzatori per aggiornare le immagini
 watch(() => props.organizzazione.organizzatori, async (nuoviOrganizzatori) => {
   organizzatori.value = nuoviOrganizzatori;
-  immaginiOrganizzatori.value.clear(); // Pulisci la mappa per evitare dati obsoleti
+  immaginiOrganizzatori.value.clear();
   for (const organizzatore of organizzatori.value) {
     if (organizzatore.urlFoto != null) {
       try {
@@ -44,10 +48,11 @@ watch(() => props.organizzazione.organizzatori, async (nuoviOrganizzatori) => {
   }
 }, {immediate: true, deep: true});
 
-
+// Stato reattivo per il popup di conferma eliminazione organizzatore e ID dell'organizzatore da eliminare
 const showConfPopupOrganizzatore = ref(false);
 const idToDelete = ref<number | null>(null);
 
+// Mostra il popup di conferma eliminazione organizzatore
 const promptDelConfOrganizzatore = (id: number) => {
 
   showConfPopupOrganizzatore.value = true;
@@ -61,6 +66,7 @@ const promptDelConfOrganizzatore = (id: number) => {
 
 };
 
+// Conferma e gestisce l'eliminazione dell'organizzatore
 const confDelOrganizzatore = async () => {
 
   if (idToDelete.value !== null) {
@@ -89,6 +95,7 @@ const confDelOrganizzatore = async () => {
   }
 };
 
+// Annulla l'eliminazione dell'organizzatore e chiude il popup di conferma
 const cancDelOrganizzatore = () => {
   showConfPopupOrganizzatore.value = false;
   idToDelete.value = null;
@@ -101,26 +108,34 @@ const cancDelOrganizzatore = () => {
 
 <template>
 
+  <!-- Titolo della sezione di gestione del team, visibile solo per l'amministratore -->
   <h1 id="team-management" class="team-management-title" v-if="props.marzel.id === props.organizzazione.admin.id"
   >Team Management</h1>
 
+  <!-- Contenitore della gestione del team -->
   <div class="team-management-container" aria-labelledby="team-management">
 
+    <!-- Cicla attraverso la lista degli organizzatori e li visualizza -->
     <div v-for="organizzatore in organizzatori" :key="organizzatore.id">
 
+      <!-- Box per ogni organizzatore -->
       <article class="organizzatore-box"
                :class="{'current-organizzatore-highlight': organizzatore.id === props.marzel.id}"
                aria-labelledby="org-name">
 
+        <!-- Parte superiore del box contenente l'immagine e il nome dell'organizzatore -->
         <div class="upper-container">
 
           <img class="organizzatore-profile-image" :src="immaginiOrganizzatori.get(organizzatore.id) || defaultImage"
                alt="Foto profilo" aria-label="Foto profilo organizzatore" aria-labelledby="org-name"/>
 
           <p id="org-name" class="organizzatore-name">{{ organizzatore.nome }} {{ organizzatore.cognome }}</p>
+
+          <!-- Visualizza l'etichetta "Admin" se l'organizzatore è l'amministratore -->
           <p style="margin: 0; padding: 0; text-decoration: underline;"
              v-if="organizzatore.id === props.organizzazione.admin.id">Admin</p>
 
+          <!-- Icona per eliminare l'organizzatore -->
           <img class="delete-image" src="@/assets/images/organizzazioneImg/delete.png" alt="Icona modifica foto"
                width="32" height="32" @click="promptDelConfOrganizzatore(organizzatore.id)"
                v-if="props.marzel.id === props.organizzazione.admin.id && organizzatore.id !== props.organizzazione.admin.id"
@@ -128,6 +143,7 @@ const cancDelOrganizzatore = () => {
 
         </div>
 
+        <!-- Email dell'organizzatore -->
         <p class="organizzatore-email" aria-label="Email dell'organizzatore">{{ organizzatore.mail }}</p>
 
       </article>
@@ -136,6 +152,7 @@ const cancDelOrganizzatore = () => {
 
   </div>
 
+  <!-- Popup di conferma eliminazione organizzatore -->
   <dialog v-if="showConfPopupOrganizzatore" class="confirmation-dialog-organizzatore" @close="cancDelOrganizzatore"
           aria-modal="true" aria-labelledby="dialog-descr"
   >
@@ -164,6 +181,7 @@ export default {
 
 <style scoped>
 
+/* Stile per il box di ogni organizzatore */
 .organizzatore-box {
   background-color: #3152a8;
   color: white;
@@ -177,6 +195,7 @@ export default {
   justify-content: space-evenly;
 }
 
+/* Stile per la parte superiore del box dell'organizzatore */
 .upper-container {
   display: flex;
   flex-direction: row;
@@ -185,6 +204,7 @@ export default {
   gap: 10px;
 }
 
+/* Stile per l'email dell'organizzatore */
 .organizzatore-email {
   margin: 0;
   padding: 15px 0 0;
@@ -192,10 +212,12 @@ export default {
   text-align: center;
 }
 
+/* Stile per il nome dell'organizzatore */
 .organizzatore-name {
   max-width: 30%;
 }
 
+/* Contenitore per la gestione del team */
 .team-management-container {
   width: 100%;
   text-align: center;
@@ -209,18 +231,21 @@ export default {
   overflow-y: auto;
 }
 
+/* Layout responsivo per schermi medi */
 @media (max-width: 768px) {
   .team-management-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* Layout responsivo per schermi piccoli */
 @media (max-width: 480px) {
   .team-management-container {
     grid-template-columns: repeat(1, 1fr);
   }
 }
 
+/* Stile per l'immagine di profilo dell'organizzatore */
 .organizzatore-profile-image {
   border-radius: 50%;
   width: 80px;
@@ -231,6 +256,7 @@ export default {
   box-shadow: 0 0 5px 0 white;
 }
 
+/* Stile per l'icona di rimozione dell'organizzatore */
 .delete-image {
   cursor: pointer;
   transition: transform 0.2s;
@@ -240,12 +266,14 @@ export default {
   transform: scale(1.2);
 }
 
+/* Stile per il titolo della gestione del team */
 .team-management-title {
   color: white;
   font-size: 1.5rem;
   margin: 0 0 10px;
 }
 
+/* Stile per il dialogo di conferma eliminazione */
 .confirmation-dialog-organizzatore {
   border: none;
   border-radius: 15px;
@@ -255,12 +283,14 @@ export default {
   font-size: 1.2rem;
 }
 
+/* Layout i pulsanti del dialogo */
 .dialog-actions-organizzatore {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
 
+/* Stile per i pulsanti del dialogo */
 .dialog-button {
   background-color: #3152a8;
   color: white;
@@ -278,6 +308,7 @@ export default {
   cursor: pointer;
 }
 
+/* Stile per evidenziare l'organizzatore corrente */
 .current-organizzatore-highlight {
   border: 3px solid white;
 }
