@@ -68,7 +68,8 @@ const confDelOrganizzatore = async () => {
 
       const response = await axios.get('/api/organizzazione/deleteOrganizzatore', {
         params: {
-          idOrganizzatore: idToDelete.value
+          idOrganizzatore: idToDelete.value,
+          idOrganizzazione: props.organizzazione.id
         }
       });
 

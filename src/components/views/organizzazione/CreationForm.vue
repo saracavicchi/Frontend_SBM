@@ -154,40 +154,49 @@ onMounted(async () => {
           <!-- nome -->
           <label for="name">Nome organizzazione *</label>
           <input type="text" id="name" name="nome" required aria-required="true"
-                 aria-label="Inserisci nome organizzazione">
+                 aria-label="Inserisci nome organizzazione"
+                 maxlength="45">
 
           <!-- email -->
           <label for="email">Email *</label>
           <input type="email" id="email" name="mail" required aria-required="true"
-                 aria-label="Inserisci email organizzazione">
+                 aria-label="Inserisci email organizzazione"
+                 maxlength="254">
 
           <!-- telefono -->
           <label for="phone">Telefono</label>
-          <input type="tel" id="phone" name="telefono" aria-label="Inserisci numero di telefono organizzazione">
+          <input type="tel" id="phone" name="telefono" aria-label="Inserisci numero di telefono organizzazione"
+                 maxlength="15">
 
           <!-- stato -->
           <label for="state">Stato</label>
-          <input type="text" id="state" name="stato" aria-label="Inserisci stato/nazione organizzazione">
+          <input type="text" id="state" name="stato" aria-label="Inserisci stato/nazione organizzazione"
+                 maxlength="45">
 
           <!-- provincia -->
           <label for="province">Provincia</label>
-          <input type="text" id="province" name="provincia" aria-label="Inserisci provincia organizzazione">
+          <input type="text" id="province" name="provincia" aria-label="Inserisci provincia organizzazione"
+                 maxlength="45">
 
           <!-- città -->
           <label for="city">Città</label>
-          <input type="text" id="city" name="città" aria-label="Inserisci città organizzazione">
+          <input type="text" id="city" name="città" aria-label="Inserisci città organizzazione"
+                 maxlength="45">
 
           <!-- cap -->
           <label for="cap">CAP</label>
-          <input type="text" id="cap" name="cap" aria-label="Inserisci CAP organizzazione">
+          <input type="text" id="cap" name="cap" aria-label="Inserisci CAP organizzazione"
+                 pattern="\d{5}">
 
           <!-- via -->
           <label for="street">Via</label>
-          <input type="text" id="street" name="via" aria-label="Inserisci via organizzazione">
+          <input type="text" id="street" name="via" aria-label="Inserisci via organizzazione"
+                 maxlength="45">
 
           <!-- numero civico -->
           <label for="civic">Numero civico</label>
-          <input type="text" id="civic" name="numCivico" aria-label="Inserisci numero civico organizzazione">
+          <input type="text" id="civic" name="numCivico" aria-label="Inserisci numero civico organizzazione"
+                 maxlength="10">
 
         </div>
 
@@ -199,27 +208,35 @@ onMounted(async () => {
 
           <!-- iban -->
           <label for="iban">IBAN</label>
-          <input type="text" id="iban" name="iban" aria-label="Inserisci IBAN organizzazione">
+          <input type="text" id="iban" name="iban" aria-label="Inserisci IBAN organizzazione"
+                 minlength="15"
+                 maxlength="34"
+                 pattern="[A-Z0-9]+">
 
           <!-- link sito web -->
           <label for="website">Sito web</label>
-          <input type="url" id="website" name="sito" aria-label="Inserisci link sito web organizzazione">
+          <input type="url" id="website" name="sito" aria-label="Inserisci link sito web organizzazione"
+                 maxlength="2000">
 
           <!-- link instagram -->
           <label for="instagram">Instagram</label>
-          <input type="url" id="instagram" name="instagram" aria-label="Inserisci link Instagram organizzazione">
+          <input type="url" id="instagram" name="instagram" aria-label="Inserisci link Instagram organizzazione"
+                 maxlength="2000">
 
           <!-- link facebook -->
           <label for="facebook">Facebook</label>
-          <input type="url" id="facebook" name="facebook" aria-label="Inserisci link Facebook organizzazione">
+          <input type="url" id="facebook" name="facebook" aria-label="Inserisci link Facebook organizzazione"
+                 maxlength="2000">
 
           <!-- link twitter -->
           <label for="twitter">Twitter</label>
-          <input type="url" id="twitter" name="twitter" aria-label="Inserisci link Twitter organizzazione">
+          <input type="url" id="twitter" name="twitter" aria-label="Inserisci link Twitter organizzazione"
+                 maxlength="2000">
 
           <!-- link linkedin -->
           <label for="linkedin">Linkedin</label>
-          <input type="url" id="linkedin" name="linkedin" aria-label="Inserisci link Linkedin organizzazione">
+          <input type="url" id="linkedin" name="linkedin" aria-label="Inserisci link Linkedin organizzazione"
+                 maxlength="2000">
 
         </div>
 

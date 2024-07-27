@@ -149,6 +149,8 @@ const addOrganizzatore = async () => {
 <template>
 
   <div v-if="organizzazione && marzel">
+
+
     <div class="control-panel-container" aria-label="Pannello di controllo organizzazione">
 
       <section class="info-organizzazione" aria-labelledby="organizzazione-name">
@@ -176,6 +178,8 @@ const addOrganizzatore = async () => {
       </section>
 
     </div>
+
+
 
     <dialog v-if="showConfPopupOrganizzazione" class="confirmation-dialog-organizzazione" @close="cancDelOrganizzazione"
             aria-labelledby="del-dialog-descr">
@@ -228,6 +232,7 @@ export default {
 .greeting-organizzazione {
   color: white;
   font-size: 1.5rem;
+  text-wrap: nowrap;
 }
 
 .info-organizzazione {
@@ -236,8 +241,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 0;
-  gap: 5%;
-  flex: 1;
+  gap: 25px;
 }
 
 .mod-buttons {
@@ -246,15 +250,13 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 0;
-  gap: 5%;
-  flex: 1.9;
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
   .mod-buttons {
     flex-direction: column;
     gap: 10px;
-    flex: 1;
   }
 }
 
@@ -273,14 +275,14 @@ export default {
   font-size: 0.8rem;
   font-weight: bold;
   color: #3152a8;
+  transition: 0.2s;
 }
 
 .control-panel-button:hover {
   background-color: #3152a8;
   color: #f2f2f2;
   cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0px 0px 5px 0px white;
+  box-shadow: 0 0 5px 0 white;
 }
 
 .control-panel-container {
@@ -289,8 +291,9 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 10px 20px 26px 10px;
+  justify-content: center;
+  padding: 20px;
+  gap: 100px;
 }
 
 .confirmation-dialog-organizzazione {

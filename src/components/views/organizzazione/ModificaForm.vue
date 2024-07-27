@@ -3,7 +3,7 @@ import {defineProps, onMounted, type PropType, ref, watch} from 'vue';
 import axios from 'axios';
 import {onBeforeRouteLeave, useRouter} from 'vue-router';
 import type {Organizzazione} from "@/types/organizzazioneType";
-import { AxiosError } from 'axios';
+import {AxiosError} from 'axios';
 import defaultImage from "@/assets/images/creaOrganizzazioneImages/profilo.jpg";
 import type {Organizzatore} from "@/types/organizzatoreType";
 
@@ -78,7 +78,7 @@ const removePhoto = () => {
   if (uploadInput) {
     uploadInput.value = ''; // Resetta l'input file
   }
-  deleted.value='true';
+  deleted.value = 'true';
 };
 
 // Resetta il form e i valori prima di lasciare la pagina
@@ -179,55 +179,83 @@ onMounted(async () => {
           <div class="form-column">
 
             <label for="name">Nome organizzazione *</label>
-            <input type="text" id="name" name="nome" v-model="organizzazione.nome" required aria-required="true" aria-label="Nome organizzazione">
+            <input type="text" id="name" name="nome" v-model="organizzazione.nome" required aria-required="true"
+                   aria-label="Nome organizzazione"
+                   maxlength="45">
 
             <label for="email">Email *</label>
-            <input type="email" id="email" name="mail" v-model="organizzazione.mail" required aria-required="true" aria-label="Email organizzazione">
+            <input type="email" id="email" name="mail" v-model="organizzazione.mail" required aria-required="true"
+                   aria-label="Email organizzazione"
+                   maxlength="254">
 
             <label for="phone">Telefono</label>
-            <input type="tel" id="phone" name="telefono" v-model="organizzazione.telefono" aria-label="Telefono organizzazione">
+            <input type="tel" id="phone" name="telefono" v-model="organizzazione.telefono"
+                   aria-label="Telefono organizzazione"
+                   maxlength="15">
 
             <label for="state">Stato</label>
-            <input type="text" id="state" name="stato" v-model="organizzazione.stato" aria-label="Stato organizzazione">
+            <input type="text" id="state" name="stato" v-model="organizzazione.stato" aria-label="Stato organizzazione"
+                   maxlength="45">
 
             <label for="province">Provincia</label>
-            <input type="text" id="province" name="provincia" v-model="organizzazione.provincia" aria-label="Provincia organizzazione">
+            <input type="text" id="province" name="provincia" v-model="organizzazione.provincia"
+                   aria-label="Provincia organizzazione"
+                   maxlength="45">
 
             <label for="city">Città</label>
-            <input type="text" id="city" name="città" v-model="organizzazione.città" aria-label="Città organizzazione">
+            <input type="text" id="city" name="città" v-model="organizzazione.città" aria-label="Città organizzazione"
+                   maxlength="45">
 
             <label for="cap">CAP</label>
-            <input type="text" id="cap" name="cap" v-model="organizzazione.cap" aria-label="CAP organizzazione">
+            <input type="text" id="cap" name="cap" v-model="organizzazione.cap" aria-label="CAP organizzazione"
+                   pattern="\d{5}">
 
             <label for="street">Via</label>
-            <input type="text" id="street" name="via" v-model="organizzazione.via" aria-label="Via organizzazione">
+            <input type="text" id="street" name="via" v-model="organizzazione.via" aria-label="Via organizzazione"
+                   maxlength="45">
 
             <label for="civic">Numero civico</label>
-            <input type="text" id="civic" name="numCivico" v-model="organizzazione.numCivico" aria-label="Numero civico organizzazione">
+            <input type="text" id="civic" name="numCivico" v-model="organizzazione.numCivico"
+                   aria-label="Numero civico organizzazione"
+                   maxlength="10">
 
           </div>
 
           <div class="form-column">
             <label for="description">Descrizione</label>
-            <textarea id="description" name="descrizione" v-model="organizzazione.descrizione" aria-label="Descrizione organizzazione"></textarea>
+            <textarea id="description" name="descrizione" v-model="organizzazione.descrizione"
+                      aria-label="Descrizione organizzazione"></textarea>
 
             <label for="iban">IBAN</label>
-            <input type="text" id="iban" name="iban" v-model="organizzazione.iban" aria-label="IBAN organizzazione">
+            <input type="text" id="iban" name="iban" v-model="organizzazione.iban" aria-label="IBAN organizzazione"
+                   minlength="15"
+                   maxlength="34"
+                   pattern="[A-Z0-9]+">
 
             <label for="website">Sito web</label>
-            <input type="url" id="website" name="sito" :value="getLinkUrl('Sito')" aria-label="Inserisci link sito web organizzazione">
+            <input type="url" id="website" name="sito" :value="getLinkUrl('Sito')"
+                   aria-label="Inserisci link sito web organizzazione"
+                   maxlength="2000">
 
             <label for="instagram">Instagram</label>
-            <input type="url" id="instagram" name="instagram" :value="getLinkUrl('Instagram')" aria-label="Inserisci link Instagram organizzazione">
+            <input type="url" id="instagram" name="instagram" :value="getLinkUrl('Instagram')"
+                   aria-label="Inserisci link Instagram organizzazione"
+                   maxlength="2000">
 
             <label for="facebook">Facebook</label>
-            <input type="url" id="facebook" name="facebook" :value="getLinkUrl('Facebook')" aria-label="Inserisci link Facebook organizzazione">
+            <input type="url" id="facebook" name="facebook" :value="getLinkUrl('Facebook')"
+                   aria-label="Inserisci link Facebook organizzazione"
+                   maxlength="2000">
 
             <label for="twitter">Twitter</label>
-            <input type="url" id="twitter" name="twitter" :value="getLinkUrl('Twitter')" aria-label="Inserisci link Twitter organizzazione">
+            <input type="url" id="twitter" name="twitter" :value="getLinkUrl('Twitter')"
+                   aria-label="Inserisci link Twitter organizzazione"
+                   maxlength="2000">
 
             <label for="linkedin">Linkedin</label>
-            <input type="url" id="linkedin" name="linkedin" :value="getLinkUrl('Linkedin')" aria-label="Inserisci link Linkedin organizzazione">
+            <input type="url" id="linkedin" name="linkedin" :value="getLinkUrl('Linkedin')"
+                   aria-label="Inserisci link Linkedin organizzazione"
+                   maxlength="2000">
           </div>
 
         </div>
