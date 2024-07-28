@@ -113,6 +113,7 @@ input, textarea {
     color: #3152a8;
     resize: none;
     margin-bottom: 10px;
+    outline: none;
 }
 
 textarea {

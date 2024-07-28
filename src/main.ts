@@ -7,6 +7,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 import CreaOrganizzazione from "@/components/views/organizzazione/CreaOrganizzazione.vue";
 import Organizzazione from "@/components/views/organizzazione/Organizzazione.vue";
 import ModificaOrganizzazione from "@/components/views/organizzazione/ModificaOrganizzazione.vue";
+import ModificaOrganizzatore from "@/components/views/organizzatore/ModificaOrganizzatore.vue";
 
 const routes = [
     {path: '/home', name: 'Homepage', component: Homepage},
@@ -14,7 +15,8 @@ const routes = [
     {path: '/', redirect: '/home'},
     {path: '/creaOrganizzazione', name: 'CreaOrganizzazione', component: CreaOrganizzazione},
     {path: '/organizzazione/:id', name: 'Organizzazione', component: Organizzazione},
-    {path: '/modificaOrganizzazione/:id', name: 'ModificaOrganizzazione', component: ModificaOrganizzazione}
+    {path: '/modificaOrganizzazione/:id', name: 'ModificaOrganizzazione', component: ModificaOrganizzazione},
+    {path: '/modificaOrganizzatore/:id', name: 'ModificaOrganizzatore', component: ModificaOrganizzatore}
 ];
 
 const router = createRouter({

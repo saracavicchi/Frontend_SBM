@@ -34,7 +34,7 @@ watch(() => props.orgLoggato, async (newVal) => {
       console.error('Errore nel recupero dei dati:', error);
     }
   }
-}, { immediate: true });
+}, {immediate: true});
 
 /*
 const fetchData = async () => {
@@ -82,9 +82,9 @@ watch(() => props.marzel, (newValue, oldValue) => {
         </router-link>
       </article>
       <article>
-        <a href="#profilo">
+        <router-link :to="{name: 'ModificaOrganizzatore', params: { id: props.orgLoggato.id } }">
           <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzatore.png" alt="Manage accounts">
-        </a>
+        </router-link>
       </article>
       <article>
         <a href="#pagamenti">

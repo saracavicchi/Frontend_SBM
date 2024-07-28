@@ -13,7 +13,7 @@ export interface Organizzatore {
     telefono: string;
     bio: string;
     urlFoto: string;
-    pIva: string;
+    partitaIva: string;
     iban: string;
     stato: string;
     provincia: string;

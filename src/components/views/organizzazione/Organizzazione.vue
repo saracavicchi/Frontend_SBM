@@ -21,6 +21,7 @@ onMounted(async () => {
 
     // Recupera i dati dell'organizzazione
     await fetchOrganizzazione();
+    console.log(organizzazione.value);
 
     // Recupera i dati dell'organizzatore
     orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
