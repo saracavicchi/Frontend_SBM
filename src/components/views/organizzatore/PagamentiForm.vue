@@ -1,43 +1,59 @@
 <template>
   <div class="form-container">
     <form>
-      <div class="form-row">
-        <div class="form-column">
-          <div class="form-group">
-            <label for="piva">Numero di P. IVA</label>
-            <input type="text" id="piva" name="piva" />
-          </div>
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" />
-          </div>
-          <div class="form-group">
-            <label for="cognome">Cognome</label>
-            <input type="text" id="cognome" name="cognome" />
-          </div>
-        </div>
-        <div class="form-column">
-          <div class="form-group">
-            <label for="carta">Numero di carta</label>
-            <input type="text" id="carta" name="carta" />
-          </div>
-          <div class="form-group">
-            <label for="scadenza">Data scadenza</label>
-            <input type="month" id="scadenza" name="scadenza" />
-          </div>
-          <div class="form-group">
-            <label for="cvv">CVV</label>
-            <input type="text" id="cvv" name="cvv" />
-          </div>
-        </div>
+      <div class="form-group">
+        <label for="partitaIva">Numero Partita IVA</label>
+        <input type="text" id="partitaIva" v-model="formData.partitaIva" />
+      </div>
+      <div class="form-group">
+        <label for="iban">Iban</label>
+        <input type="text" id="iban" v-model="formData.iban" />
+      </div>
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" v-model="formData.nome" />
+      </div>
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input type="text" id="cognome" v-model="formData.cognome" />
+      </div>
+      <div class="form-group">
+        <label for="numeroCarta">Numero Carta</label>
+        <input type="text" id="numeroCarta" v-model="formData.numeroCarta" />
+      </div>
+      <div class="form-group">
+        <label for="dataScadenza">Data Scadenza</label>
+        <input type="text" id="dataScadenza" v-model="formData.dataScadenza" />
+      </div>
+      <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" v-model="formData.cvv" />
       </div>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-// Logica
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  formData: {
+    type: Object,
+    required: true,
+    default: () => ({
+      partitaIva: '',
+      iban: '',
+      nome: '',
+      cognome: '',
+      numeroCarta: '',
+      dataScadenza: '',
+      cvv: ''
+    })
+  }
+});
 </script>
+
+
 
 <style scoped>
 /* Stile per il contenitore del form */

@@ -1,35 +1,44 @@
 <template>
   <div class="form-container">
     <form>
-      <div class="form-row">
-        <div class="form-column">
-          <div class="form-group">
-            <label for="facebook">Link Facebook</label>
-            <input type="url" id="facebook" name="facebook" />
-          </div>
-          <div class="form-group">
-            <label for="instagram">Link Instagram</label>
-            <input type="url" id="instagram" name="instagram" />
-          </div>
-        </div>
-        <div class="form-column">
-          <div class="form-group">
-            <label for="linkedin">Link LinkedIn</label>
-            <input type="url" id="linkedin" name="linkedin" />
-          </div>
-          <div class="form-group">
-            <label for="tiktok">Link TikTok</label>
-            <input type="url" id="tiktok" name="tiktok" />
-          </div>
-        </div>
+      <div class="form-group">
+        <label for="facebook">Link Facebook</label>
+        <input type="text" id="facebook" v-model="formData.facebook" />
+      </div>
+      <div class="form-group">
+        <label for="instagram">Link Instagram</label>
+        <input type="text" id="instagram" v-model="formData.instagram" />
+      </div>
+      <div class="form-group">
+        <label for="tiktok">Link TikTok</label>
+        <input type="text" id="tiktok" v-model="formData.tiktok" />
+      </div>
+      <div class="form-group">
+        <label for="linkedin">Link LinkedIn</label>
+        <input type="text" id="linkedin" v-model="formData.linkedin" />
       </div>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-// Logica
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  formData: {
+    type: Object,
+    required: true,
+    default: () => ({
+      facebook: '',
+      instagram: '',
+      tiktok: '',
+      linkedin: ''
+    })
+  }
+});
 </script>
+
+
 
 <style scoped>
 .form-container {
