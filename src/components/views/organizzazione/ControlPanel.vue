@@ -20,7 +20,7 @@ const props = defineProps({
     type: Object as PropType<Organizzazione>,
     required: true
   },
-  marzel: {
+  orgLoggato: {
     type: Object as PropType<Organizzatore>,
     required: true
   }
@@ -161,7 +161,7 @@ const addOrganizzatore = async () => {
 
 <template>
 
-  <div v-if="organizzazione && marzel">
+  <div v-if="organizzazione && orgLoggato">
 
 
     <!-- Pannello di controllo dell'organizzazione -->
@@ -175,7 +175,7 @@ const addOrganizzatore = async () => {
       </section>
 
       <!-- Sezione pulsanti di modifica, visibile solo all'admin -->
-      <section class="mod-buttons" v-if="organizzazione.admin.id === marzel.id"
+      <section class="mod-buttons" v-if="organizzazione.admin.id === orgLoggato.id"
                aria-label="Pulsanti per interagire con l'organizzazione">
         <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
                 @click="openAddOrganizzatorePopup">

@@ -22,7 +22,7 @@ const fileInputRef = ref<HTMLInputElement | null>(null);
 const formRef = ref<HTMLFormElement | null>(null);
 
 // Dati dell'organizzatore corrente
-const marzel = ref<Organizzatore>();
+const orgLoggato = ref<Organizzatore>();
 
 // Funzione per tornare alla pagina precedente
 const goBack = () => {
@@ -109,8 +109,8 @@ onBeforeRouteLeave(() => {
 // Eseguito al montaggio del componente per recuperare i dati dell'organizzatore
 onMounted(async () => {
   try {
-    marzel.value = (await axios.get('/api/homepage/marzel')).data;
-    console.log(JSON.stringify(marzel.value));
+    orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
+    console.log(JSON.stringify(orgLoggato.value));
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
   }
@@ -266,7 +266,7 @@ onMounted(async () => {
       </div>
 
       <!-- Input nascosto per l'id dell'admin -->
-      <input type="hidden" name="idAdmin" :value="marzel?.id">
+      <input type="hidden" name="idAdmin" :value="orgLoggato?.id">
       <input type="submit" style="display: none;" aria-hidden="true">
 
     </form>

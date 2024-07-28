@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 // Dati dell'organizzatore corrente
-const marzel = ref<Organizzatore>();
+const orgLoggato = ref<Organizzatore>();
 
 // URL della foto dell'organizzazione
 const photoUrl = ref('');
@@ -146,8 +146,8 @@ const getLinkUrl = (nomeSocial: string): string => {
 // Eseguito al montaggio del componente per recuperare i dati dell'organizzatore
 onMounted(async () => {
   try {
-    marzel.value = (await axios.get('/api/homepage/marzel')).data;
-    console.log(JSON.stringify(marzel.value));
+    orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
+    console.log(JSON.stringify(orgLoggato.value));
     //console.log (props.organizzazione);
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
@@ -303,7 +303,7 @@ onMounted(async () => {
         </div>
 
         <!-- Input nascosto per l'id dell'admin -->
-        <input type="hidden" name="idAdmin" :value="marzel?.id">
+        <input type="hidden" name="idAdmin" :value="orgLoggato?.id">
 
         <input type="submit" style="display: none;" aria-hidden="true">
 

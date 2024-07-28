@@ -17,7 +17,7 @@ const props = defineProps({
     type: Object as PropType<Organizzazione>,
     required: true
   },
-  marzel: {
+  orgLoggato: {
     type: Object as PropType<Organizzatore>,
     required: true
   }
@@ -109,7 +109,7 @@ const cancDelOrganizzatore = () => {
 <template>
 
   <!-- Titolo della sezione di gestione del team, visibile solo per l'amministratore -->
-  <h1 id="team-management" class="team-management-title" v-if="props.marzel.id === props.organizzazione.admin.id"
+  <h1 id="team-management" class="team-management-title" v-if="props.orgLoggato.id === props.organizzazione.admin.id"
   >Team Management</h1>
 
   <!-- Contenitore della gestione del team -->
@@ -120,7 +120,7 @@ const cancDelOrganizzatore = () => {
 
       <!-- Box per ogni organizzatore -->
       <article class="organizzatore-box"
-               :class="{'current-organizzatore-highlight': organizzatore.id === props.marzel.id}"
+               :class="{'current-organizzatore-highlight': organizzatore.id === props.orgLoggato.id}"
                aria-labelledby="org-name">
 
         <!-- Parte superiore del box contenente l'immagine e il nome dell'organizzatore -->
@@ -138,7 +138,7 @@ const cancDelOrganizzatore = () => {
           <!-- Icona per eliminare l'organizzatore -->
           <img class="delete-image" src="@/assets/images/organizzazioneImg/delete.png" alt="Icona modifica foto"
                width="32" height="32" @click="promptDelConfOrganizzatore(organizzatore.id)"
-               v-if="props.marzel.id === props.organizzazione.admin.id && organizzatore.id !== props.organizzazione.admin.id"
+               v-if="props.orgLoggato.id === props.organizzazione.admin.id && organizzatore.id !== props.organizzazione.admin.id"
                aria-label="Elimina organizzatore dall'organizzazione">
 
         </div>

@@ -14,13 +14,13 @@ const props = defineProps({
  */
 
 const props = defineProps({
-  marzel: {
+  orgLoggato: {
     type: Object as PropType<Organizzatore>,
     required: true
   }
 });
 
-watch(() => props.marzel, async (newVal) => {
+watch(() => props.orgLoggato, async (newVal) => {
   if (newVal && newVal.id) {
     try {
       const response = await axios.get(`/api/organizzatore/hasOrganizzazione?id=${newVal.id}`);

@@ -9,8 +9,8 @@ import type {EventoConcluso} from '@/types/eventoConclusoType';
 const eventiConclusi = ref<EventoConcluso[]>([]);
 const eventiFuturi = ref<Evento[]>([]);
 const notifiche = ref<Notifica[]>([]);
-const organizzatore = ref<Organizzatore[]>([]);
-const marzel = ref<Organizzatore>();
+//const organizzatore = ref<Organizzatore[]>([]);
+const orgLoggato = ref<Organizzatore>();
 
 onMounted(async () => {
   try {
@@ -22,10 +22,10 @@ onMounted(async () => {
       console.log(JSON.stringify(response.data))
       notifiche.value = response.data
     })
-    organizzatore.value = (await axios.get('/api/homepage/utente')).data;
-    console.log(JSON.stringify(organizzatore.value));
-    marzel.value = (await axios.get('/api/homepage/marzel')).data;
-    console.log(JSON.stringify(marzel.value));
+    //organizzatore.value = (await axios.get('/api/homepage/utente')).data;
+    //console.log(JSON.stringify(organizzatore.value));
+    orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
+    console.log(JSON.stringify(orgLoggato.value));
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
   }
@@ -39,7 +39,7 @@ onMounted(async () => {
         <img class="profile-image" src="@/assets/images/homepageImg/profilo.jpg" alt="Foto Profilo"/>
         <h3>Ciao utente!</h3>
       </div>
-      <ActionCenter v-if="marzel" :marzel="marzel"/>
+      <ActionCenter v-if="orgLoggato" :orgLoggato="orgLoggato"/>
     </div>
     <div class="right-section">
       <div class="rounded-component">

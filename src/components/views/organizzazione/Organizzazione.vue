@@ -13,7 +13,7 @@ const idOrganizzazione = route.params.id;
 
 // Stato reattivo per l'organizzazione e l'organizzatore
 const organizzazione = ref<Organizzazione>();
-const marzel = ref<Organizzatore>();
+const orgLoggato = ref<Organizzatore>();
 
 // Funzione eseguita al montaggio del componente per recuperare i dati dell'organizzazione e dell'organizzatore
 onMounted(async () => {
@@ -23,8 +23,8 @@ onMounted(async () => {
     await fetchOrganizzazione();
 
     // Recupera i dati dell'organizzatore
-    marzel.value = (await axios.get('/api/homepage/marzel')).data;
-    console.log(JSON.stringify(marzel.value));
+    orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
+    console.log(JSON.stringify(orgLoggato.value));
 
   } catch (error) {
     console.error('Errore nel recupero dei dati:', error);
@@ -63,14 +63,14 @@ const unblurBackground = () => {
 
     <!-- Pannello di controllo dell'organizzazione, visibile solo se organizzazione e organizzatore sono caricati
           ascolta inoltre gli eventi emessi dal componenente-->
-    <ControlPanel v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"
+    <ControlPanel v-if="organizzazione && orgLoggato" :organizzazione="organizzazione" :orgLoggato="orgLoggato"
                   @organizzatoreAdded="fetchOrganizzazione" aria-label="Pannello di controllo organizzazione"
                   @openPopup="blurBackground"
                   @closePopup="unblurBackground"/>
 
     <!-- Gestione del team dell'organizzazione, visibile solo se organizzazione e organizzatore sono caricati
           ascolta inoltre gli eventi emessi dal componente-->
-    <TeamManagement v-if="organizzazione && marzel" :organizzazione="organizzazione" :marzel="marzel"
+    <TeamManagement v-if="organizzazione && orgLoggato" :organizzazione="organizzazione" :orgLoggato="orgLoggato"
                     aria-label="Team management organizzazione"
                     @openPopup="blurBackground"
                     @closePopup="unblurBackground"/>
