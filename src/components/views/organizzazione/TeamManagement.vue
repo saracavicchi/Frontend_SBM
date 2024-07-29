@@ -34,7 +34,7 @@ watch(() => props.organizzazione.organizzatori, async (nuoviOrganizzatori) => {
   for (const organizzatore of organizzatori.value) {
     if (organizzatore.urlFoto != null) {
       try {
-
+        // Recupera l'immagine dell'organizzatore dal server per ogni organizzatore
         const response = await axios.get('/api/images/organizzatore', {
           params: {name: organizzatore.urlFoto},
           responseType: 'blob'
@@ -58,6 +58,7 @@ const promptDelConfOrganizzatore = (id: number) => {
   showConfPopupOrganizzatore.value = true;
   idToDelete.value = id;
 
+  // Emette l'evento di apertura del popup
   emit('openPopup');
 
   nextTick(() => {
@@ -72,6 +73,7 @@ const confDelOrganizzatore = async () => {
   if (idToDelete.value !== null) {
     try {
 
+      // Esegue la richiesta al server per rimuovere l'organizzatore
       const response = await axios.get('/api/organizzazione/deleteOrganizzatore', {
         params: {
           idOrganizzatore: idToDelete.value,
@@ -79,17 +81,20 @@ const confDelOrganizzatore = async () => {
         }
       });
 
+      // Rimuove l'organizzatore dalla lista e l'immagine dalla mappa se la richiesta ha successo
       if (response.status === 200) {
         organizzatori.value = organizzatori.value.filter(organizzatore => organizzatore.id !== idToDelete.value);
         immaginiOrganizzatori.value.delete(idToDelete.value);
       }
 
       (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.close();
+      // Emette l'evento di chiusura del popup
       emit('closePopup');
 
     } catch (error) {
       console.error('Errore nella cancellazione dell\'organizzatore:', error);
       (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.close();
+      // Emette l'evento di chiusura del popup
       emit('closePopup');
     }
   }
@@ -99,6 +104,7 @@ const confDelOrganizzatore = async () => {
 const cancDelOrganizzatore = () => {
   showConfPopupOrganizzatore.value = false;
   idToDelete.value = null;
+  // Emette l'evento di chiusura del popup
   emit('closePopup');
   (document.querySelector('.confirmation-dialog-organizzatore') as HTMLDialogElement)?.close();
 }
@@ -136,7 +142,7 @@ const cancDelOrganizzatore = () => {
              v-if="organizzatore.id === props.organizzazione.admin.id">Admin</p>
 
           <!-- Icona per eliminare l'organizzatore -->
-          <img class="delete-image" src="@/assets/images/organizzazioneImg/delete.png" alt="Icona modifica foto"
+          <img class="delete-image" src="@/assets/images/organizzazioneImg/delete.png" alt="Icona elimina organizzatore"
                width="32" height="32" @click="promptDelConfOrganizzatore(organizzatore.id)"
                v-if="props.orgLoggato.id === props.organizzazione.admin.id && organizzatore.id !== props.organizzazione.admin.id"
                aria-label="Elimina organizzatore dall'organizzazione">

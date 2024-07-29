@@ -17,6 +17,7 @@ console.log('idOrganizzazione:', idOrganizzazione);
 // Effettua il recupero dei dati dell'organizzazione ogni volta che la rotta cambia
 watchEffect(async () => {
   try {
+    // Esegue la richiesta al server per ottenere i dati dell'organizzazione
     const response = await axios.get('/api/organizzazione/getOrganizzazione', {
       params: { id: route.params.id }
     });

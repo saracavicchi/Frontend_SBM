@@ -33,6 +33,7 @@ const imageUrl = ref('');
 watch(() => props.organizzazione, async (newVal) => {
   if (newVal && newVal.id && newVal.urlFoto) {
     try {
+      // Recupera l'immagine dell'organizzazione dal server
       const response = await axios.get('/api/images/organizzazione', {
         params: {name: newVal.urlFoto},
         responseType: 'blob'
@@ -56,6 +57,7 @@ const navigateToModificaOrganizzazione = () => {
 // Mostra il popup di conferma dell'eliminazione dell'organizzazione
 const promptDelConfOrganizzazione = () => {
   showConfPopupOrganizzazione.value = true;
+  // Emette l'evento di apertura del popup
   emit('openPopup');
 
   nextTick(() => {
@@ -66,15 +68,18 @@ const promptDelConfOrganizzazione = () => {
 // Conferma e gestisce l'eliminazione dell'organizzazione
 const confDelOrganizzazione = async () => {
   try {
+    // Effettua la richiesta di eliminazione dell'organizzazione
     const response = await axios.get('/api/organizzazione/deleteOrganizzazione', {
       params: {
         id: props.organizzazione.id
       }
     });
 
+    // Se la richiesta ha successo, torna alla homepage
     if (response.status === 200) {
-      console.log('Organizzazione eliminata con successo!');
+      //console.log('Organizzazione eliminata con successo!');
       (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+      // Emette l'evento di chiusura del popup
       emit('closePopup');
       await router.push({
         name: 'Homepage'
@@ -82,20 +87,23 @@ const confDelOrganizzazione = async () => {
     }
 
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+    // Emette l'evento di chiusura del popup
     emit('closePopup');
 
   } catch (error) {
     console.error('Errore nella cancellazione dell\'organizzazione:', error);
     (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+    // Emette l'evento di chiusura del popup
     emit('closePopup');
   }
 };
 
 
-// Annulla l'eliminazione dell'organizzazione e chiude il popup di conferma
+// Annulla l'eliminazione dell'organizzazione chiudendo il popup di conferma
 const cancDelOrganizzazione = () => {
   showConfPopupOrganizzazione.value = false;
   (document.querySelector('.confirmation-dialog-organizzazione') as HTMLDialogElement)?.close();
+  // Emette l'evento di chiusura del popup
   emit('closePopup');
 };
 
@@ -109,6 +117,7 @@ const responseMessage = ref('');
 // Mostra il popup di aggiunta dell'organizzatore
 const openAddOrganizzatorePopup = () => {
   showAddOrganizzatorePopup.value = true;
+  // Emette l'evento di apertura del popup
   emit('openPopup');
   responseMessage.value = '';
   nextTick(() => {
@@ -121,6 +130,7 @@ const closeAddOrganizzatorePopup = () => {
   showAddOrganizzatorePopup.value = false;
   email.value = '';
   (document.querySelector('.add-organizzatore-dialog') as HTMLDialogElement)?.close();
+  // Emette l'evento di chiusura del popup
   emit('closePopup');
 
 };
@@ -128,8 +138,9 @@ const closeAddOrganizzatorePopup = () => {
 // Gestisce l'aggiunta di un nuovo organizzatore
 const addOrganizzatore = async () => {
   try {
-    console.log('Email:', email.value);
+    //console.log('Email:', email.value);
 
+    // Effettua la richiesta di aggiunta dell'organizzatore
     const response = await axios.post('/api/organizzazione/addOrganizzatore', qs.stringify({
       emailAddress: email.value,
       idOrganizzazione: props.organizzazione.id
@@ -139,8 +150,11 @@ const addOrganizzatore = async () => {
       }
     });
 
+    // Se la richiesta ha successo, aggiorna il messaggio di risposta e lancia l'evento di aggiunta dell'organizzatore
+    // in modo che venga aggiornata la lista degli organizzatori
     if (response.status === 200) {
       responseMessage.value = response.data;
+      // Emette l'evento di aggiunta dell'organizzatore
       emit('organizzatoreAdded');
       email.value = '';
 

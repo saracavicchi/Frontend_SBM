@@ -70,6 +70,7 @@ const handleFileChange = (event: Event) => {
   if (input && input.files && input.files.length > 0) {
     const file = input.files[0];
     const reader = new FileReader();
+    // Callback per ottenere l'url dell'immagine
     reader.onload = (e: ProgressEvent<FileReader>) => {
       const target = e.target as FileReader | null;
       if (target && target.result) {
@@ -104,13 +105,18 @@ onBeforeRouteLeave(() => {
 // Funzione per inviare il form di modifica dell'organizzazione
 const submitForm = () => {
   if (formRef.value) {
+    // Validazione del form
     if (formRef.value.reportValidity()) {
+
+      // Creazione di un oggetto FormData per inviare i dati e append foto
       const formData = new FormData(formRef.value);
       if (fileInputRef.value && fileInputRef.value.files && fileInputRef.value.files[0]) {
         formData.append('foto', fileInputRef.value.files[0]);
       }
 
-      console.log(props.organizzazione);
+      //console.log(props.organizzazione);
+
+      // Richiesta ad axios per aggiornare i dati dell'organizzazione
       axios.put(`/api/organizzazione/update/${props.organizzazione.id}`, formData)
           .then(response => {
 
@@ -118,6 +124,7 @@ const submitForm = () => {
               //console.log(`${key}: ${value}`);
             //}
 
+            // Se la richiesta va a buon fine, reindirizza alla pagina dell'organizzazione
             if (response.status === 200) {
               router.push({
                 name: 'Organizzazione',
@@ -136,7 +143,7 @@ const submitForm = () => {
 };
 
 
-// Funzione per ottenere l'URL di un link sociale specifico
+// Funzione per ottenere l'URL di un link social specifico a partire dal nome del social
 const getLinkUrl = (nomeSocial: string): string => {
   const link = props.organizzazione.link.find(l => l.nomeSocial === nomeSocial);
   return link ? link.url : '';
@@ -146,6 +153,7 @@ const getLinkUrl = (nomeSocial: string): string => {
 // Eseguito al montaggio del componente per recuperare i dati dell'organizzatore
 onMounted(async () => {
   try {
+    // Richiesta ad axios per ottenere i dati dell'organizzatore loggato
     orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
     console.log(JSON.stringify(orgLoggato.value));
     //console.log (props.organizzazione);
@@ -313,5 +321,5 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@import "@/assets/css/CreaModificaOrganizzazione.css";
+@import "@/assets/css/CreaModificaForm.css";
 </style>

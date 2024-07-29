@@ -7,10 +7,13 @@ import type {Organizzatore} from "@/types/organizzatoreType";
 
 const route = useRoute();
 
+// Recupera l'id dell'organizzatore dalla route
 const idOrganizzatore = route.params.id;
 
+// Stato reattivo per l'organizzatore
 const organizzatore = ref<Organizzatore | null>(null);
 
+// Chiamata all'API per recuperare i dati dell'organizzazione
 onMounted(async () => {
   try {
 
@@ -41,6 +44,7 @@ const fetchOrganizzatore = async () => {
 
 <template>
 
+  <!-- Visualizza il modulo di modifica solo se l'organizzatore è stato caricato -->
   <ModificaOrganizzatoreForm v-if="organizzatore" :organizzatore="organizzatore" />
 
 </template>

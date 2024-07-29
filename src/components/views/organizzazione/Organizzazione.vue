@@ -63,14 +63,21 @@ const unblurBackground = () => {
   <div class="org-main-container">
 
     <!-- Pannello di controllo dell'organizzazione, visibile solo se organizzazione e organizzatore sono caricati
-          ascolta inoltre gli eventi emessi dal componenente-->
+          ascolta inoltre gli eventi emessi dal componenente
+          organizzatoreAdded -> aggiornamento dell'organizzazione dopo l'aggiunta di un nuovo organizzatore
+          openPopup -> sfocatura dello sfondo
+          closePopup -> rimozione della sfocatura dello sfondo
+          -->
     <ControlPanel v-if="organizzazione && orgLoggato" :organizzazione="organizzazione" :orgLoggato="orgLoggato"
                   @organizzatoreAdded="fetchOrganizzazione" aria-label="Pannello di controllo organizzazione"
                   @openPopup="blurBackground"
                   @closePopup="unblurBackground"/>
 
     <!-- Gestione del team dell'organizzazione, visibile solo se organizzazione e organizzatore sono caricati
-          ascolta inoltre gli eventi emessi dal componente-->
+          ascolta inoltre gli eventi emessi dal componente
+          openPopup -> sfocatura dello sfondo
+          closePopup -> rimozione della sfocatura dello sfondo
+          -->
     <TeamManagement v-if="organizzazione && orgLoggato" :organizzazione="organizzazione" :orgLoggato="orgLoggato"
                     aria-label="Team management organizzazione"
                     @openPopup="blurBackground"
@@ -95,6 +102,7 @@ export default {
 
 <style scoped>
 
+/* Stile per il contenitore principale della pagina organizzazione */
 .org-main-container {
   width: 100%;
   height: 100%;
@@ -106,6 +114,7 @@ export default {
   max-height: 70vh;
 }
 
+/* Stile per l'effetto di sfocatura */
 .blur {
   filter: blur(4px);
 }

@@ -42,6 +42,7 @@ const handleFileChange = (event: Event) => {
   if (input && input.files && input.files.length > 0) {
     const file = input.files[0];
     const reader = new FileReader();
+    // Callback per ottenere l'url dell'immagine
     reader.onload = (e: ProgressEvent<FileReader>) => {
       const target = e.target as FileReader | null;
       if (target && target.result) {
@@ -64,16 +65,21 @@ const removePhoto = () => {
 // Funzione per inviare il form di creazione dell'organizzazione
 const submitForm = () => {
   if (formRef.value) {
+    // Validazione form
     if (formRef.value.reportValidity()) {
+
+      // Creazione form data e append foto
       const formData = new FormData(formRef.value);
       if (fileInputRef.value && fileInputRef.value.files && fileInputRef.value.files[0]) {
         formData.append('foto', fileInputRef.value.files[0]);
       }
 
+      // Chiamata al server per la creazione dell'organizzazione
       axios.post('/api/organizzazione/creaOrganizzazione', formData)
           .then(response => {
             console.log(response.data);
 
+            // Se la creazione è andata a buon fine, reindirizza alla pagina dell'organizzazione
             if (response.status === 200) {
               router.push({
                 name: 'Organizzazione',
@@ -109,6 +115,7 @@ onBeforeRouteLeave(() => {
 // Eseguito al montaggio del componente per recuperare i dati dell'organizzatore
 onMounted(async () => {
   try {
+    // Recupero i dati dell'organizzatore loggato
     orgLoggato.value = (await axios.get('/api/homepage/utente')).data;
     console.log(JSON.stringify(orgLoggato.value));
   } catch (error) {
@@ -276,6 +283,6 @@ onMounted(async () => {
 
 
 <style scoped>
-@import "@/assets/css/CreaModificaOrganizzazione.css";
+@import "@/assets/css/CreaModificaForm.css";
 
 </style>
