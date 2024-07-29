@@ -74,7 +74,6 @@ const handleFileChange = (event: Event) => {
       const target = e.target as FileReader | null;
       if (target && target.result) {
         photoUrl.value = target.result.toString();
-        deleted.value = 'true';
       }
     };
     reader.readAsDataURL(file);

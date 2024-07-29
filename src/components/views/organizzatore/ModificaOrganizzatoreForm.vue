@@ -53,7 +53,6 @@ const handleFileChange = (event: Event) => {
       const target = e.target as FileReader | null;
       if (target && target.result) {
         photoUrl.value = target.result.toString();
-        deleted.value = 'true';
       }
     };
     reader.readAsDataURL(file);
@@ -129,6 +128,7 @@ const submitForm = () => {
         formData.append('foto', fileInputRef.value.files[0]);
       }
 
+      /*
       props.organizzatore.carte.forEach((carta, index) => {
         const fieldName = `dataScadenza${index + 1}`;
         const fieldValue = formData.get(fieldName) as string;
@@ -136,6 +136,17 @@ const submitForm = () => {
           formData.set(fieldName, convertToLastDayOfMonth(fieldValue));
         }
       });
+
+       */
+
+      for (let i = 1; i <= 3; i++) {
+        const fieldName = `dataScadenza${i}`;
+        const fieldValue = formData.get(fieldName) as string;
+        if (fieldValue) {
+          formData.set(fieldName, convertToLastDayOfMonth(fieldValue));
+        }
+      }
+
 
       axios.put(`/api/organizzatore/update/${props.organizzatore.id}`, formData)
           .then(response => {
@@ -156,6 +167,7 @@ const submitForm = () => {
 };
 
 const convertToLastDayOfMonth = (date: string): string => {
+  console.log(date);
   const [month, year] = date.split('/');
   const lastDay = new Date(Number(`20${year}`), Number(month), 0).getDate();
   return `20${year}-${month}-${lastDay}`;
@@ -403,7 +415,9 @@ const checkCardFields = () => {
           </div>
 
 
-          <div v-for="index in 3" :key="index">
+          <div class="card" v-for="index in 3" :key="index">
+
+            <input type="hidden" :name="'idCarta' + index" :value="getCardField(index, 'id').value">
 
             <h2 class="card-title">Carta {{ index }}</h2>
 
@@ -508,11 +522,17 @@ const checkCardFields = () => {
 .card-title {
   color: white;
   text-align: center;
-  margin-top: 30px;
 }
 
 .not-active {
   display: none;
+}
+
+.card {
+  background-color: #007BFF;
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin: 20px;
 }
 
 </style>
