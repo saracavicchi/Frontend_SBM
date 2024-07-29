@@ -140,7 +140,7 @@ onMounted(async () => {
           Annulla
         </button>
         <button type="button" id="create-button" class="form-button" aria-label="Conferma creazione"
-                @click="submitForm">Crea
+                @click="submitForm" accesskey="s">Crea
         </button>
       </section>
 

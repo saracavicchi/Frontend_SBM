@@ -4,7 +4,8 @@
     background-color: #3152a8;
     border-radius: 15px;
     margin: 2vh 5vw;
-    max-width: 100vw;
+    width: 86vw;
+    /*max-width: 100vh;*/
     max-height: 66vh;
     padding: 20px 40px;
     display: flex;

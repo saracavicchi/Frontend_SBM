@@ -175,10 +175,10 @@ onMounted(async () => {
 
         <!-- Pulsanti per annullare o salvare le modifiche -->
         <section class="form-buttons">
-          <button type="button" id="cancel-button" class="form-button" aria-label="Annulla modifica" @click="goBack">
+          <button type="button" id="cancel-button" class="form-button" aria-label="Annulla modifica" @click="goBack" accesskey="j">
             Annulla
           </button>
-          <button type="button" id="save-button" class="form-button" aria-label="Salva modifiche"
+          <button type="button" id="save-button" class="form-button" aria-label="Salva modifiche" accesskey="q"
                   @click="submitForm">Salva Modifiche
           </button>
         </section>
@@ -312,7 +312,6 @@ onMounted(async () => {
 
         <!-- Input nascosto per l'id dell'admin -->
         <input type="hidden" name="idAdmin" :value="orgLoggato?.id">
-
         <input type="submit" style="display: none;" aria-hidden="true">
 
       </form>

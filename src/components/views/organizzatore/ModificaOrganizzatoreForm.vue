@@ -233,10 +233,10 @@ const resetCardFields = (index: number) => {
 
         <!-- Pulsanti per annullare o salvare le modifiche -->
         <section class="form-buttons">
-          <button type="button" id="cancel-button" class="form-button" aria-label="Annulla modifica" @click="goBack">
+          <button type="button" id="cancel-button" class="form-button" aria-label="Annulla modifica" @click="goBack" accesskey="u">
             Annulla
           </button>
-          <button type="button" id="save-button" class="form-button" aria-label="Salva modifiche" @click="submitForm">
+          <button type="button" id="save-button" class="form-button" aria-label="Salva modifiche" @click="submitForm" accesskey="v">
             Salva Modifiche
           </button>
         </section>
@@ -249,21 +249,21 @@ const resetCardFields = (index: number) => {
         <!-- Sezione anagrafica -->
         <button @click="activeSection = 'anagrafica'"
                 :class="{ selected: activeSection === 'anagrafica', notSelected: activeSection !== 'anagrafica' }"
-                aria-label="Vai alla sezione anagrafica">
+                aria-label="Vai alla sezione anagrafica" accesskey="w">
           Anagrafica
         </button>
 
         <!-- Sezione social -->
         <button @click="activeSection = 'social'"
                 :class="{ selected: activeSection === 'social', notSelected: activeSection !== 'social' }"
-                aria-label="Vai alla sezione social">
+                aria-label="Vai alla sezione social" accesskey="x">
           Social
         </button>
 
         <!-- Sezione pagamenti -->
         <button @click="activeSection = 'pagamenti'"
                 :class="{ selected: activeSection === 'pagamenti', notSelected: activeSection !== 'pagamenti' }"
-                aria-label="Vai alla sezione pagamenti">
+                aria-label="Vai alla sezione pagamenti" accesskey="y">
           Pagamenti
         </button>
       </nav>

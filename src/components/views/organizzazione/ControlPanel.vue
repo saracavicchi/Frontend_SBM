@@ -192,16 +192,16 @@ const addOrganizzatore = async () => {
       <section class="mod-buttons" v-if="organizzazione.admin.id === orgLoggato.id"
                aria-label="Pulsanti per interagire con l'organizzazione">
         <button type="button" id="add-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
-                @click="openAddOrganizzatorePopup">
+                @click="openAddOrganizzatorePopup" accesskey="b">
           Aggiungi
           organizzatore
         </button>
-        <button type="button" id="mod-org-button" class="control-panel-button" aria-label="Modifica organizzazione" @click="navigateToModificaOrganizzazione">
+        <button type="button" id="mod-org-button" class="control-panel-button" aria-label="Modifica organizzazione" @click="navigateToModificaOrganizzazione" accesskey="d">
           Modifica
           organizzazione
         </button>
-        <button type="button" id="del-org-button" class="control-panel-button" aria-label="Aggiungi un organizzatore"
-                @click="promptDelConfOrganizzazione">
+        <button type="button" id="del-org-button" class="control-panel-button" aria-label="Elimina Organizzazione"
+                @click="promptDelConfOrganizzazione" accesskey="F">
           Elimina
           organizzazione
         </button>

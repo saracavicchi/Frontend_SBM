@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { previousRoute } from '@/main.ts';
 
+const referringPage = ref('');
+
+onMounted(() => {
+  referringPage.value = previousRoute.value;
+  if (referringPage.value) {
+    console.log(referringPage.value);
+  } else {
+    console.log('No referrer found');
+  }
+});
 </script>
 
 <template>
@@ -22,7 +34,7 @@
         <li><strong>Alt + C</strong> o <strong>Shift + Alt + C</strong> (Windows/Linux), <strong>Ctrl + Opt + C</strong> (macOS): Contattaci</li>
       </ul>
     </section>
-    <section class="accessibility-section">
+    <section v-if="referringPage.includes('home')" class="accessibility-section">
       <h2>Accessibilità per la pagina di homepage personale</h2>
       <p>Questa guida fornisce informazioni su come navigare nella pagina di homepage personale utilizzando le funzionalità di accessibilità.</p>
       <ul>
@@ -36,6 +48,41 @@
         <li><strong>Alt + N</strong> o <strong>Shift + Alt + N</strong> (Windows/Linux), <strong>Ctrl + Opt + N</strong> (macOS): Centro Notifiche</li>
         <li><strong>Alt + K</strong> o <strong>Shift + Alt + K</strong> (Windows/Linux), <strong>Ctrl + Opt + K</strong> (macOS): Lista Eventi In Programma</li>
         <li><strong>Alt + F</strong> o <strong>Shift + Alt + F</strong> (Windows/Linux), <strong>Ctrl + Opt + F</strong> (macOS): Lista Eventi Passati</li>
+      </ul>
+    </section>
+    <section v-if="referringPage.includes('crea')" class="accessibility-section">
+      <h2>Accessibilità per la pagina di creazione organizzazione</h2>
+      <p>Questa guida fornisce informazioni su come navigare nella pagina di creazione organizzazione utilizzando le funzionalità di accessibilità.</p>
+      <ul>
+        <li><strong>Alt + S</strong> o <strong>Shift + Alt + S</strong> (Windows/Linux), <strong>Ctrl + Opt + S</strong> (macOS): Crea Organizzazione</li>
+      </ul>
+    </section>
+    <section v-if="referringPage.includes('gestisci')" class="accessibility-section">
+      <h2>Accessibilità per il pannello di controllo organizzazione</h2>
+      <p>Questa guida fornisce informazioni su come navigare nel pannello di controllo dell'organizzazione utilizzando le funzionalità di accessibilità.</p>
+      <ul>
+        <li><strong>Alt + B</strong> o <strong>Shift + Alt + B</strong> (Windows/Linux), <strong>Ctrl + Opt + B</strong> (macOS): Aggiungi organizzatore (solo se utente è admin dell'organizzazione)</li>
+        <li><strong>Alt + D</strong> o <strong>Shift + Alt + D</strong> (Windows/Linux), <strong>Ctrl + Opt + D</strong> (macOS): Modifica organizzazione (solo se utente è admin dell'organizzazione)</li>
+        <li><strong>Alt + F</strong> o <strong>Shift + Alt + F</strong> (Windows/Linux), <strong>Ctrl + Opt + F</strong> (macOS): Elimina organizzazione (solo se utente è admin dell'organizzazione)</li>
+      </ul>
+    </section>
+    <section v-if="referringPage.includes('modificaOrganizzazione')" class="accessibility-section">
+      <h2>Accessibilità per la pagina di modifica dell'organizzazione</h2>
+      <p>Questa guida fornisce informazioni su come navigare nel modulo di modifica dell'organizzazione utilizzando le funzionalità di accessibilità.</p>
+      <ul>
+        <li><strong>Alt + J</strong> o <strong>Shift + Alt + J</strong> (Windows/Linux), <strong>Ctrl + Opt + J</strong> (macOS): Annulla modifica</li>
+        <li><strong>Alt + Q</strong> o <strong>Shift + Alt + Q</strong> (Windows/Linux), <strong>Ctrl + Opt + Q</strong> (macOS): Salva modifiche</li>
+      </ul>
+    </section>
+    <section v-if="referringPage.includes('modificaOrganizzatore')" class="accessibility-section">
+      <h2>Accessibilità per la modifica del profilo dell'organizzatore</h2>
+      <p>Questa guida fornisce informazioni su come navigare nel modulo di modifica del profilo dell'organizzatore utilizzando le funzionalità di accessibilità.</p>
+      <ul>
+        <li><strong>Alt + U</strong> o <strong>Shift + Alt + U</strong> (Windows/Linux), <strong>Ctrl + Opt + U</strong> (macOS): Annulla modifica</li>
+        <li><strong>Alt + V</strong> o <strong>Shift + Alt + V</strong> (Windows/Linux), <strong>Ctrl + Opt + V</strong> (macOS): Salva modifiche</li>
+        <li><strong>Alt + W</strong> o <strong>Shift + Alt + W</strong> (Windows/Linux), <strong>Ctrl + Opt + W</strong> (macOS): Vai alla sezione anagrafica</li>
+        <li><strong>Alt + X</strong> o <strong>Shift + Alt + X</strong> (Windows/Linux), <strong>Ctrl + Opt + X</strong> (macOS): Vai alla sezione social</li>
+        <li><strong>Alt + Y</strong> o <strong>Shift + Alt + Y</strong> (Windows/Linux), <strong>Ctrl + Opt + Y</strong> (macOS): Vai alla sezione pagamenti</li>
       </ul>
     </section>
   </section>
