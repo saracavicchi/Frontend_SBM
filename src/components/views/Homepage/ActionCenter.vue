@@ -1,4 +1,66 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import {ref, onMounted, watch, defineProps, type PropType} from "vue";
+import axios from "axios";
+import type {Organizzatore} from "@/types/organizzatoreType";
+
+const organizzazionePath = ref('');
+
+/*
+const props = defineProps({
+  marzel: Object
+});
+
+ */
+
+const props = defineProps({
+  orgLoggato: {
+    type: Object as PropType<Organizzatore>,
+    required: true
+  }
+});
+
+watch(() => props.orgLoggato, async (newVal) => {
+  if (newVal && newVal.id) {
+    try {
+      const response = await axios.get(`/api/organizzatore/hasOrganizzazione?id=${newVal.id}`);
+      if (response.data === '') {
+        organizzazionePath.value = '/creaOrganizzazione';
+      } else {
+        organizzazionePath.value = '/organizzazione/' + response.data;
+      }
+      //console.log('organizzazionePath:', organizzazionePath.value);
+    } catch (error) {
+      console.error('Errore nel recupero dei dati:', error);
+    }
+  }
+}, {immediate: true});
+
+/*
+const fetchData = async () => {
+  if (props.marzel && props.marzel.id) {
+    try {
+      const response = await axios.get(`/api/organizzatore/hasOrganizzazione?id=${props.marzel.id}`);
+      if (response.data === '') {
+        organizzazionePath.value = '/creaOrganizzazione';
+      } else {
+        organizzazionePath.value = '/organizzazione/' + response.data;
+      }
+    } catch (error) {
+      console.error('Errore nel recupero dei dati:', error);
+    }
+  }
+};
+
+watch(() => props.marzel, (newValue, oldValue) => {
+  if (newValue && newValue.id !== oldValue?.id) {
+    fetchData();
+  }
+}, { immediate: true });
+
+ */
+</script>
+
 <template>
   <section aria-labelledby="action-center" class="centro-azioni">
     <h2 id="action-center">Centro Azioni</h2>
@@ -16,6 +78,18 @@
         </a>
       </article>
       <article>
+        <router-link :to="organizzazionePath" aria-label="Organizzazione - Vai alla sezione del profilo dell'organizzazione o crea una nuova organizzazione" accesskey="3">
+          <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzazione.png" alt="Gestione organizzazione" tabindex="0">
+          <h3 class="action-text">Organizzazione</h3>
+        </router-link>
+      </article>
+      <article>
+        <img class="action-img" src="../../assets/images/homepageImg/profiloOrganizzatore.png"  alt="Profilo dell'organizzatore" tabindex="0">
+        <router-link :to="{name: 'ModificaOrganizzatore', params: { id: props.orgLoggato.id } }" aria-label="Profilo - Vai alla pagina del tuo profilo personale" accesskey="4">
+          <h3 class="action-text">Profilo</h3>
+        </router-link>
+      </article>
+      <!-- <article>
         <a href="#organizzazione" aria-label="Organizzazione - Vai alla sezione del profilo dell'organizzazione o crea una nuova organizzazione" accesskey="3">
           <img class="action-img" src="../../../assets/images/homepageImg/profiloOrganizzazione.png" alt="Profilo dell'organizzazione" tabindex="0">
           <h3 class="action-text">Organizzazione</h3>
@@ -26,7 +100,7 @@
           <img class="action-img" src="../../../assets/images/homepageImg/profiloOrganizzatore.png" alt="Profilo organizzatore" tabindex="0">
           <h3 class="action-text">Profilo</h3>
         </a>
-      </article>
+      </article>-->
       <article>
         <a href="#pagamenti" aria-label="Pagamenti - Vai alla sezione per gestire finanze e pagamenti" accesskey="5">
           <img class="action-img" src="../../../assets/images/homepageImg/pagamento.png" alt="Gestione pagamenti" tabindex="0">
@@ -42,7 +116,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'ActionCenter'
 };

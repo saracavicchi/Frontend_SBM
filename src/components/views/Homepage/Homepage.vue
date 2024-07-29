@@ -79,7 +79,7 @@ onMounted(async () => {
       <img class="profile-image" v-if="state.organizzatore" :src="profileImageUrl" alt="Foto Profilo" />
       <h3 v-if="state.organizzatore">Ciao {{ state.organizzatore.nome }} {{ state.organizzatore.cognome }}!</h3>
     </section>
-    <ActionCenter />
+    <ActionCenter v-if="state.organizzatore" :orgLoggato="state.organizzatore"/>
   </section>
   <aside class="right-section" id="right-section" aria-labelledby="aside-header">
     <h2 id="aside-header" class="visually-hidden">Notifiche e Eventi</h2>
