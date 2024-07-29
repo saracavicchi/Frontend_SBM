@@ -249,21 +249,21 @@ const resetCardFields = (index: number) => {
         <!-- Sezione anagrafica -->
         <button @click="activeSection = 'anagrafica'"
                 :class="{ selected: activeSection === 'anagrafica', notSelected: activeSection !== 'anagrafica' }"
-                aria-label="Vai alla sezione anagrafica" accesskey="w">
+                aria-label="Vai alla sezione anagrafica" accesskey="w" tabindex="0">
           Anagrafica
         </button>
 
         <!-- Sezione social -->
         <button @click="activeSection = 'social'"
                 :class="{ selected: activeSection === 'social', notSelected: activeSection !== 'social' }"
-                aria-label="Vai alla sezione social" accesskey="x">
+                aria-label="Vai alla sezione social" accesskey="x" tabindex="0">
           Social
         </button>
 
         <!-- Sezione pagamenti -->
         <button @click="activeSection = 'pagamenti'"
                 :class="{ selected: activeSection === 'pagamenti', notSelected: activeSection !== 'pagamenti' }"
-                aria-label="Vai alla sezione pagamenti" accesskey="y">
+                aria-label="Vai alla sezione pagamenti" accesskey="y" tabindex="0">
           Pagamenti
         </button>
       </nav>
@@ -289,7 +289,7 @@ const resetCardFields = (index: number) => {
                  style="margin-left: 10px;">
             <label for="photo-upload" style="margin-left: 20px;">Imposta foto profilo</label>
             <button v-if="photoUrl" class="remove-button" type="button" @click="removePhoto" style="margin-left: 20px;"
-                    aria-label="Rimuovi foto profilo">Rimuovi Foto
+                    aria-label="Rimuovi foto profilo" tabindex="0">Rimuovi Foto
             </button>
             <input type="hidden" name="deleted" id="deleted" v-model="deleted">
 
