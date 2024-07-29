@@ -28,7 +28,7 @@ export default {
 
 <style>
 .star {
-  width: 30px; /* Regola la dimensione delle stelle */
+  width: 30px;
   height: 30px;
   filter: brightness(120%) saturate(110%);
 

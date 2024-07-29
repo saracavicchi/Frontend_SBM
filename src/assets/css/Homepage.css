@@ -1,13 +1,25 @@
 /*** Stili specifici per la pagina Homepage ***/
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 0;
+    margin: 0;
+    gap: 3em;
+}
 /** Stili per la sezione sinistra: foto profilo e centro azioni ***/
 .left-section {
-    flex: 0 0 50%; /* Mantiene la larghezza */
+    /*flex: 1 0 50%;*/ /* Mantiene la larghezza */
+    flex: 1 1;
     display: flex;
     flex-direction: column; /* Imposta i figli in colonna */
-    justify-content: flex-start;
-    gap: 52px;
-    height: 740px;
-    margin-left: 13px;
+    justify-content: space-between;
+    gap: 4em;
+    /*height: 740px;*/
+    height: 100%;
+    /*width: 50%;*/
+    /*padding-left: 1em;*/
+    /*margin-left: 13px;*/
 }
 
 /* Stili per la sezione dell'immagine profilo */
@@ -46,10 +58,12 @@
 
 /* Stili per il centro azioni */
 .left-section .centro-azioni{
-    height: calc(2 * 230px + 15px); /* 2*altezza rounded component + gap di 15px*/
+    min-height: calc(2 * 230px + 15px); /* 2*altezza rounded component + gap di 15px*/
     background-color: #ffffff40;
     border-radius: 20px;
-    display: block;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -115,12 +129,17 @@
 
 /** Stili per la sezione destra: eventi futiri e conclusi e notifiche **/
 .right-section {
-    flex: 0 0 45%; /* Assegna alla sezione destra il 45% dello spazio disponibile */
+    /*flex: 1 1 45%;*/ /* Assegna alla sezione destra il 45% dello spazio disponibile */
+    flex: 1 1;
     display: flex;
     height: auto;
+    justify-content: center;
+    align-items: flex-end;
     flex-direction: column;
     gap: 15px;
-    margin-left: auto;
+    overflow: hidden;
+    /*padding-right: 0.5em;*/
+    /*margin-left: auto;*/
 }
 
 /* Stili per le 3 sezioni che rappresentano notifiche, eventi futuri e eventi passati */
@@ -133,6 +152,8 @@
     flex-direction: column;
     height: 230px;
     width: 580px;
+    flex: 1;
+
 }
 
 /* Stili per il titolo delle liste di notifiche/eventi */
@@ -141,6 +162,9 @@
     color: white;
     padding: 5px 0 0 0;
     margin: 0 0 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Stili per i link a visualizzazione delle pegine di eventi/notifiche */
@@ -191,9 +215,9 @@
     display: flex;
     justify-content: flex-start;
     /*align-items: center;*/
+
     align-items: center;
-    gap: 15px;
-    overflow: hidden;
+    gap: 1em;
     text-overflow: ellipsis;
     height: 75px;
 }
@@ -213,6 +237,7 @@
     border-radius: 50%;
     display: inline-block;
     margin-right: 15px;
+
 }
 
 /*Stili generali di disposizione degli elementi della sezione destra*/
@@ -225,6 +250,12 @@
 .rounded-component .messaggio{
     display: inline-block;
     justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rounded-component p{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -251,11 +282,13 @@
     text-overflow: ellipsis;
 }
 
+
 /* Stili per la sezione delle date e stelle degli eventi conclusi */
 .event-details{
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 /* Stili per la sezione delle date degli eventi */
