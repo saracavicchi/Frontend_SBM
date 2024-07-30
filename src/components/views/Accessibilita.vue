@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="accnessibility-container">
+  <div class="accessibility-container">
     <section class="general-accessibility">
       <h1>Guida all'Accessibilità</h1>
       <p>Gli accesskey permettono una navigazione più rapida e accessibile, specialmente per gli utenti che si affidano alla tastiera per navigare. Per utilizzare un accesskey, premi contemporaneamente i tasti indicati a seconda del tuo sistema operativo. Questo ti porterà direttamente alla sezione del sito associata a quell'accesskey.</p>

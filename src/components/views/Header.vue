@@ -13,8 +13,8 @@ const isHomepage = computed(() => route.path === '/');
     <!-- Link per saltare alla sezione laterale, visibile solo in homepage -->
     <a v-if="isHomepage" href="#right-section" accesskey="r" class="skip-link">Vai alla sezione laterale</a>
 
+    <h2 class="logo">EVENTGO</h2>
     <nav aria-label="Navigazione principale">
-      <h2 class="logo">EVENTGO</h2>
       <ul>
         <li><a href="#home" aria-label="Vai alla home" accesskey="h">Home</a></li>
         <li><a href="#eventi" aria-label="Scopri gli eventi" accesskey="e">Eventi</a></li>

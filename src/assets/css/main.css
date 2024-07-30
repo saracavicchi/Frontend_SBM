@@ -37,13 +37,18 @@ header {
   background-color: #007BFF;
   color: white;
   padding: 1rem;
+  flex-wrap: wrap;
   height: 25vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /* Stili per la navigazione nell'header */
 header nav {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -66,7 +71,7 @@ header .logo{
 header nav ul {
   list-style: none;
   display: flex;
-  gap: 3em;
+  gap: 4em;
   font-size: 22px;
   font-weight: bold;
   margin: 0;

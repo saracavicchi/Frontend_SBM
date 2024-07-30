@@ -25,6 +25,7 @@
 /* Stili per la sezione dell'immagine profilo */
 .profile-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     margin-top: 0px;
     padding-top: 0px;
