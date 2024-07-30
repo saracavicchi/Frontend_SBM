@@ -331,7 +331,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 0 20px 20px;
   gap: 100px;
 }
 
