@@ -169,7 +169,11 @@
 
 /* Stili per i link a visualizzazione delle pegine di eventi/notifiche */
 .rounded-component > h2 > a {
-    display: inline-block;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    justify-content: center;
     text-decoration: none;
     transition: transform 0.3s ease;
     /*color: #00004d;*/
@@ -215,7 +219,8 @@
     display: flex;
     justify-content: flex-start;
     /*align-items: center;*/
-
+    flex-wrap: nowrap;
+    flex: 0 1;
     align-items: center;
     gap: 1em;
     text-overflow: ellipsis;
@@ -236,6 +241,7 @@
     margin: 0 0 ;
     border-radius: 50%;
     display: inline-block;
+    /*flex-wrap: wrap;*/
     margin-right: 15px;
 
 }
@@ -249,7 +255,10 @@
 /* Stili per i messaggi delle notifiche */
 .rounded-component .messaggio{
     display: inline-block;
+    align-items: center;
     justify-content: center;
+    /*display: inline-block;
+    justify-content: center;*/
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -259,12 +268,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: block;
+    flex-wrap: nowrap;
+    justify-content: center;
 }
 
 /* Stili per la sezione del testo degli eventi */
 .event-info{
-    display: inline-block;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    /*text-align: left;*/
+    align-items: flex-start;
     margin: 0;
     padding: 0;
     white-space: nowrap;
@@ -274,9 +288,10 @@
 
 /* Stili per il nome dell'evento */
 .event-name {
-    display: block;
+   /* display: block;*/
     font-size: 20px;
     font-weight: bold;
+    display: flex;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -288,7 +303,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
 }
 
 /* Stili per la sezione delle date degli eventi */
