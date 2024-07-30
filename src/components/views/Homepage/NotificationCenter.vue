@@ -22,13 +22,22 @@ function formatTimestamp(timestamp: string, timeZone: string = 'UTC'): string {
 
 <template>
   <section aria-labelledby="notification-center" id="centro-notifiche" class="rounded-component" role="region">
+
+    <!-- Intestazione del centro notifiche -->
     <h2 id="notification-center">
+      <!-- Link al centro notifiche con accesskey per l'accessibilità -->
       <a href="#notifiche" aria-label="Vai al Centro Notifiche" tabindex="0" accesskey="n">Centro Notifiche</a>
     </h2>
+
+    <!-- Lista delle notifiche -->
     <ul role="list">
+      <!-- Itera sulle notifiche e crea un elemento di lista per ciascuna -->
       <li v-for="notifica in notifiche" :key="notifica.id" role="listitem">
+        <!-- Mostra il timestamp formattato della notifica -->
         <p>{{ formatTimestamp(notifica.data_ora) }}</p>
+        <!-- Mostra il mittente della notifica in grassetto -->
         <p class="messaggio" style="font-weight: bold">{{ notifica.mittente }}:</p>
+        <!-- Mostra il testo della notifica con un margine a sinistra -->
         <p class="messaggio" style="margin-left: 15px">{{ notifica.testo }}</p>
       </li>
     </ul>

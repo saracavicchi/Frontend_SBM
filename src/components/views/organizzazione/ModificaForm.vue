@@ -120,10 +120,6 @@ const submitForm = () => {
       axios.put(`/api/organizzazione/update/${props.organizzazione.id}`, formData)
           .then(response => {
 
-            //for (let [key, value] of formData.entries()) {
-              //console.log(`${key}: ${value}`);
-            //}
-
             // Se la richiesta va a buon fine, reindirizza alla pagina dell'organizzazione
             if (response.status === 200) {
               router.push({

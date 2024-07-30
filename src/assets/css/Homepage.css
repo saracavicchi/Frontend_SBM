@@ -7,6 +7,7 @@
     margin: 0;
     gap: 2em;
 }
+
 /** Stili per la sezione sinistra: foto profilo e centro azioni ***/
 .left-section {
     flex: 1 1;

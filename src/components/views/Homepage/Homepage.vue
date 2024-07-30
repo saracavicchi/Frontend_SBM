@@ -74,14 +74,22 @@ onMounted(async () => {
 
 <template>
   <div class="container">
+
+    <!-- Sezione sinistra contenente il profilo dell'organizzatore e il centro azioni -->
     <section class="left-section" aria-labelledby="left-header" role="main">
       <h2 id="left-header" class="visually-hidden">Profilo Organizzatore e Centro Azioni</h2>
+
+      <!-- Intestazione del profilo con immagine e nome dell'organizzatore -->
       <section class="profile-header">
         <img class="profile-image" v-if="state.organizzatore" :src="profileImageUrl" alt="Foto Profilo" />
         <h3 v-if="state.organizzatore">Ciao {{ state.organizzatore.nome }} {{ state.organizzatore.cognome }}!</h3>
       </section>
+
+      <!-- Centro azioni per l'organizzatore loggato -->
       <ActionCenter v-if="state.organizzatore" :orgLoggato="state.organizzatore"/>
     </section>
+
+    <!-- Sezione destra contenente notifiche ed eventi -->
     <aside class="right-section" id="right-section" aria-labelledby="aside-header">
       <h2 id="aside-header" class="visually-hidden">Notifiche e Eventi</h2>
       <NotificationCenter :notifiche="state.notifiche" />

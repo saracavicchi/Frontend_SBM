@@ -1,14 +1,20 @@
 <script setup lang="ts">
+// Importa le funzioni ref e onMounted da Vue e la variabile previousRoute dal file main.ts
 import { ref, onMounted } from 'vue';
 import { previousRoute } from '@/main.ts';
 
+// Definisce una variabile reattiva per memorizzare la pagina di riferimento
 const referringPage = ref('');
 
+// Esegue il codice quando il componente è montato
 onMounted(() => {
+  // Assegna il valore di previousRoute a referringPage
   referringPage.value = previousRoute.value;
+  // Se referringPage ha un valore, lo stampa nella console
   if (referringPage.value) {
     console.log(referringPage.value);
   } else {
+    // Altrimenti, stampa 'No referrer found' nella console
     console.log('No referrer found');
   }
 });
@@ -16,9 +22,11 @@ onMounted(() => {
 
 <template>
   <div class="accessibility-container">
+
     <section class="general-accessibility">
       <h1>Guida all'Accessibilità</h1>
       <p>Gli accesskey permettono una navigazione più rapida e accessibile, specialmente per gli utenti che si affidano alla tastiera per navigare. Per utilizzare un accesskey, premi contemporaneamente i tasti indicati a seconda del tuo sistema operativo. Questo ti porterà direttamente alla sezione del sito associata a quell'accesskey.</p>
+
       <section class="accessibility-section">
         <h2>Accesskey disponibili globalmente sul sito</h2>
         <p>Questa guida fornisce informazioni su come navigare nel nostro sito utilizzando le funzionalità di accessibilità.</p>
@@ -35,6 +43,7 @@ onMounted(() => {
           <li><strong>Alt + C</strong> o <strong>Shift + Alt + C</strong> (Windows/Linux), <strong>Ctrl + Opt + C</strong> (macOS): Contattaci</li>
         </ul>
       </section>
+
       <section v-if="referringPage.includes('home')" class="accessibility-section">
         <h2>Accessibilità per la pagina di homepage personale</h2>
         <p>Questa guida fornisce informazioni su come navigare nella pagina di homepage personale utilizzando le funzionalità di accessibilità.</p>
@@ -51,6 +60,7 @@ onMounted(() => {
           <li><strong>Alt + F</strong> o <strong>Shift + Alt + F</strong> (Windows/Linux), <strong>Ctrl + Opt + F</strong> (macOS): Lista Eventi Passati</li>
         </ul>
       </section>
+
       <section v-if="referringPage.includes('crea')" class="accessibility-section">
         <h2>Accessibilità per la pagina di creazione organizzazione</h2>
         <p>Questa guida fornisce informazioni su come navigare nella pagina di creazione organizzazione utilizzando le funzionalità di accessibilità.</p>
@@ -58,6 +68,7 @@ onMounted(() => {
           <li><strong>Alt + S</strong> o <strong>Shift + Alt + S</strong> (Windows/Linux), <strong>Ctrl + Opt + S</strong> (macOS): Crea Organizzazione</li>
         </ul>
       </section>
+
       <section v-if="referringPage.includes('gestisci')" class="accessibility-section">
         <h2>Accessibilità per il pannello di controllo organizzazione</h2>
         <p>Questa guida fornisce informazioni su come navigare nel pannello di controllo dell'organizzazione utilizzando le funzionalità di accessibilità.</p>
@@ -67,6 +78,7 @@ onMounted(() => {
           <li><strong>Alt + F</strong> o <strong>Shift + Alt + F</strong> (Windows/Linux), <strong>Ctrl + Opt + F</strong> (macOS): Elimina organizzazione (solo se utente è admin dell'organizzazione)</li>
         </ul>
       </section>
+
       <section v-if="referringPage.includes('modificaOrganizzazione')" class="accessibility-section">
         <h2>Accessibilità per la pagina di modifica dell'organizzazione</h2>
         <p>Questa guida fornisce informazioni su come navigare nel modulo di modifica dell'organizzazione utilizzando le funzionalità di accessibilità.</p>
@@ -75,6 +87,7 @@ onMounted(() => {
           <li><strong>Alt + Q</strong> o <strong>Shift + Alt + Q</strong> (Windows/Linux), <strong>Ctrl + Opt + Q</strong> (macOS): Salva modifiche</li>
         </ul>
       </section>
+
       <section v-if="referringPage.includes('modificaOrganizzatore')" class="accessibility-section">
         <h2>Accessibilità per la modifica del profilo dell'organizzatore</h2>
         <p>Questa guida fornisce informazioni su come navigare nel modulo di modifica del profilo dell'organizzatore utilizzando le funzionalità di accessibilità.</p>
@@ -86,54 +99,65 @@ onMounted(() => {
           <li><strong>Alt + Y</strong> o <strong>Shift + Alt + Y</strong> (Windows/Linux), <strong>Ctrl + Opt + Y</strong> (macOS): Vai alla sezione pagamenti</li>
         </ul>
       </section>
+
     </section>
   </div>
 </template>
 
 
 <style>
-.accessibility-container{
+/* Contenitore principale per la sezione di accessibilità */
+.accessibility-container {
   margin: 0 2em;
 }
 
-.general-accessibility{
+/* Stile generale per la sezione di accessibilità */
+.general-accessibility {
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
   color: #00004d;
 }
+
+/* Stile per le sezioni specifiche di accessibilità */
 .accessibility-section {
   padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.accessibility-section  h1, .accessibility-section  h2 {
+/* Stile per i titoli delle sezioni di accessibilità */
+.accessibility-section h1, .accessibility-section h2 {
   color: #333;
   margin-bottom: 10px;
 }
 
-.accessibility-section h1{
+/* Stile specifico per il titolo h1 */
+.accessibility-section h1 {
   font-size: 25px;
 }
 
+/* Stile specifico per il titolo h2 */
 .accessibility-section h2 {
   font-size: 22px;
 }
 
+/* Stile per le liste non ordinate nelle sezioni di accessibilità */
 .accessibility-section ul {
   list-style-type: none;
   padding: 0;
   margin-left: 20px;
 }
 
-.accessibility-section  li {
-  margin-bottom: 10px; /* Spazio tra gli elementi dell'elenco */
-  line-height: 1.5; /* Spaziatura delle linee per una migliore leggibilità */
+/* Stile per gli elementi della lista nelle sezioni di accessibilità */
+.accessibility-section li {
+  margin-bottom: 10px;
+  line-height: 1.5;
   font-size: 18px;
 }
 
-.accessibility-section  li strong {
-  color: #007BFF; /* Colore per evidenziare i tasti di scelta rapida */
+/* Stile per evidenziare i tasti di scelta rapida */
+.accessibility-section li strong {
+  color: #007BFF;
 }
 </style>

@@ -5,7 +5,6 @@
     border-radius: 15px;
     margin: 2vh 5vw;
     width: 86vw;
-    /*max-width: 100vh;*/
     max-height: 66vh;
     padding: 20px 40px;
     display: flex;
@@ -85,16 +84,12 @@
 
 /* Sezione orizzontale (riga) per le foto */
 .photo-row {
-
     width: 100%;
-
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-
     padding: 10px 15px;
-
 }
 
 /* Colonna per i campi del form */

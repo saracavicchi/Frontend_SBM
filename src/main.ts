@@ -3,7 +3,6 @@ import {createApp, ref} from 'vue';
 import App from './App.vue';
 import {createRouter, createWebHistory} from 'vue-router';
 import Homepage from './components/views/Homepage/Homepage.vue';
-import HelloWorld from "@/components/HelloWorld.vue";
 import CreaOrganizzazione from "@/components/views/organizzazione/CreaOrganizzazione.vue";
 import Organizzazione from "@/components/views/organizzazione/Organizzazione.vue";
 import ModificaOrganizzazione from "@/components/views/organizzazione/ModificaOrganizzazione.vue";
@@ -11,7 +10,6 @@ import ModificaOrganizzatore from "@/components/views/organizzatore/ModificaOrga
 
 const routes = [
     {path: '/home', name: 'Homepage', component: Homepage},
-    {path: '/hello', name: 'HelloWorld', component: HelloWorld},
     {path: '/', redirect: '/home'},
     {path: '/creaOrganizzazione', name: 'CreaOrganizzazione', component: CreaOrganizzazione},
     {path: '/gestisciOrganizzazione/:id', name: 'Organizzazione', component: Organizzazione},

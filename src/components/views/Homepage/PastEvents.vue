@@ -61,26 +61,44 @@ watchEffect(() => {
 
 <template>
   <section class="rounded-component" aria-labelledby="past-events" id="eventi-conclusi" role="region">
+
+    <!-- Intestazione della sezione eventi conclusi -->
     <h2 id="past-events">
+      <!-- Link per visualizzare tutti gli eventi conclusi con accesskey per l'accessibilità -->
       <a href="#eventi-conclusi" aria-label="Visualizza tutti gli eventi conclusi" accesskey="f">Eventi Conclusi</a>
     </h2>
+
+    <!-- Lista degli eventi conclusi -->
     <ul>
+      <!-- Itera sugli eventi conclusi e crea un elemento di lista per ciascuno -->
       <li v-for="(evento, index) in eventiConclusi" :key="evento.id" tabindex="0" role="listitem">
+
         <article>
+          <!-- Immagine dell'evento con URL dinamico o immagine di default -->
           <img class="event-img" :src="evento.url_photo ? eventiConclusiImageUrls[index] : defaultImage" :alt="`Immagine dell'evento: ${evento.nome}, inizio: ${formatTimestamp(evento.data_ora.inizio)}, fine: ${formatTimestamp(evento.data_ora.fine)}`" />
+
           <section class="event-info">
+            <!-- Nome dell'evento -->
             <p class="event-name">{{ evento.nome }}</p>
+
             <section class="event-details">
+
               <section class="event-dates">
+                <!-- Date di inizio e fine dell'evento -->
                 <p>Inizio: {{ formatTimestamp(evento.data_ora.inizio) }}</p>
                 <p>Fine: {{ formatTimestamp(evento.data_ora.fine) }}</p>
               </section>
+
+              <!-- Component per la valutazione in stelle dell'evento -->
               <StarsRating :rating="evento.stelle" />
             </section>
+
           </section>
+
         </article>
       </li>
     </ul>
+
   </section>
 </template>
 

@@ -18,9 +18,9 @@ body {
 
 /* Stili per l'elemento principale dell'applicazione */
 .app {
-  display: flex; /* Utilizza flexbox per il layout */
-  flex-direction: column; /* Organizza i figli in colonna */
-  height: 100vh; /* Altezza completa della viewport */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   flex-wrap: nowrap;
 }
 
@@ -29,7 +29,7 @@ body {
 }
 
 header, header nav, footer nav, main{
-  max-width: 100%; /* Assicura che questi elementi non superino la larghezza della viewport */
+  max-width: 100%;
 }
 
 /* Stili per l'intestazione */
@@ -119,14 +119,14 @@ header nav li:hover {
   clip: auto;
   overflow: visible;
   z-index: 10000;
-  background: #007bff; /* Colore di sfondo più vivace */
+  background: #007bff;
   color: #fff;
-  padding: 12px; /* Padding più grande per aumentare la dimensione */
-  font-size: 18px; /* Dimensione del font aumentata */
+  padding: 12px;
+  font-size: 18px;
   text-decoration: none;
   border: 0;
   box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Aggiunta di ombreggiatura per profondità */
-  border-radius: 5px; /* Bordi arrotondati */
+  border-radius: 5px;
 }
 
 /* Stili per il contenuto principale dell'applicazione */

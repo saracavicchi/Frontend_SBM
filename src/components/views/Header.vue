@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+// Proprietà per verificare se il percorso corrente è la homepage
 const isHomepage = computed(() => route.path === '/');
 </script>
 
@@ -14,6 +15,7 @@ const isHomepage = computed(() => route.path === '/');
     <a v-if="isHomepage" href="#right-section" accesskey="r" class="skip-link">Vai alla sezione laterale</a>
 
     <h2 class="logo">EVENTGO</h2>
+
     <nav aria-label="Navigazione principale">
       <ul>
         <li><a href="#home" aria-label="Vai alla home" accesskey="h">Home</a></li>

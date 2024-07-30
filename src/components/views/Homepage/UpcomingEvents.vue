@@ -60,23 +60,37 @@ watchEffect(() => {
 
 <template>
   <section aria-labelledby="upcoming-events" id="eventi-in-programma" class="rounded-component" role="region">
+
+    <!-- Intestazione della sezione eventi in programma -->
     <h2 id="upcoming-events">
+      <!-- Link per visualizzare tutti gli eventi in programma con accesskey per l'accessibilità -->
       <a href="#eventi-futuri" aria-label="Visualizza tutti gli eventi in programma" accesskey="k">Eventi In Programma</a>
     </h2>
+
+    <!-- Lista degli eventi in programma -->
     <ul>
+      <!-- Itera sugli eventi futuri e crea un elemento di lista per ciascuno -->
       <li v-for="(evento, index) in eventiFuturi" :key="evento.id" tabindex="0" role="listitem">
+
         <article>
+          <!-- Immagine dell'evento con URL dinamico o immagine di default -->
           <img class="event-img" :src="evento.url_photo ? eventiFuturiImageUrls[index] : defaultImage" :alt="`Immagine dell'evento: ${evento.nome}`" />
+
           <section class="event-info">
+            <!-- Nome dell'evento -->
             <p class="event-name">{{ evento.nome }}</p>
             <section class="event-dates">
+              <!-- Date di inizio e fine dell'evento -->
               <p>Inizio: {{ formatTimestamp(evento.data_ora.inizio) }}</p>
               <p>Fine: {{ formatTimestamp(evento.data_ora.fine) }}</p>
             </section>
           </section>
+
         </article>
+
       </li>
     </ul>
+
   </section>
 </template>
 
