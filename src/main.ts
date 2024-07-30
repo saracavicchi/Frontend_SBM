@@ -7,6 +7,7 @@ import CreaOrganizzazione from "@/components/views/organizzazione/CreaOrganizzaz
 import Organizzazione from "@/components/views/organizzazione/Organizzazione.vue";
 import ModificaOrganizzazione from "@/components/views/organizzazione/ModificaOrganizzazione.vue";
 import ModificaOrganizzatore from "@/components/views/organizzatore/ModificaOrganizzatore.vue";
+import Accessibilita from "@/components/views/Accessibilita.vue";
 
 const routes = [
     {path: '/home', name: 'Homepage', component: Homepage},
@@ -15,7 +16,7 @@ const routes = [
     {path: '/gestisciOrganizzazione/:id', name: 'Organizzazione', component: Organizzazione},
     {path: '/modificaOrganizzazione/:id', name: 'ModificaOrganizzazione', component: ModificaOrganizzazione},
     {path: '/modificaOrganizzatore/:id', name: 'ModificaOrganizzatore', component: ModificaOrganizzatore},
-    { path: '/accessibilita', name: 'accessibilita', component: () => import('./components/views/Accessibilita.vue') }
+    { path: '/accessibilita', name: 'accessibilita', component: Accessibilita }
 ];
 
 const router = createRouter({
