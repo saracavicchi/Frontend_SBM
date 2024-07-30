@@ -320,7 +320,7 @@ const resetCardFields = (index: number) => {
               <input type="text" id="username" name="username" v-model="organizzatore.username" required
                      aria-required="true"
                      aria-label="Username"
-                     maxlength="45">
+                     maxlength="20">
 
               <!-- Email -->
               <label for="email">Email *</label>
