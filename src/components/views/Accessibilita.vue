@@ -93,7 +93,7 @@ onMounted(() => {
 
 <style>
 .accessibility-container{
-  margin: 0 1em;
+  margin: 0 2em;
 }
 
 .general-accessibility{

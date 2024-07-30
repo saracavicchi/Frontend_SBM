@@ -3,9 +3,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 0;
+    padding: 0 2rem;
     margin: 0;
-    gap: 3em;
+    gap: 2em;
 }
 /** Stili per la sezione sinistra: foto profilo e centro azioni ***/
 .left-section {
@@ -131,7 +131,7 @@
 /** Stili per la sezione destra: eventi futiri e conclusi e notifiche **/
 .right-section {
     /*flex: 1 1 45%;*/ /* Assegna alla sezione destra il 45% dello spazio disponibile */
-    flex: 1 1;
+    flex: 0.8 1;
     display: flex;
     height: auto;
     justify-content: center;
@@ -239,11 +239,11 @@
 .rounded-component .event-img{
     width: 60px;
     height: 60px;
-    margin: 0 0 ;
+    /*margin: 0 0 ;*/
     border-radius: 50%;
     display: inline-block;
     /*flex-wrap: wrap;*/
-    margin-right: 15px;
+    margin-right: 5px;
 
 }
 
@@ -330,7 +330,7 @@
 .event-info .stars-rating{
     display: inline-block;
     text-align: center;
-    margin-left: -5px;
+    margin-right: 15px;
 }
 
 /* Stili per non visualizzare elementi utili agli screen reader */
