@@ -9,17 +9,12 @@
 }
 /** Stili per la sezione sinistra: foto profilo e centro azioni ***/
 .left-section {
-    /*flex: 1 0 50%;*/ /* Mantiene la larghezza */
     flex: 1 1;
     display: flex;
     flex-direction: column; /* Imposta i figli in colonna */
     justify-content: space-between;
     gap: 4em;
-    /*height: 740px;*/
     height: 100%;
-    /*width: 50%;*/
-    /*padding-left: 1em;*/
-    /*margin-left: 13px;*/
 }
 
 /* Stili per la sezione dell'immagine profilo */
@@ -139,8 +134,6 @@
     flex-direction: column;
     gap: 15px;
     overflow: hidden;
-    /*padding-right: 0.5em;*/
-    /*margin-left: auto;*/
 }
 
 /* Stili per le 3 sezioni che rappresentano notifiche, eventi futuri e eventi passati */
@@ -159,7 +152,6 @@
 
 /* Stili per il titolo delle liste di notifiche/eventi */
 .rounded-component h2 {
-    /*color: #00004d;*/
     color: white;
     padding: 5px 0 0 0;
     margin: 0 0 5px 0;
@@ -177,7 +169,6 @@
     justify-content: center;
     text-decoration: none;
     transition: transform 0.3s ease;
-    /*color: #00004d;*/
     color: white;
 }
 
@@ -209,7 +200,6 @@
 
 /* Stili per gli elementi delle liste di notifiche/eventi */
 .rounded-component li {
-    /*color: #00004d;*/
     color: white;
     margin-bottom: 10px;
     font-size: 18px;
@@ -239,10 +229,8 @@
 .rounded-component .event-img{
     width: 60px;
     height: 60px;
-    /*margin: 0 0 ;*/
     border-radius: 50%;
     display: inline-block;
-    /*flex-wrap: wrap;*/
     margin-right: 5px;
 
 }
@@ -258,8 +246,6 @@
     display: inline-block;
     align-items: center;
     justify-content: center;
-    /*display: inline-block;
-    justify-content: center;*/
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -278,7 +264,6 @@
 .event-info{
     display: flex;
     flex-direction: column;
-    /*text-align: left;*/
     align-items: flex-start;
     margin: 0;
     padding: 0;
@@ -289,7 +274,6 @@
 
 /* Stili per il nome dell'evento */
 .event-name {
-   /* display: block;*/
     font-size: 20px;
     font-weight: bold;
     display: flex;
@@ -304,7 +288,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    /*flex-wrap: wrap;*/
 }
 
 /* Stili per la sezione delle date degli eventi */
